@@ -1,0 +1,21 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^3.11.1",
+    "cors": "^2.8.5",
+    "express": "^4.17.3",
+    "express-joi-validation": "^5.0.1",
+    "joi": "^17.6.0",
+    "morgan": "^1.10.0"
+  }
+}
