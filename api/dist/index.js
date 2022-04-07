@@ -15,6 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 // import cors from "cors";
 const mongoose_1 = require("mongoose");
+const user_1 = require("./models/user");
+const recipe_1 = require("./models/recipe");
 const morgan_1 = __importDefault(require("morgan"));
 const express_joi_validation_1 = require("express-joi-validation");
 require("dotenv/config");
@@ -32,70 +34,9 @@ function connectDatabase() {
     });
 }
 connectDatabase().catch((err) => console.log(err));
-const userSchema = new mongoose_1.Schema({
-    email: {
-        type: String,
-        unique: true,
-        required: true,
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    name: String,
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    recipes: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Recipe",
-        },
-    ],
-    reviews: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Review",
-        },
-    ],
-});
-const User = (0, mongoose_1.model)("User", userSchema);
-const recipeSchema = new mongoose_1.Schema({
-    title: {
-        type: String,
-        required: true,
-    },
-    body: {
-        type: String,
-        required: true,
-    },
-    score: {
-        type: Number,
-        min: 1,
-        max: 6,
-    },
-    createdAt: {
-        type: Date,
-        default: Date.now,
-    },
-    author: {
-        type: mongoose_1.Schema.Types.ObjectId,
-        required: true,
-        ref: "User",
-    },
-    categories: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            required: true,
-            ref: "Category",
-        },
-    ],
-});
-const Recipe = (0, mongoose_1.model)("Recipe", recipeSchema);
 app.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const newUser = new User({
+        const newUser = new user_1.User({
             email: req.body.email,
             name: req.body.name,
             password: req.body.password,
@@ -110,7 +51,7 @@ app.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 }));
 app.get("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield User.find({});
+        const users = yield user_1.User.find({});
         res.send(users);
     }
     catch (err) {
@@ -120,7 +61,7 @@ app.get("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 app.get("/users/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User.findById(req.params.userId);
+        const user = yield user_1.User.findById(req.params.userId);
         res.send(user);
     }
     catch (err) {
@@ -130,7 +71,7 @@ app.get("/users/:userId", (req, res) => __awaiter(void 0, void 0, void 0, functi
 }));
 app.post("/users/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User.findByIdAndUpdate(req.params.userId, {
+        const user = yield user_1.User.findByIdAndUpdate(req.params.userId, {
             email: req.body.email,
             password: req.body.password,
             name: req.body.name,
@@ -144,8 +85,68 @@ app.post("/users/:userId", (req, res) => __awaiter(void 0, void 0, void 0, funct
 }));
 app.delete("/users/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield User.findByIdAndDelete(req.params.userId);
+        const user = yield user_1.User.findByIdAndDelete(req.params.userId);
         res.send(user);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+}));
+//-------Recipe
+app.post("/recipes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const newRecipe = new recipe_1.Recipe({
+            title: req.body.title,
+            body: req.body.body,
+            author: req.body.authorId,
+        });
+        yield newRecipe.save();
+        res.send(newRecipe);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+}));
+app.get("/recipes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const recipes = yield recipe_1.Recipe.find({});
+        res.send(recipes);
+    }
+    catch (err) {
+        res.status(500).send(err);
+        console.log(err);
+    }
+}));
+app.get("/recipes/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const recipe = yield recipe_1.Recipe.findById(req.params.recipeId);
+        res.send(recipe);
+    }
+    catch (err) {
+        res.status(500).send(err);
+        console.log(err);
+    }
+}));
+app.post("/recipes/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const recipe = yield recipe_1.Recipe.findByIdAndUpdate(req.params.recipeId, {
+            title: req.body.title,
+            body: req.body.body,
+            author: req.body.authorId,
+        }, { new: true });
+        res.send(recipe);
+    }
+    catch (err) {
+        console.log(err);
+        res.status(500).send(err);
+    }
+}));
+app.delete("/recipes/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const recipe = yield recipe_1.Recipe.findByIdAndDelete(req.params.recipeId);
+        res.send(recipe);
     }
     catch (err) {
         console.log(err);
