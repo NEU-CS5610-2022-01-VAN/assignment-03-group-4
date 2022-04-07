@@ -15,16 +15,19 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 // import cors from "cors";
 const mongoose_1 = require("mongoose");
-const user_1 = require("./models/user");
-const recipe_1 = require("./models/recipe");
 const morgan_1 = __importDefault(require("morgan"));
 const express_joi_validation_1 = require("express-joi-validation");
 require("dotenv/config");
+const user_1 = __importDefault(require("./routes/user"));
+const recipe_1 = __importDefault(require("./routes/recipe"));
 const app = (0, express_1.default)();
 // app.use(cors());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)("dev"));
+//routers
+app.use("/users", user_1.default);
+app.use("/recipes", recipe_1.default);
 const validator = (0, express_joi_validation_1.createValidator)({});
 function connectDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
@@ -34,125 +37,6 @@ function connectDatabase() {
     });
 }
 connectDatabase().catch((err) => console.log(err));
-app.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const newUser = new user_1.User({
-            email: req.body.email,
-            name: req.body.name,
-            password: req.body.password,
-        });
-        yield newUser.save();
-        res.send(newUser);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
-}));
-app.get("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const users = yield user_1.User.find({});
-        res.send(users);
-    }
-    catch (err) {
-        res.status(500).send(err);
-        console.log(err);
-    }
-}));
-app.get("/users/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield user_1.User.findById(req.params.userId);
-        res.send(user);
-    }
-    catch (err) {
-        res.status(500).send(err);
-        console.log(err);
-    }
-}));
-app.post("/users/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield user_1.User.findByIdAndUpdate(req.params.userId, {
-            email: req.body.email,
-            password: req.body.password,
-            name: req.body.name,
-        }, { new: true });
-        res.send(user);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
-}));
-app.delete("/users/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const user = yield user_1.User.findByIdAndDelete(req.params.userId);
-        res.send(user);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
-}));
-//-------Recipe
-app.post("/recipes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const newRecipe = new recipe_1.Recipe({
-            title: req.body.title,
-            body: req.body.body,
-            author: req.body.authorId,
-        });
-        yield newRecipe.save();
-        res.send(newRecipe);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
-}));
-app.get("/recipes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const recipes = yield recipe_1.Recipe.find({});
-        res.send(recipes);
-    }
-    catch (err) {
-        res.status(500).send(err);
-        console.log(err);
-    }
-}));
-app.get("/recipes/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const recipe = yield recipe_1.Recipe.findById(req.params.recipeId);
-        res.send(recipe);
-    }
-    catch (err) {
-        res.status(500).send(err);
-        console.log(err);
-    }
-}));
-app.post("/recipes/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const recipe = yield recipe_1.Recipe.findByIdAndUpdate(req.params.recipeId, {
-            title: req.body.title,
-            body: req.body.body,
-            author: req.body.authorId,
-        }, { new: true });
-        res.send(recipe);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
-}));
-app.delete("/recipes/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const recipe = yield recipe_1.Recipe.findByIdAndDelete(req.params.recipeId);
-        res.send(recipe);
-    }
-    catch (err) {
-        console.log(err);
-        res.status(500).send(err);
-    }
-}));
 const port = process.env.PORT || 3000;
 app.get("/", (req, res) => {
     res.send("Express + TypeScript Server");

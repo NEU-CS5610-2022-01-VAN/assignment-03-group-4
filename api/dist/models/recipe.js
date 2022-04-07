@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Recipe = void 0;
+exports.recipeSchema = exports.Recipe = void 0;
 const mongoose_1 = require("mongoose");
 const recipeSchema = new mongoose_1.Schema({
     title: {
@@ -39,5 +39,6 @@ const recipeSchema = new mongoose_1.Schema({
         },
     ],
 });
+exports.recipeSchema = recipeSchema;
 const Recipe = (0, mongoose_1.model)("Recipe", recipeSchema);
 exports.Recipe = Recipe;
