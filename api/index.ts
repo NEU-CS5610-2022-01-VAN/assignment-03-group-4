@@ -1,7 +1,14 @@
 import express, { Express, Request, Response } from "express";
 import Joi from "joi";
 // import cors from "cors";
-import { Schema, model, connect, Types, HydratedDocument } from "mongoose";
+import {
+  Schema,
+  model,
+  connect,
+  Types,
+  HydratedDocument,
+  Document,
+} from "mongoose";
 import morgan from "morgan";
 import { createValidator } from "express-joi-validation";
 import "dotenv/config";
@@ -27,8 +34,11 @@ interface IUser {
   email: string;
   password: string;
   name?: string;
-}
+  createdAt?: Date;
 
+  recipes: Types.ObjectId[];
+  reviews: Types.ObjectId[];
+}
 const userSchema = new Schema<IUser>({
   email: {
     type: String,
@@ -40,9 +50,69 @@ const userSchema = new Schema<IUser>({
     required: true,
   },
   name: String,
-});
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
 
+  recipes: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Recipe",
+    },
+  ],
+  reviews: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Review",
+    },
+  ],
+});
 const User = model<IUser>("User", userSchema);
+
+interface IRecipe {
+  title: string;
+  body: string;
+  score?: number;
+  createdAt: Date;
+
+  author: Types.ObjectId;
+  categories: Types.ObjectId[];
+  reviews: Types.ObjectId[];
+}
+const recipeSchema = new Schema<IRecipe>({
+  title: {
+    type: String,
+    required: true,
+  },
+  body: {
+    type: String,
+    required: true,
+  },
+  score: {
+    type: Number,
+    min: 1,
+    max: 6,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+
+  author: {
+    type: Schema.Types.ObjectId,
+    required: true,
+    ref: "User",
+  },
+  categories: [
+    {
+      type: Schema.Types.ObjectId,
+      required: true,
+      ref: "Category",
+    },
+  ],
+});
+const Recipe = model<IRecipe>("Recipe", recipeSchema);
 
 app.post("/users", async (req: Request, res: Response) => {
   try {
