@@ -43,8 +43,56 @@ const userSchema = new mongoose_1.Schema({
         required: true,
     },
     name: String,
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    recipes: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Recipe",
+        },
+    ],
+    reviews: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            ref: "Review",
+        },
+    ],
 });
 const User = (0, mongoose_1.model)("User", userSchema);
+const recipeSchema = new mongoose_1.Schema({
+    title: {
+        type: String,
+        required: true,
+    },
+    body: {
+        type: String,
+        required: true,
+    },
+    score: {
+        type: Number,
+        min: 1,
+        max: 6,
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
+    author: {
+        type: mongoose_1.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    },
+    categories: [
+        {
+            type: mongoose_1.Schema.Types.ObjectId,
+            required: true,
+            ref: "Category",
+        },
+    ],
+});
+const Recipe = (0, mongoose_1.model)("Recipe", recipeSchema);
 app.post("/users", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const newUser = new User({
