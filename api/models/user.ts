@@ -1,4 +1,5 @@
 import { Types, Schema, model } from "mongoose";
+import { recipeSchema } from "./recipe";
 
 interface IUser {
   email: string;

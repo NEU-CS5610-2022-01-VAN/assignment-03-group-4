@@ -52,4 +52,4 @@ const recipeSchema = new Schema<IRecipe>({
 
 const Recipe = model<IRecipe>("Recipe", recipeSchema);
 
-export { Recipe };
+export { Recipe, recipeSchema };
