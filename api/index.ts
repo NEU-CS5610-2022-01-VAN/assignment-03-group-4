@@ -9,6 +9,8 @@ import {
   HydratedDocument,
   Document,
 } from "mongoose";
+import { User } from "./models/user";
+import { Recipe } from "./models/recipe";
 import morgan from "morgan";
 import { createValidator } from "express-joi-validation";
 import "dotenv/config";
@@ -30,93 +32,13 @@ async function connectDatabase() {
 
 connectDatabase().catch((err) => console.log(err));
 
-interface IUser {
-  email: string;
-  password: string;
-  name?: string;
-  createdAt?: Date;
-
-  recipes: Types.ObjectId[];
-  reviews: Types.ObjectId[];
+interface ICategory {
+  name: string;
 }
-const userSchema = new Schema<IUser>({
-  email: {
-    type: String,
-    unique: true,
-    required: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  name: String,
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-
-  recipes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Recipe",
-    },
-  ],
-  reviews: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Review",
-    },
-  ],
-});
-const User = model<IUser>("User", userSchema);
-
-interface IRecipe {
-  title: string;
-  body: string;
-  score?: number;
-  createdAt: Date;
-
-  author: Types.ObjectId;
-  categories: Types.ObjectId[];
-  reviews: Types.ObjectId[];
-}
-const recipeSchema = new Schema<IRecipe>({
-  title: {
-    type: String,
-    required: true,
-  },
-  body: {
-    type: String,
-    required: true,
-  },
-  score: {
-    type: Number,
-    min: 1,
-    max: 6,
-  },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-
-  author: {
-    type: Schema.Types.ObjectId,
-    required: true,
-    ref: "User",
-  },
-  categories: [
-    {
-      type: Schema.Types.ObjectId,
-      required: true,
-      ref: "Category",
-    },
-  ],
-});
-const Recipe = model<IRecipe>("Recipe", recipeSchema);
 
 app.post("/users", async (req: Request, res: Response) => {
   try {
-    const newUser: HydratedDocument<IUser> = new User({
+    const newUser = new User({
       email: req.body.email,
       name: req.body.name,
       password: req.body.password,
@@ -171,6 +93,71 @@ app.delete("/users/:userId", async (req: Request, res: Response) => {
   try {
     const user = await User.findByIdAndDelete(req.params.userId);
     res.send(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+//-------Recipe
+
+app.post("/recipes", async (req: Request, res: Response) => {
+  try {
+    const newRecipe = new Recipe({
+      title: req.body.title,
+      body: req.body.body,
+      author: req.body.authorId,
+    });
+    await newRecipe.save();
+    res.send(newRecipe);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+app.get("/recipes", async (req: Request, res: Response) => {
+  try {
+    const recipes = await Recipe.find({});
+    res.send(recipes);
+  } catch (err) {
+    res.status(500).send(err);
+    console.log(err);
+  }
+});
+
+app.get("/recipes/:recipeId", async (req: Request, res: Response) => {
+  try {
+    const recipe = await Recipe.findById(req.params.recipeId);
+    res.send(recipe);
+  } catch (err) {
+    res.status(500).send(err);
+    console.log(err);
+  }
+});
+
+app.post("/recipes/:recipeId", async (req: Request, res: Response) => {
+  try {
+    const recipe = await Recipe.findByIdAndUpdate(
+      req.params.recipeId,
+      {
+        title: req.body.title,
+        body: req.body.body,
+        author: req.body.authorId,
+      },
+      { new: true }
+    );
+    res.send(recipe);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+app.delete("/recipes/:recipeId", async (req: Request, res: Response) => {
+  try {
+    const recipe = await Recipe.findByIdAndDelete(req.params.recipeId);
+    res.send(recipe);
   } catch (err) {
     console.log(err);
     res.status(500).send(err);
