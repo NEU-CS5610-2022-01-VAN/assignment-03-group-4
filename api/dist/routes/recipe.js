@@ -15,10 +15,12 @@ const user_1 = require("../models/user");
 const router = (0, express_1.Router)();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { title, body, author, categories } = req.body;
         const newRecipe = new recipe_1.Recipe({
-            title: req.body.title,
-            body: req.body.body,
-            author: req.body.authorId,
+            title,
+            body,
+            author,
+            categories,
         });
         yield newRecipe.save();
         yield user_1.User.findByIdAndUpdate(req.body.authorId, {
@@ -35,7 +37,10 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const recipes = yield recipe_1.Recipe.find({});
+        const recipes = yield recipe_1.Recipe.find({})
+            .populate("author")
+            .populate("categories")
+            .exec();
         res.send(recipes);
     }
     catch (err) {
@@ -45,7 +50,10 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.get("/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const recipe = yield recipe_1.Recipe.findById(req.params.recipeId);
+        const recipe = yield recipe_1.Recipe.findById(req.params.recipeId)
+            .populate("author")
+            .populate("categories")
+            .exec();
         res.send(recipe);
     }
     catch (err) {
@@ -54,11 +62,13 @@ router.get("/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, functio
     }
 }));
 router.post("/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { title, body, author, categories } = req.body;
     try {
         const recipe = yield recipe_1.Recipe.findByIdAndUpdate(req.params.recipeId, {
-            title: req.body.title,
-            body: req.body.body,
-            author: req.body.authorId,
+            title,
+            body,
+            author,
+            categories,
         }, { new: true });
         res.send(recipe);
     }

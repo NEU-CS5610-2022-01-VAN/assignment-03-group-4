@@ -20,6 +20,7 @@ const express_joi_validation_1 = require("express-joi-validation");
 require("dotenv/config");
 const user_1 = __importDefault(require("./routes/user"));
 const recipe_1 = __importDefault(require("./routes/recipe"));
+const category_1 = __importDefault(require("./routes/category"));
 const app = (0, express_1.default)();
 // app.use(cors());
 app.use(express_1.default.urlencoded({ extended: true }));
@@ -28,6 +29,7 @@ app.use((0, morgan_1.default)("dev"));
 //routers
 app.use("/users", user_1.default);
 app.use("/recipes", recipe_1.default);
+app.use("/categories", category_1.default);
 const validator = (0, express_joi_validation_1.createValidator)({});
 function connectDatabase() {
     return __awaiter(this, void 0, void 0, function* () {

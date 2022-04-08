@@ -1,16 +1,20 @@
 import { Router, Request, Response } from "express";
 import { Recipe } from "../models/recipe";
 import { User } from "../models/user";
-
+import { Category } from "../models/category";
 const router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
   try {
+    const { title, body, author, categories } = req.body;
+
     const newRecipe = new Recipe({
-      title: req.body.title,
-      body: req.body.body,
-      author: req.body.authorId,
+      title,
+      body,
+      author,
+      categories,
     });
+
     await newRecipe.save();
     await User.findByIdAndUpdate(req.body.authorId, {
       $push: {
@@ -27,7 +31,10 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const recipes = await Recipe.find({});
+    const recipes = await Recipe.find({})
+      .populate("author")
+      .populate("categories")
+      .exec();
     res.send(recipes);
   } catch (err) {
     res.status(500).send(err);
@@ -37,7 +44,10 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/:recipeId", async (req: Request, res: Response) => {
   try {
-    const recipe = await Recipe.findById(req.params.recipeId);
+    const recipe = await Recipe.findById(req.params.recipeId)
+      .populate("author")
+      .populate("categories")
+      .exec();
     res.send(recipe);
   } catch (err) {
     res.status(500).send(err);
@@ -46,16 +56,19 @@ router.get("/:recipeId", async (req: Request, res: Response) => {
 });
 
 router.post("/:recipeId", async (req: Request, res: Response) => {
+  const { title, body, author, categories } = req.body;
   try {
     const recipe = await Recipe.findByIdAndUpdate(
       req.params.recipeId,
       {
-        title: req.body.title,
-        body: req.body.body,
-        author: req.body.authorId,
+        title,
+        body,
+        author,
+        categories,
       },
       { new: true }
     );
+
     res.send(recipe);
   } catch (err) {
     console.log(err);
