@@ -9,6 +9,7 @@ import "dotenv/config";
 
 import userRouter from "./routes/user";
 import recipeRouter from "./routes/recipe";
+import categoryRouter from "./routes/category";
 
 const app: Express = express();
 
@@ -20,6 +21,7 @@ app.use(morgan("dev"));
 //routers
 app.use("/users", userRouter);
 app.use("/recipes", recipeRouter);
+app.use("/categories", categoryRouter);
 
 const validator = createValidator({});
 

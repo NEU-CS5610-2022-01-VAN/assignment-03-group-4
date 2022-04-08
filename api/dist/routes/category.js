@@ -10,17 +10,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const user_1 = require("../models/user");
+const category_1 = require("../models/category");
 const router = (0, express_1.Router)();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const newUser = new user_1.User({
-            email: req.body.email,
+        const newCategory = new category_1.Category({
             name: req.body.name,
-            password: req.body.password,
         });
-        yield newUser.save();
-        res.send(newUser);
+        yield newCategory.save();
+        res.send(newCategory);
     }
     catch (err) {
         console.log(err);
@@ -29,34 +27,30 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield user_1.User.find({}).populate("recipes").exec();
-        res.send(users);
+        const categories = yield category_1.Category.find({});
+        res.send(categories);
     }
     catch (err) {
         res.status(500).send(err);
         console.log(err);
     }
 }));
-router.get("/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/:categoryId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield user_1.User.findById(req.params.userId)
-            .populate("recipes")
-            .exec();
-        res.send(user);
+        const category = yield category_1.Category.findById(req.params.categoryId);
+        res.send(category);
     }
     catch (err) {
         res.status(500).send(err);
         console.log(err);
     }
 }));
-router.post("/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.post("/:categoryId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield user_1.User.findByIdAndUpdate(req.params.userId, {
-            email: req.body.email,
-            password: req.body.password,
+        const category = yield category_1.Category.findByIdAndUpdate(req.params.categoryId, {
             name: req.body.name,
         }, { new: true });
-        res.send(user);
+        res.send(category);
     }
     catch (err) {
         console.log(err);
@@ -65,18 +59,18 @@ router.post("/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function
 }));
 router.delete("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield user_1.User.deleteMany();
-        res.send(users);
+        const categories = yield category_1.Category.deleteMany();
+        res.send(categories);
     }
     catch (err) {
         console.log(err);
         res.status(500).send(err);
     }
 }));
-router.delete("/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete("/:categoryId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield user_1.User.findByIdAndDelete(req.params.userId);
-        res.send(user);
+        const category = yield category_1.Category.findByIdAndDelete(req.params.categoryId);
+        res.send(category);
     }
     catch (err) {
         console.log(err);
