@@ -13,16 +13,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-// import cors from "cors";
 const mongoose_1 = require("mongoose");
 const morgan_1 = __importDefault(require("morgan"));
-const express_joi_validation_1 = require("express-joi-validation");
 require("dotenv/config");
+//routers
 const user_1 = __importDefault(require("./routes/user"));
 const recipe_1 = __importDefault(require("./routes/recipe"));
 const category_1 = __importDefault(require("./routes/category"));
+const review_1 = __importDefault(require("./routes/review"));
 const app = (0, express_1.default)();
-// app.use(cors());
 app.use(express_1.default.urlencoded({ extended: true }));
 app.use(express_1.default.json());
 app.use((0, morgan_1.default)("dev"));
@@ -30,7 +29,7 @@ app.use((0, morgan_1.default)("dev"));
 app.use("/users", user_1.default);
 app.use("/recipes", recipe_1.default);
 app.use("/categories", category_1.default);
-const validator = (0, express_joi_validation_1.createValidator)({});
+app.use("/reviews", review_1.default);
 function connectDatabase() {
     return __awaiter(this, void 0, void 0, function* () {
         const databaseUrl = process.env.DATABASE_URL;

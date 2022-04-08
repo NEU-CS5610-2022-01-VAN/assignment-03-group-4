@@ -5,12 +5,15 @@ const router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
   try {
+    const { email, name, password } = req.body;
+
     const newUser = new User({
-      email: req.body.email,
-      name: req.body.name,
-      password: req.body.password,
+      email,
+      name,
+      password,
     });
     await newUser.save();
+
     res.send(newUser);
   } catch (err) {
     console.log(err);
@@ -20,7 +23,8 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const users = await User.find({}).populate("recipes").exec();
+    const users = await User.find();
+
     res.send(users);
   } catch (err) {
     res.status(500).send(err);
@@ -30,9 +34,10 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/:userId", async (req: Request, res: Response) => {
   try {
-    const user = await User.findById(req.params.userId)
-      .populate("recipes")
-      .exec();
+    const userId = req.params.userId;
+
+    const user = await User.findById(userId);
+
     res.send(user);
   } catch (err) {
     res.status(500).send(err);
@@ -42,15 +47,19 @@ router.get("/:userId", async (req: Request, res: Response) => {
 
 router.post("/:userId", async (req: Request, res: Response) => {
   try {
+    const userId = req.params.userId;
+    const { email, name, password } = req.body;
+
     const user = await User.findByIdAndUpdate(
-      req.params.userId,
+      userId,
       {
-        email: req.body.email,
-        password: req.body.password,
-        name: req.body.name,
+        email,
+        password,
+        name,
       },
       { new: true }
     );
+
     res.send(user);
   } catch (err) {
     console.log(err);
@@ -61,6 +70,7 @@ router.post("/:userId", async (req: Request, res: Response) => {
 router.delete("/", async (req: Request, res: Response) => {
   try {
     const users = await User.deleteMany();
+
     res.send(users);
   } catch (err) {
     console.log(err);
@@ -70,7 +80,10 @@ router.delete("/", async (req: Request, res: Response) => {
 
 router.delete("/:userId", async (req: Request, res: Response) => {
   try {
-    const user = await User.findByIdAndDelete(req.params.userId);
+    const userId = req.params.userId;
+
+    const user = await User.findByIdAndDelete(userId);
+
     res.send(user);
   } catch (err) {
     console.log(err);

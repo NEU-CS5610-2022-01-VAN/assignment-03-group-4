@@ -18,7 +18,7 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const categories = await Category.find({});
+    const categories = await Category.find();
     res.send(categories);
   } catch (err) {
     res.status(500).send(err);

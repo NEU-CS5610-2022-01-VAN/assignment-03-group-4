@@ -17,18 +17,31 @@ const userSchema = new mongoose_1.Schema({
         type: Date,
         default: Date.now,
     },
-    recipes: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Recipe",
-        },
-    ],
-    reviews: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Review",
-        },
-    ],
+}, {
+    //add populated fields to json and object
+    toJSON: {
+        virtuals: true,
+    },
+    toObject: {
+        virtuals: true,
+    },
+});
+// only id in populated recipes
+// userSchema.pre("find", function () {
+//   this.populate("recipes", "id -author");
+// });
+userSchema.virtual("recipes", {
+    ref: "Recipe",
+    localField: "_id",
+    foreignField: "author",
+});
+userSchema.virtual("reviews", {
+    ref: "Review",
+    localField: "_id",
+    foreignField: "author",
+});
+userSchema.pre("find", function () {
+    this.populate("recipes").populate("reviews");
 });
 const User = (0, mongoose_1.model)("User", userSchema);
 exports.User = User;
