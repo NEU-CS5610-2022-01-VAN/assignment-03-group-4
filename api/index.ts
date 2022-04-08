@@ -1,19 +1,19 @@
 import express, { Express, Request, Response } from "express";
 import Joi from "joi";
-// import cors from "cors";
 import { connect } from "mongoose";
 
 import morgan from "morgan";
 import { createValidator } from "express-joi-validation";
 import "dotenv/config";
 
+//routers
 import userRouter from "./routes/user";
 import recipeRouter from "./routes/recipe";
 import categoryRouter from "./routes/category";
+import reviewRouter from "./routes/review";
 
 const app: Express = express();
 
-// app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("dev"));
@@ -22,8 +22,7 @@ app.use(morgan("dev"));
 app.use("/users", userRouter);
 app.use("/recipes", recipeRouter);
 app.use("/categories", categoryRouter);
-
-const validator = createValidator({});
+app.use("/reviews", reviewRouter);
 
 async function connectDatabase() {
   const databaseUrl: string = <string>process.env.DATABASE_URL;
@@ -32,10 +31,6 @@ async function connectDatabase() {
 }
 
 connectDatabase().catch((err) => console.log(err));
-
-interface ICategory {
-  name: string;
-}
 
 const port = process.env.PORT || 3000;
 

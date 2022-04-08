@@ -32,13 +32,23 @@ const recipeSchema = new mongoose_1.Schema({
             ref: "Category",
         },
     ],
-    reviews: [
-        {
-            type: mongoose_1.Schema.Types.ObjectId,
-            ref: "Review",
-        },
-    ],
+}, {
+    //add populated fields to json and object
+    toJSON: {
+        virtuals: true,
+    },
+    toObject: {
+        virtuals: true,
+    },
 });
 exports.recipeSchema = recipeSchema;
+recipeSchema.virtual("reviews", {
+    ref: "Review",
+    localField: "_id",
+    foreignField: "recipe",
+});
+recipeSchema.pre("find", function () {
+    this.populate("reviews");
+});
 const Recipe = (0, mongoose_1.model)("Recipe", recipeSchema);
 exports.Recipe = Recipe;

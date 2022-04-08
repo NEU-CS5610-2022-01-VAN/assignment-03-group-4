@@ -1,7 +1,6 @@
 import { Router, Request, Response } from "express";
 import { Recipe } from "../models/recipe";
-import { User } from "../models/user";
-import { Category } from "../models/category";
+
 const router = Router();
 
 router.post("/", async (req: Request, res: Response) => {
@@ -14,13 +13,7 @@ router.post("/", async (req: Request, res: Response) => {
       author,
       categories,
     });
-
     await newRecipe.save();
-    await User.findByIdAndUpdate(req.body.authorId, {
-      $push: {
-        recipes: newRecipe.id,
-      },
-    });
 
     res.send(newRecipe);
   } catch (err) {
@@ -31,10 +24,8 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const recipes = await Recipe.find({})
-      .populate("author")
-      .populate("categories")
-      .exec();
+    const recipes = await Recipe.find();
+
     res.send(recipes);
   } catch (err) {
     res.status(500).send(err);
@@ -44,10 +35,8 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/:recipeId", async (req: Request, res: Response) => {
   try {
-    const recipe = await Recipe.findById(req.params.recipeId)
-      .populate("author")
-      .populate("categories")
-      .exec();
+    const recipe = await Recipe.findById(req.params.recipeId);
+
     res.send(recipe);
   } catch (err) {
     res.status(500).send(err);
@@ -57,6 +46,7 @@ router.get("/:recipeId", async (req: Request, res: Response) => {
 
 router.post("/:recipeId", async (req: Request, res: Response) => {
   const { title, body, author, categories } = req.body;
+
   try {
     const recipe = await Recipe.findByIdAndUpdate(
       req.params.recipeId,
@@ -79,6 +69,7 @@ router.post("/:recipeId", async (req: Request, res: Response) => {
 router.delete("/", async (req: Request, res: Response) => {
   try {
     const recipes = await Recipe.deleteMany();
+
     res.send(recipes);
   } catch (err) {
     console.log(err);
@@ -89,6 +80,7 @@ router.delete("/", async (req: Request, res: Response) => {
 router.delete("/:recipeId", async (req: Request, res: Response) => {
   try {
     const recipe = await Recipe.findByIdAndDelete(req.params.recipeId);
+
     res.send(recipe);
   } catch (err) {
     console.log(err);

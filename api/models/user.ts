@@ -1,44 +1,59 @@
-import { Types, Schema, model } from "mongoose";
-import { recipeSchema } from "./recipe";
+import { Schema, model } from "mongoose";
 
 interface IUser {
   email: string;
   password: string;
   name?: string;
   createdAt?: Date;
-
-  recipes: Types.ObjectId[];
-  reviews: Types.ObjectId[];
 }
 
-const userSchema = new Schema<IUser>({
-  email: {
-    type: String,
-    unique: true,
-    required: true,
+const userSchema = new Schema<IUser>(
+  {
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    name: String,
+    createdAt: {
+      type: Date,
+      default: Date.now,
+    },
   },
-  password: {
-    type: String,
-    required: true,
-  },
-  name: String,
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
+  {
+    //add populated fields to json and object
+    toJSON: {
+      virtuals: true,
+    },
+    toObject: {
+      virtuals: true,
+    },
+  }
+);
 
-  recipes: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Recipe",
-    },
-  ],
-  reviews: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Review",
-    },
-  ],
+// only id in populated recipes
+// userSchema.pre("find", function () {
+//   this.populate("recipes", "id -author");
+// });
+
+userSchema.virtual("recipes", {
+  ref: "Recipe",
+  localField: "_id",
+  foreignField: "author",
+});
+
+userSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "author",
+});
+
+userSchema.pre("find", function () {
+  this.populate("recipes").populate("reviews");
 });
 
 const User = model<IUser>("User", userSchema);

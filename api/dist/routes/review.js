@@ -10,19 +10,19 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const recipe_1 = require("../models/recipe");
+const review_1 = require("../models/review");
 const router = (0, express_1.Router)();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { title, body, author, categories } = req.body;
-        const newRecipe = new recipe_1.Recipe({
-            title,
-            body,
+        const { content, rating, recipe, author } = req.body;
+        const newReview = new review_1.Review({
+            content,
+            rating,
+            recipe,
             author,
-            categories,
         });
-        yield newRecipe.save();
-        res.send(newRecipe);
+        yield newReview.save();
+        res.send(newReview);
     }
     catch (err) {
         console.log(err);
@@ -31,34 +31,36 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const recipes = yield recipe_1.Recipe.find();
-        res.send(recipes);
+        const reviews = yield review_1.Review.find();
+        res.send(reviews);
     }
     catch (err) {
         res.status(500).send(err);
         console.log(err);
     }
 }));
-router.get("/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.get("/:reviewId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const recipe = yield recipe_1.Recipe.findById(req.params.recipeId);
-        res.send(recipe);
+        const reviewId = req.params.reviewId;
+        const user = yield review_1.Review.findById(reviewId);
+        res.send(user);
     }
     catch (err) {
         res.status(500).send(err);
         console.log(err);
     }
 }));
-router.post("/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const { title, body, author, categories } = req.body;
+router.post("/:reviewId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const recipe = yield recipe_1.Recipe.findByIdAndUpdate(req.params.recipeId, {
-            title,
-            body,
+        const reviewId = req.params.reviewId;
+        const { content, rating, recipe, author } = req.body;
+        const review = yield review_1.Review.findByIdAndUpdate(reviewId, {
+            content,
+            rating,
+            recipe,
             author,
-            categories,
         }, { new: true });
-        res.send(recipe);
+        res.send(review);
     }
     catch (err) {
         console.log(err);
@@ -67,18 +69,19 @@ router.post("/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, functi
 }));
 router.delete("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const recipes = yield recipe_1.Recipe.deleteMany();
-        res.send(recipes);
+        const reviews = yield review_1.Review.deleteMany();
+        res.send(reviews);
     }
     catch (err) {
         console.log(err);
         res.status(500).send(err);
     }
 }));
-router.delete("/:recipeId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+router.delete("/:reviewId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const recipe = yield recipe_1.Recipe.findByIdAndDelete(req.params.recipeId);
-        res.send(recipe);
+        const reviewId = req.params.reviewId;
+        const review = yield review_1.Review.findByIdAndDelete(reviewId);
+        res.send(review);
     }
     catch (err) {
         console.log(err);

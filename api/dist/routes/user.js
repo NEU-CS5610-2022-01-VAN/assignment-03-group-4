@@ -14,10 +14,11 @@ const user_1 = require("../models/user");
 const router = (0, express_1.Router)();
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { email, name, password } = req.body;
         const newUser = new user_1.User({
-            email: req.body.email,
-            name: req.body.name,
-            password: req.body.password,
+            email,
+            name,
+            password,
         });
         yield newUser.save();
         res.send(newUser);
@@ -29,7 +30,7 @@ router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const users = yield user_1.User.find({}).populate("recipes").exec();
+        const users = yield user_1.User.find();
         res.send(users);
     }
     catch (err) {
@@ -39,9 +40,8 @@ router.get("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 }));
 router.get("/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield user_1.User.findById(req.params.userId)
-            .populate("recipes")
-            .exec();
+        const userId = req.params.userId;
+        const user = yield user_1.User.findById(userId);
         res.send(user);
     }
     catch (err) {
@@ -51,10 +51,12 @@ router.get("/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function*
 }));
 router.post("/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield user_1.User.findByIdAndUpdate(req.params.userId, {
-            email: req.body.email,
-            password: req.body.password,
-            name: req.body.name,
+        const userId = req.params.userId;
+        const { email, name, password } = req.body;
+        const user = yield user_1.User.findByIdAndUpdate(userId, {
+            email,
+            password,
+            name,
         }, { new: true });
         res.send(user);
     }
@@ -75,7 +77,8 @@ router.delete("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 }));
 router.delete("/:userId", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const user = yield user_1.User.findByIdAndDelete(req.params.userId);
+        const userId = req.params.userId;
+        const user = yield user_1.User.findByIdAndDelete(userId);
         res.send(user);
     }
     catch (err) {
