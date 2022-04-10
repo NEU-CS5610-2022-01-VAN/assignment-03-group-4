@@ -20,14 +20,15 @@ app.use(morgan("dev"));
 
 //routers
 app.use("/users", userRouter);
+
 app.use("/recipes", recipeRouter);
 app.use("/categories", categoryRouter);
 app.use("/reviews", reviewRouter);
 
 async function connectDatabase() {
-  const databaseUrl: string = <string>process.env.DATABASE_URL;
+  const databaseUrl: string = <string>process.env.MONGO_URL;
   await connect(databaseUrl, {});
-  console.log("MongoDB connected");
+  console.log("MongoDB connected oh yeah!");
 }
 
 connectDatabase().catch((err) => console.log(err));
