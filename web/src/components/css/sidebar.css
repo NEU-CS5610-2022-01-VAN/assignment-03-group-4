@@ -1,0 +1,14 @@
+.sidebar {
+    width: 15%;
+    background-color: "whitesmoke";
+    display: grid;
+    justify-items: center;
+}
+.sidebar_button {
+    background-color: "lightblue";
+    border: 0;
+    padding: 1rem;
+    border-radius: 40px;
+    font-weight: bold;
+    cursor: pointer;
+}
