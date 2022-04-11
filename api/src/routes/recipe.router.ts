@@ -1,26 +1,8 @@
 import { Router, Request, Response } from "express";
 import { Recipe } from "../models/recipe";
+import { checkJwt } from "../middlewares/authz.middleware";
 
 const router = Router();
-
-router.post("/", async (req: Request, res: Response) => {
-  try {
-    const { title, body, author, categories } = req.body;
-
-    const newRecipe = new Recipe({
-      title,
-      body,
-      author,
-      categories,
-    });
-    await newRecipe.save();
-
-    res.send(newRecipe);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
-});
 
 router.get("/", async (req: Request, res: Response) => {
   try {
@@ -44,7 +26,26 @@ router.get("/:recipeId", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/:recipeId", async (req: Request, res: Response) => {
+router.post("/", checkJwt, async (req: Request, res: Response) => {
+  try {
+    const { title, body, author, categories } = req.body;
+
+    const newRecipe = new Recipe({
+      title,
+      body,
+      author,
+      categories,
+    });
+    await newRecipe.save();
+
+    res.send(newRecipe);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+router.post("/:recipeId", checkJwt, async (req: Request, res: Response) => {
   const { title, body, author, categories } = req.body;
 
   try {
@@ -66,7 +67,7 @@ router.post("/:recipeId", async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/", async (req: Request, res: Response) => {
+router.delete("/", checkJwt, async (req: Request, res: Response) => {
   try {
     const recipes = await Recipe.deleteMany();
 
@@ -77,7 +78,7 @@ router.delete("/", async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/:recipeId", async (req: Request, res: Response) => {
+router.delete("/:recipeId", checkJwt, async (req: Request, res: Response) => {
   try {
     const recipe = await Recipe.findByIdAndDelete(req.params.recipeId);
 

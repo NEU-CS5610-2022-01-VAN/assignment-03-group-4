@@ -1,9 +1,10 @@
 import { Router, Request, Response } from "express";
 import { User } from "../models/user";
+import { checkJwt } from "../middlewares/authz.middleware";
 
 const router = Router();
 
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", checkJwt, async (req: Request, res: Response) => {
   try {
     const { email, name, password } = req.body;
 
@@ -45,7 +46,7 @@ router.get("/:userId", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/:userId", async (req: Request, res: Response) => {
+router.post("/:userId", checkJwt, async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
     const { email, name, password } = req.body;
@@ -67,7 +68,7 @@ router.post("/:userId", async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/", async (req: Request, res: Response) => {
+router.delete("/", checkJwt, async (req: Request, res: Response) => {
   try {
     const users = await User.deleteMany();
 
@@ -78,7 +79,7 @@ router.delete("/", async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/:userId", async (req: Request, res: Response) => {
+router.delete("/:userId", checkJwt, async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
 
