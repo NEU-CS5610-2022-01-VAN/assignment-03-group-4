@@ -1,6 +1,6 @@
 import "./css/waterFall.css";
 import Search from "./Search";
-import Recipe from "./Recipe";
+// import Recipe from "./Recipe";
 
 const WaterFall = () => {
   return (
@@ -16,7 +16,7 @@ const WaterFall = () => {
           </div>
           <img src="https://x.yummlystatic.com/web/img-fruit-bowl.png" alt="" />
         </div>
-        <Recipe />
+        {/* <Recipe /> */}
       </div>
     </>
   );
