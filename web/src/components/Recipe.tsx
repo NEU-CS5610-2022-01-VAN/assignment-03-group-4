@@ -1,5 +1,6 @@
 import "./css/recipe.css";
-// import ReactStars from "react-rating-stars-component";
+import ReactStars from "react-rating-stars-component";
+// const ReactStars = require("react-rating-stars-component");
 
 const recipes = [
   {
@@ -103,7 +104,7 @@ const Recipe = () => {
               />
 
               <h5>{recipe.title}</h5>
-              {/* <ReactStars count={recipe.count} size={24} activeColor="yellow" /> */}
+              <ReactStars count={recipe.count} size={24} activeColor="yellow" />
             </div>
           );
         })}
