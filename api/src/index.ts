@@ -13,6 +13,10 @@ import recipeRouter from "./routes/recipe.router";
 import categoryRouter from "./routes/category.router";
 import reviewRouter from "./routes/review.router";
 
+//middlewares
+import { errorHandler } from "./middlewares/error.middleware";
+import { notFoundHandler } from "./middlewares/not-found.middleware";
+
 const app: Express = express();
 
 app.use(express.urlencoded({ extended: true }));
@@ -40,11 +44,14 @@ async function connectDatabase() {
 
 connectDatabase().catch((err) => console.log(err));
 
-const port = process.env.PORT || 8000;
+const port: number = Number(process.env.PORT) || 8000;
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
+
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 app.listen(port, () => {
   console.log(`App running on port: ${port}`);

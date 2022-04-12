@@ -1,9 +1,7 @@
-import { Types, Schema, model } from "mongoose";
+import { Schema, model } from "mongoose";
 
 interface ICategory {
   name: string;
-
-  // recipes: Types.ObjectId[];
 }
 
 const categorySchema = new Schema<ICategory>({
@@ -12,13 +10,6 @@ const categorySchema = new Schema<ICategory>({
     required: true,
     unique: true,
   },
-
-  // recipes: [
-  //   {
-  //     type: Schema.Types.ObjectId,
-  //     ref: "Recipe",
-  //   },
-  // ],
 });
 
 const Category = model<ICategory>("Category", categorySchema);

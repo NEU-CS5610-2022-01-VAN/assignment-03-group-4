@@ -1,6 +1,6 @@
 import { Router, Request, Response } from "express";
 import { Recipe } from "../models/recipe";
-import { checkJwt } from "../middlewares/authz.middleware";
+import { checkJwt } from "../middlewares/check-jwt.middleware";
 
 const router = Router();
 
