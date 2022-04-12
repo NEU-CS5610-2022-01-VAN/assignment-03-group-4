@@ -1,0 +1,16 @@
+
+.recipe_details{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.recipe_details-list {
+    padding-left: 25px;
+    padding-bottom: 15px;
+}
+
+.recipe__details-list img{
+    max-width: 200px;
+    min-height: 200px;
+}
