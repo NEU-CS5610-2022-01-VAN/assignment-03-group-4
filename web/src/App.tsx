@@ -1,6 +1,6 @@
 // import "./App.css";
 import Home from "./pages/Home";
-import Details from "./pages/Details";
+import Recipes from "./pages/Recipes";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import { Routes, Route } from "react-router-dom";
@@ -25,9 +25,19 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/pages/Details" element={<Details />} />
-        <Route path="/pages/Login" element={<Login />} />
-        <Route path="/pages/profile" element={<Profile />} />
+        <Route path="recipes" element={<Recipes />} />
+        <Route path="login" element={<Login />} />
+        <Route path="profile" element={<Profile />}>
+          <Route path=":userId" element={<Profile />} />
+        </Route>
+        <Route
+          path="*"
+          element={
+            <main style={{ padding: "1rem" }}>
+              <p>There's nothing here!</p>
+            </main>
+          }
+        />
       </Routes>
     </div>
   );

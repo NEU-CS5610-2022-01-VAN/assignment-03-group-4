@@ -1,6 +1,12 @@
 import React from "react";
-function Profile(props) {
-  return <></>;
-}
+import Navibar from "../components/Navibar";
+
+const Profile = () => {
+  return (
+    <>
+      <Navibar />
+    </>
+  );
+};
 
 export default Profile;

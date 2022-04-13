@@ -1,13 +1,13 @@
 import "./css/recipe.css";
 import ReactStars from "react-rating-stars-component";
 import { Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 function RecipeCard({ recipe }) {
   const catagories = recipe.categories.length
     ? recipe.categories.map((category) => category.name)
     : ["Others"];
 
-  console.log(recipe);
   return (
     <div className="recipe_details">
       <div key={recipe.id}>
@@ -18,7 +18,10 @@ function RecipeCard({ recipe }) {
         />
 
         <h4>{recipe.title}</h4>
-        <p>by {recipe.author.name}</p>
+        <div>
+          <span>by </span>{" "}
+          <Link to={`/Profile/${recipe.author.id}`}>{recipe.author.name}</Link>
+        </div>
         {catagories.map((category: string) => (
           <Button key={category}>{category}</Button>
         ))}
