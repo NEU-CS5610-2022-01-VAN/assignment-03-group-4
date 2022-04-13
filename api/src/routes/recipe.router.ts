@@ -6,7 +6,10 @@ const router = Router();
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const recipes = await Recipe.find();
+    const recipes = await Recipe.find()
+      .populate("author")
+      .populate("reviews")
+      .populate("categories");
 
     res.send(recipes);
   } catch (err) {

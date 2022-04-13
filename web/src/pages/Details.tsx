@@ -3,7 +3,7 @@ import WaterFall from "../components/WaterFall";
 
 const Detail = () => {
   return (
-    < div>
+    <div>
       <Sidebar />
       <WaterFall />
     </div>
@@ -11,4 +11,3 @@ const Detail = () => {
 };
 
 export default Detail;
-
