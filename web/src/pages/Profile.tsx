@@ -3,6 +3,9 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import RecipeList from "../components/RecipeList";
 import ReviewList from "../components/ReviewList";
+import LoginButton from "../components/LoginButton";
+import LogoutButton from "../components/LogoutButton";
+import ProfileCard from "../components/ProfileCard";
 
 const userUrl = "http://localhost:8000/users/";
 
@@ -47,8 +50,17 @@ const Profile = () => {
           <h2>Hi {user.name}</h2>
         )
       ) : (
-        <div>Please log in</div>
+        <div>
+          <div>
+            Please <LoginButton />
+          </div>
+          <div>
+            You can <LogoutButton />
+          </div>
+        </div>
       )}
+
+      <ProfileCard />
 
       {user && (
         <>
