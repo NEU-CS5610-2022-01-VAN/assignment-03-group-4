@@ -1,13 +1,13 @@
-import Navibar from "../components/Navibar";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
+
 import RecipeList from "../components/RecipeList";
 import ReviewList from "../components/ReviewList";
 import LoginButton from "../components/LoginButton";
 import LogoutButton from "../components/LogoutButton";
 import ProfileCard from "../components/ProfileCard";
 
-const userUrl = "http://localhost:8000/users/";
+const userUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
 
 const Profile = () => {
   const params = useParams();
@@ -40,7 +40,6 @@ const Profile = () => {
 
   return (
     <>
-      <Navibar />
       {userId ? (
         error ? (
           <div>Error: {error.mesasge}</div>

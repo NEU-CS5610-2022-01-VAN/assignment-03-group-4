@@ -1,9 +1,7 @@
-import Navibar from "../components/Navibar";
 import { useEffect, useState } from "react";
-
 import RecipeList from "../components/RecipeList";
 
-const recipesUrl = "http://localhost:8000/recipes";
+const recipesUrl = process.env.REACT_APP_API_BASE_URL + "/recipes";
 
 function Recipes() {
   const [error, setError] = useState<any>(null);
@@ -15,8 +13,8 @@ function Recipes() {
       .then((res) => res.json())
       .then(
         (result) => {
-          setIsLoaded(true);
           setRecipes(result);
+          setIsLoaded(true);
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -30,8 +28,6 @@ function Recipes() {
 
   return (
     <div>
-      <Navibar />
-
       {error ? (
         <div>Error: {error.mesasge}</div>
       ) : !isLoaded ? (

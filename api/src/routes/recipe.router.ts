@@ -20,7 +20,10 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/:recipeId", async (req: Request, res: Response) => {
   try {
-    const recipe = await Recipe.findById(req.params.recipeId);
+    const recipe = await Recipe.findById(req.params.recipeId)
+      .populate("author")
+      .populate("reviews")
+      .populate("categories");
 
     res.send(recipe);
   } catch (err) {

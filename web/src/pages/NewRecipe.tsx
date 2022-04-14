@@ -1,12 +1,9 @@
 import React from "react";
 import { Form, Button } from "react-bootstrap";
-import Navibar from "../components/Navibar";
 
 const NewRecipe = () => {
   return (
     <>
-      <Navibar />
-
       <div>
         <Form>
           <Form.Group className="mb-3" controlId="formRecipeTitle">

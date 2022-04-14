@@ -10,16 +10,21 @@ function RecipeCard({ recipe }) {
 
   return (
     <>
-      <img
-        className="recipe_card_image"
-        src="https://x.yummlystatic.com/web/strawberry-grain.png"
-        alt="recipe"
-      />
+      <Link to={`/recipe/${recipe.id}`}>
+        <img
+          className="recipe_card_image"
+          src="https://x.yummlystatic.com/web/strawberry-grain.png"
+          alt="recipe"
+        />
 
-      <h4>{recipe.title}</h4>
+        <h4>{recipe.title}</h4>
+      </Link>
+
       <div>
         <span>by </span>
-        <Link to={`/Profile/${recipe.author.id}`}>{recipe.author.name}</Link>
+        <Link to={`/profile/${recipe.author.id}`}>
+          <h3>{recipe.author.name}</h3>
+        </Link>
       </div>
       {catagories.map((category: string) => (
         <Button key={category}>{category}</Button>

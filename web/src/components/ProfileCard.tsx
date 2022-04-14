@@ -5,7 +5,6 @@ const ProfileCard = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [userMetadata, setUserMetadata] = useState(null);
   const { getAccessTokenSilently } = useAuth0();
-  console.log(user);
 
   useEffect(() => {
     const getUserMetadata = async () => {
@@ -28,7 +27,6 @@ const ProfileCard = () => {
         });
 
         const { user_metadata } = await metadataResponse.json();
-        console.log(user_metadata);
 
         setUserMetadata(user_metadata);
       } catch (e) {
@@ -38,6 +36,7 @@ const ProfileCard = () => {
 
     getUserMetadata();
   }, [getAccessTokenSilently, user?.sub]);
+
   if (isLoading) {
     return <div>Loading ...</div>;
   }

@@ -12,9 +12,12 @@ import Dropdown from "@material-tailwind/react/Dropdown";
 import DropdownItem from "@material-tailwind/react/DropdownItem";
 import Icon from "@material-tailwind/react/Icon";
 import Button from "@material-tailwind/react/Button";
+import { useAuth0 } from "@auth0/auth0-react";
+import UserNavbarAvatar from "./UserNavbarAvatar";
 
 export default function Navibar() {
   const [openNavbar, setOpenNavbar] = useState(false);
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <div
@@ -64,6 +67,7 @@ export default function Navibar() {
               </div>
             </Nav>
           </NavbarCollapse>
+          <UserNavbarAvatar />
         </NavbarContainer>
       </Navbar>
     </div>
