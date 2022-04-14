@@ -1,8 +1,7 @@
 import Navibar from "../components/Navibar";
 import { useEffect, useState } from "react";
-import { Col, Container, Row } from "react-bootstrap";
 
-import RecipeCard from "../components/RecipeCard";
+import RecipeList from "../components/RecipeList";
 
 const recipesUrl = "http://localhost:8000/recipes";
 
@@ -38,15 +37,7 @@ function Recipes() {
       ) : !isLoaded ? (
         <div>Loading...</div>
       ) : (
-        <Container>
-          <Row>
-            {recipes.map((recipe) => (
-              <Col md="auto" key={recipe.id}>
-                <RecipeCard recipe={recipe} />
-              </Col>
-            ))}
-          </Row>
-        </Container>
+        <RecipeList recipes={recipes} />
       )}
     </div>
   );

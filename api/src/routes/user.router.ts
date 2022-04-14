@@ -37,7 +37,9 @@ router.get("/:userId", async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
 
-    const user = await User.findById(userId);
+    const user = await User.findById(userId)
+      .populate("recipes")
+      .populate("reviews");
 
     res.send(user);
   } catch (err) {

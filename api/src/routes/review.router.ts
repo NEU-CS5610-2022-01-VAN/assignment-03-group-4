@@ -24,7 +24,7 @@ router.post("/", checkJwt, async (req: Request, res: Response) => {
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const reviews = await Review.find();
+    const reviews = await Review.find().populate("author");
 
     res.send(reviews);
   } catch (err) {
