@@ -41,19 +41,22 @@ export default function Navibar() {
                   <Icon name="description" size="2xl" />
                   &nbsp;Home
                 </NavLink>
-                <NavLink
-                  href="login"
-                  // target="_blank"
-                  rel="noreferrer"
-                  ripple="light"
-                >
+
+                <NavLink href="login" rel="noreferrer" ripple="light">
                   <Icon name="/apps" size="2xl" />
                   &nbsp;Login
                 </NavLink>
+
                 <NavLink href="/recipes" rel="noreferrer" ripple="light">
                   <Icon name="apps" size="2xl" />
                   &nbsp;Recipes
                 </NavLink>
+
+                <NavLink href="/newrecipe" rel="noreferrer" ripple="light">
+                  <Icon name="apps" size="2xl" />
+                  &nbsp;New Recipe
+                </NavLink>
+
                 <NavLink href="/profile" rel="noreferrer" ripple="light">
                   <Icon name="apps" size="2xl" />
                   &nbsp;Profile
