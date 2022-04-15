@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import { Review } from "../models/review";
 import { checkJwt } from "../middlewares/check-jwt.middleware";
+import { User } from "../models/user";
 
 const router = Router();
 
@@ -24,7 +25,10 @@ router.post("/", checkJwt, async (req: Request, res: Response) => {
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const reviews = await Review.find().populate("author");
+    const reviews = await Review.find().populate({
+      path: "author",
+      model: User,
+    });
 
     res.send(reviews);
   } catch (err) {

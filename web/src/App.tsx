@@ -6,6 +6,8 @@ import Profile from "./pages/Profile";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Navbar from "./components/Navbar";
+import NewRecipe from "./pages/NewRecipe";
+import RecipeDetail from "./pages/RecipeDetail";
 
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -15,8 +17,6 @@ import "./assets/styles/tailwind.css";
 
 // Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
-import NewRecipe from "./pages/NewRecipe";
-import RecipeDetail from "./pages/RecipeDetail";
 
 function RequireAuth({ children }) {
   const { isAuthenticated, isLoading } = useAuth0();

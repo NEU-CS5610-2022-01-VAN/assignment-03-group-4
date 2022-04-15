@@ -7,7 +7,6 @@ function RecipeCard({ recipe }) {
   const catagories = recipe.categories.length
     ? recipe.categories.map((category) => category.name)
     : ["Others"];
-
   return (
     <>
       <Link to={`/recipe/${recipe.id}`}>

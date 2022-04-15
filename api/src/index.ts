@@ -26,7 +26,6 @@ app.use(cors());
 
 //routers
 app.use("/users", userRouter);
-
 app.use("/recipes", recipeRouter);
 app.use("/categories", categoryRouter);
 app.use("/reviews", reviewRouter);

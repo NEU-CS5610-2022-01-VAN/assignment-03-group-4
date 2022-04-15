@@ -23,16 +23,15 @@ const Profile = () => {
         .then((res) => res.json())
         .then(
           (result) => {
-            setIsLoaded(true);
             setUser(result);
-            console.log(result);
+            setIsLoaded(true);
           },
           // Note: it's important to handle errors here
           // instead of a catch() block so that we don't swallow
           // exceptions from actual bugs in components.
           (error: Error) => {
-            setIsLoaded(true);
             setError(error);
+            setIsLoaded(true);
           }
         );
     }
@@ -43,7 +42,7 @@ const Profile = () => {
       {userId ? (
         error ? (
           <div>Error: {error.mesasge}</div>
-        ) : !user ? (
+        ) : !isLoaded ? (
           <div>Loading...</div>
         ) : (
           <h2>Hi {user.name}</h2>
@@ -70,7 +69,7 @@ const Profile = () => {
 
           <div>
             <h2>{user.name}'s reviews</h2>
-            <ReviewList reviews={user.reviews} author={user} />
+            <ReviewList reviews={user.reviews} />
           </div>
         </>
       )}

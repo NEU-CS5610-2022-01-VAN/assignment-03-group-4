@@ -7,7 +7,7 @@ const RecipeList = ({ recipes }) => {
       <Row>
         {recipes.map((recipe) => (
           <Col md="auto" key={recipe.id}>
-            <RecipeCard recipe={recipe} />
+            <RecipeCard recipe={recipe} key={recipe.id} />
           </Col>
         ))}
       </Row>
