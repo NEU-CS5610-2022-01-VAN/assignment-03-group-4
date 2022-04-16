@@ -12,9 +12,12 @@ import Dropdown from "@material-tailwind/react/Dropdown";
 import DropdownItem from "@material-tailwind/react/DropdownItem";
 import Icon from "@material-tailwind/react/Icon";
 import Button from "@material-tailwind/react/Button";
+import { useAuth0 } from "@auth0/auth0-react";
+import UserNavbarDropdown from "./UserNavbarDropdown";
 
-export default function Navibar() {
+export default function TopNavbar() {
   const [openNavbar, setOpenNavbar] = useState(false);
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <div
@@ -41,19 +44,22 @@ export default function Navibar() {
                   <Icon name="description" size="2xl" />
                   &nbsp;Home
                 </NavLink>
-                <NavLink
-                  href="login"
-                  // target="_blank"
-                  rel="noreferrer"
-                  ripple="light"
-                >
+
+                <NavLink href="/login" rel="noreferrer" ripple="light">
                   <Icon name="/apps" size="2xl" />
                   &nbsp;Login
                 </NavLink>
+
                 <NavLink href="/recipes" rel="noreferrer" ripple="light">
                   <Icon name="apps" size="2xl" />
                   &nbsp;Recipes
                 </NavLink>
+
+                <NavLink href="/newrecipe" rel="noreferrer" ripple="light">
+                  <Icon name="apps" size="2xl" />
+                  &nbsp;New Recipe
+                </NavLink>
+
                 <NavLink href="/profile" rel="noreferrer" ripple="light">
                   <Icon name="apps" size="2xl" />
                   &nbsp;Profile
@@ -61,6 +67,7 @@ export default function Navibar() {
               </div>
             </Nav>
           </NavbarCollapse>
+          <UserNavbarDropdown />
         </NavbarContainer>
       </Navbar>
     </div>

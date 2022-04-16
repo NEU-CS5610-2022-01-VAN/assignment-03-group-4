@@ -1,7 +1,3 @@
-// import "./css/home.css";
-import Sidebar from "../components/Sidebar";
-import WaterFall from "../components/WaterFall";
-import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 
 const Home = () => {

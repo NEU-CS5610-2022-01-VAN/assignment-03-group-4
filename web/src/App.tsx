@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import Navbar from "./components/Navbar";
+import TopNavbar from "./components/TopNavbar";
 import NewRecipe from "./pages/NewRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
 
@@ -74,7 +74,7 @@ function App() {
 function LayoutsWithNavbar() {
   return (
     <>
-      <Navbar />
+      <TopNavbar />
       <Outlet />
     </>
   );

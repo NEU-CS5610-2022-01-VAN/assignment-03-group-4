@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
 import RecipeCard from "../components/RecipeCard";
 
@@ -7,30 +7,20 @@ const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
 const RecipeDetail = () => {
   const params = useParams();
-  const recipeId = params.recipeId;
+  const url = recipeUrl + params.recipeId;
 
-  const [error, setError] = useState<any>(null);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [recipe, setRecipe] = useState<any>(null);
-
-  useEffect(() => {
-    axios
-      .get(recipeUrl + recipeId)
-      .then((res) => {
-        setRecipe(res.data);
-        setIsLoaded(true);
-      })
-      .catch((err) => {
-        setIsLoaded(true);
-        setError(err);
-      });
-  }, [recipeId]);
+  const {
+    isLoading,
+    error,
+    data: recipe,
+    isFetching,
+  } = useQuery("recipe", () => axios.get(url).then((res) => res.data));
 
   return (
     <div>
       {error ? (
-        <div>Error: {error.mesasge}</div>
-      ) : !isLoaded ? (
+        <div>Error: {(error as any).mesasge}</div>
+      ) : isLoading ? (
         <div>Loading...</div>
       ) : (
         <div>
