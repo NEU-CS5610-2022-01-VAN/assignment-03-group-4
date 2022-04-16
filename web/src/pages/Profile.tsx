@@ -1,11 +1,12 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
 
 import RecipeList from "../components/RecipeList";
 import ReviewList from "../components/ReviewList";
 import LoginButton from "../components/LoginButton";
 import LogoutButton from "../components/LogoutButton";
 import ProfileCard from "../components/ProfileCard";
+import axios from "axios";
+import { useQuery } from "react-query";
 
 const userUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
 
@@ -13,39 +14,21 @@ const Profile = () => {
   const params = useParams();
   const userId = params.userId;
 
-  const [error, setError] = useState<any>(null);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [user, setUser] = useState<any>();
-
-  useEffect(() => {
-    if (userId) {
-      fetch(userUrl + userId)
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            setUser(result);
-            setIsLoaded(true);
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error: Error) => {
-            setError(error);
-            setIsLoaded(true);
-          }
-        );
-    }
-  }, [userId]);
+  const { isLoading, error, data, isFetching } = useQuery("user", () =>
+    axios.get(userUrl + userId).then((res) => {
+      return res.data;
+    })
+  );
 
   return (
     <>
-      {userId ? (
+      {/* {userId ? (
         error ? (
-          <div>Error: {error.mesasge}</div>
-        ) : !isLoaded ? (
+          <div>Error: {(error as any).mesasge}</div>
+        ) : !isLoading ? (
           <div>Loading...</div>
         ) : (
-          <h2>Hi {user.name}</h2>
+          <h2>Hi {(data as any).name}</h2>
         )
       ) : (
         <div>
@@ -56,20 +39,28 @@ const Profile = () => {
             You can <LogoutButton />
           </div>
         </div>
-      )}
+      )} */}
+      <div>
+        <div>
+          Please <LoginButton />
+        </div>
+        <div>
+          You can <LogoutButton />
+        </div>
+      </div>
 
       <ProfileCard />
 
-      {user && (
+      {userId && !isLoading && !error && (
         <>
           <div>
-            <h2>{user.name}'s recipes</h2>
-            <RecipeList recipes={user.recipes} />
+            <h2>{data.name}'s recipes</h2>
+            <RecipeList recipes={data.recipes} />
           </div>
 
           <div>
-            <h2>{user.name}'s reviews</h2>
-            <ReviewList reviews={user.reviews} />
+            <h2>{data.name}'s reviews</h2>
+            <ReviewList reviews={data.reviews} />
           </div>
         </>
       )}

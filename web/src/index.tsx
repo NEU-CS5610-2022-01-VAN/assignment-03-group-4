@@ -6,16 +6,24 @@ import App from "./App";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
+
+const queryClient = new QueryClient();
+
 ReactDOM.render(
-  <Auth0Provider
-    domain="dev-v3sgfmsg.us.auth0.com"
-    clientId="4wE1f32HLvNyczWdsBGyESmYGudHpfG9"
-    redirectUri={window.location.origin}
-  >
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </Auth0Provider>,
+  <QueryClientProvider client={queryClient}>
+    <Auth0Provider
+      domain="dev-v3sgfmsg.us.auth0.com"
+      clientId="4wE1f32HLvNyczWdsBGyESmYGudHpfG9"
+      redirectUri={window.location.origin}
+    >
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </Auth0Provider>
+    <ReactQueryDevtools initialIsOpen={true} />
+  </QueryClientProvider>,
   document.getElementById("root")
 );
 
