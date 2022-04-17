@@ -1,33 +1,83 @@
-// import "./App.css";
-import Home from "./pages/Home";
-import Details from "./pages/Details";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile"
-import {Routes, Route} from "react-router-dom";
-
-// import React from 'react'
+import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // Font Awesome Style Sheet
-import '@fortawesome/fontawesome-free/css/all.min.css';
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Tailwind CSS Style Sheet
-import './assets/styles/tailwind.css';
+import "./assets/styles/tailwind.css";
+
+// Bootstrap CSS
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import TopNavbar from "./components/TopNavbar";
+import NewRecipe from "./pages/NewRecipe";
+import RecipeDetail from "./pages/RecipeDetail";
+import Home from "./pages/Home";
+import Recipes from "./pages/Recipes";
+import Profile from "./pages/Profile";
+import VerifyUser from "./components/VerifyUser";
+
+function RequireAuth({ children }) {
+  const { isAuthenticated, isLoading } = useAuth0();
+
+  if (!isLoading && !isAuthenticated) {
+    return <Navigate to="/profile" replace />;
+  }
+
+  return children;
+}
 
 function App() {
   return (
     <div className="App">
       <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet"
+        rel="stylesheet"
       />
+
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/pages/Details" element={<Details />} />
-        <Route path="/pages/Login" element={<Login />} />
-        <Route path="/pages/profile" element={<Profile />} />
+        <Route path="/" element={<LayoutsWithNavbar />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
+          <Route path="/profile" element={<Profile />}>
+            <Route path=":userId" element={<Profile />} />
+          </Route>
+          <Route path="/verify-user" element={<VerifyUser />} />
+
+          <Route
+            path="/newrecipe"
+            element={
+              <RequireAuth>
+                <NewRecipe />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+        </Route>
       </Routes>
+
+      {process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_DEV_MODE
+        : process.env.REACT_APP_PRO_MODE}
     </div>
-    
+  );
+}
+
+function LayoutsWithNavbar() {
+  return (
+    <>
+      <TopNavbar />
+      <Outlet />
+    </>
   );
 }
 

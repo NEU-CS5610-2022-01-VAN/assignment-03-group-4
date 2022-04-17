@@ -60,9 +60,20 @@ recipeSchema.virtual("reviews", {
   foreignField: "recipe",
 });
 
-recipeSchema.pre("find", function () {
-  this.populate("reviews");
-});
+// recipeSchema.pre("find", function () {
+//   this.populate("reviews").populate("categories");
+// });
+
+// recipeSchema.pre("find", function (next) {
+//   // if ((this as any).options._recursed) {
+//   //   return next();
+//   // }
+//   this.populate({
+//     path: "reviews author categories",
+//     options: { _recursed: true },
+//   });
+//   next();
+// });
 
 const Recipe = model<IRecipe>("Recipe", recipeSchema);
 

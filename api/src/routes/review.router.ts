@@ -1,9 +1,11 @@
 import { Router, Request, Response } from "express";
 import { Review } from "../models/review";
+import { checkJwt } from "../middlewares/check-jwt.middleware";
+import { User } from "../models/user";
 
 const router = Router();
 
-router.post("/", async (req: Request, res: Response) => {
+router.post("/", checkJwt, async (req: Request, res: Response) => {
   try {
     const { content, rating, recipe, author } = req.body;
 
@@ -23,7 +25,10 @@ router.post("/", async (req: Request, res: Response) => {
 
 router.get("/", async (req: Request, res: Response) => {
   try {
-    const reviews = await Review.find();
+    const reviews = await Review.find().populate({
+      path: "author",
+      model: User,
+    });
 
     res.send(reviews);
   } catch (err) {
@@ -44,7 +49,7 @@ router.get("/:reviewId", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/:reviewId", async (req: Request, res: Response) => {
+router.post("/:reviewId", checkJwt, async (req: Request, res: Response) => {
   try {
     const reviewId = req.params.reviewId;
     const { content, rating, recipe, author } = req.body;
@@ -67,7 +72,7 @@ router.post("/:reviewId", async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/", async (req: Request, res: Response) => {
+router.delete("/", checkJwt, async (req: Request, res: Response) => {
   try {
     const reviews = await Review.deleteMany();
 
@@ -78,7 +83,7 @@ router.delete("/", async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/:reviewId", async (req: Request, res: Response) => {
+router.delete("/:reviewId", checkJwt, async (req: Request, res: Response) => {
   try {
     const reviewId = req.params.reviewId;
 
