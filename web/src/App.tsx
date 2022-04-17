@@ -16,6 +16,7 @@ import RecipeDetail from "./pages/RecipeDetail";
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import Profile from "./pages/Profile";
+import VerifyUser from "./components/VerifyUser";
 
 function RequireAuth({ children }) {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -38,11 +39,13 @@ function App() {
       <Routes>
         <Route path="/" element={<LayoutsWithNavbar />}>
           <Route path="/" element={<Home />} />
-          <Route path="/recipes" element={<Recipes />}></Route>
+          <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
           <Route path="/profile" element={<Profile />}>
             <Route path=":userId" element={<Profile />} />
           </Route>
+          <Route path="/verify-user" element={<VerifyUser />} />
+
           <Route
             path="/newrecipe"
             element={

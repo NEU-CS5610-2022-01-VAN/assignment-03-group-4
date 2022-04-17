@@ -35,14 +35,11 @@ const ProfileCard = () => {
     };
 
     getUserMetadata();
-  }, [getAccessTokenSilently, user?.sub]);
+  }, [getAccessTokenSilently, user]);
 
   if (isLoading) {
     return <div>Loading ...</div>;
   }
-
-  console.log("this is user");
-  console.log(user);
 
   return (
     <div>
