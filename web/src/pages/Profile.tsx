@@ -1,9 +1,5 @@
 const Profile = () => {
-    return (
-      < ></>
-    );
-  };
-  
-  export default Profile;
-  
-  
+  return <></>;
+};
+
+export default Profile;
