@@ -24,6 +24,11 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
+// app.use(function (req: any, res: any, next: any) {
+//   console.log(req);
+//   next();
+// });
+
 //routers
 app.use("/users", userRouter);
 app.use("/recipes", recipeRouter);
