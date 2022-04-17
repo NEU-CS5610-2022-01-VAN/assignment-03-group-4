@@ -1,0 +1,10 @@
+.avatar {
+  width: 35px;
+  height: 35px;
+}
+
+.dropdown-card {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+}
