@@ -1,65 +1,40 @@
-import Navibar from "../components/Navibar";
+import axios from "axios";
+import { useQuery } from "react-query";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+
 import RecipeList from "../components/RecipeList";
 import ReviewList from "../components/ReviewList";
+import ProfileCard from "../components/ProfileCard";
+import LoginButton from "../components/LoginButton";
 
-const userUrl = "http://localhost:8000/users/";
+const baseUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
 
 const Profile = () => {
   const params = useParams();
   const userId = params.userId;
+  const url = baseUrl + params.userId;
 
-  const [error, setError] = useState<any>(null);
-  const [isLoaded, setIsLoaded] = useState<boolean>(false);
-  const [user, setUser] = useState<any>();
-
-  useEffect(() => {
-    if (userId) {
-      fetch(userUrl + userId)
-        .then((res) => res.json())
-        .then(
-          (result) => {
-            setIsLoaded(true);
-            setUser(result);
-            console.log(result);
-          },
-          // Note: it's important to handle errors here
-          // instead of a catch() block so that we don't swallow
-          // exceptions from actual bugs in components.
-          (error: Error) => {
-            setIsLoaded(true);
-            setError(error);
-          }
-        );
-    }
-  }, [userId]);
+  const {
+    isLoading,
+    error,
+    data: user,
+    isFetching,
+  } = useQuery("user", () => axios.get(url).then((res) => res.data));
 
   return (
     <>
-      <Navibar />
-      {userId ? (
-        error ? (
-          <div>Error: {error.mesasge}</div>
-        ) : !user ? (
-          <div>Loading...</div>
-        ) : (
-          <h2>Hi {user.name}</h2>
-        )
-      ) : (
-        <div>Please log in</div>
-      )}
+      {!userId && <ProfileCard />}
 
-      {user && (
+      {userId && !isLoading && !error && (
         <>
           <div>
             <h2>{user.name}'s recipes</h2>
-            <RecipeList recipes={user.recipes} />
+            <RecipeList url={url + "/recipes"} />
           </div>
 
           <div>
             <h2>{user.name}'s reviews</h2>
-            <ReviewList reviews={user.reviews} author={user} />
+            <ReviewList url={url + "/reviews"} />
           </div>
         </>
       )}

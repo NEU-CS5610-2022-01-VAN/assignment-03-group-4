@@ -1,6 +1,8 @@
 import { Router, Request, Response } from "express";
 import { Recipe } from "../models/recipe";
 import { checkJwt } from "../middlewares/check-jwt.middleware";
+import { Review } from "../models/review";
+import { User } from "../models/user";
 
 const router = Router();
 
@@ -20,9 +22,30 @@ router.get("/", async (req: Request, res: Response) => {
 
 router.get("/:recipeId", async (req: Request, res: Response) => {
   try {
-    const recipe = await Recipe.findById(req.params.recipeId);
+    const recipe = await Recipe.findById(req.params.recipeId)
+      .populate("author")
+      .populate("reviews")
+      .populate("categories");
 
     res.send(recipe);
+  } catch (err) {
+    res.status(500).send(err);
+    console.log(err);
+  }
+});
+
+router.get("/:recipeId/reviews", async (req: Request, res: Response) => {
+  try {
+    const recipeId = req.params.recipeId;
+
+    const reviews = await Review.find({
+      recipe: recipeId,
+    }).populate({
+      path: "author",
+      model: User,
+    });
+
+    res.send(reviews);
   } catch (err) {
     res.status(500).send(err);
     console.log(err);
