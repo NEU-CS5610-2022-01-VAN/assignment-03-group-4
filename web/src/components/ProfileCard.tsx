@@ -41,6 +41,9 @@ const ProfileCard = () => {
     return <div>Loading ...</div>;
   }
 
+  console.log("this is user");
+  console.log(user);
+
   return (
     <div>
       {isAuthenticated && (

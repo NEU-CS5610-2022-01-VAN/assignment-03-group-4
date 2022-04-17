@@ -24,6 +24,7 @@ const PublicProfile = ({ userId }) => {
         <div>Loading...</div>
       ) : (
         <>
+          <h1>{user.name}'s Public Profile</h1>
           <div>
             <h2>{user.name}'s recipes</h2>
             <RecipeList url={url + "/recipes"} />

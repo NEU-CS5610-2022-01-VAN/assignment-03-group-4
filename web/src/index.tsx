@@ -14,8 +14,8 @@ const queryClient = new QueryClient();
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>
     <Auth0Provider
-      domain="dev-v3sgfmsg.us.auth0.com"
-      clientId="4wE1f32HLvNyczWdsBGyESmYGudHpfG9"
+      domain={process.env.REACT_APP_AUTH0_DOMAIN || ""}
+      clientId={process.env.REACT_APP_AUTH0_CLIENT_ID || ""}
       redirectUri={window.location.origin}
     >
       <BrowserRouter>

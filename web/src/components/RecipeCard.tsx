@@ -1,5 +1,7 @@
 import "./css/recipeCard.css";
+
 import ReactStars from "react-rating-stars-component";
+
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
