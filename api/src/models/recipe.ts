@@ -6,7 +6,7 @@ interface IRecipe {
   score?: number;
   createdAt?: Date;
 
-  author: Types.ObjectId;
+  author: String;
   categories: Types.ObjectId[];
 }
 
@@ -31,7 +31,7 @@ const recipeSchema = new Schema<IRecipe>(
     },
 
     author: {
-      type: Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: "User",
     },
