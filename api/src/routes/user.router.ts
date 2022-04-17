@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { User } from "../models/user";
 import { checkJwt } from "../middlewares/check-jwt.middleware";
 import { Review } from "../models/review";
+import { Recipe } from "../models/recipe";
 
 const router = Router();
 
@@ -43,6 +44,27 @@ router.get("/:userId/reviews", async (req: Request, res: Response) => {
     });
 
     res.send(reviews);
+  } catch (err) {
+    res.status(500).send(err);
+    console.log(err);
+  }
+});
+
+router.get("/:userId/recipes", async (req: Request, res: Response) => {
+  try {
+    const userId = req.params.userId;
+
+    const recipes = await Recipe.find({
+      author: userId,
+    })
+      .populate("reviews")
+      .populate("categories")
+      .populate({
+        path: "author",
+        model: User,
+      });
+
+    res.send(recipes);
   } catch (err) {
     res.status(500).send(err);
     console.log(err);

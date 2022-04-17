@@ -1,13 +1,5 @@
-// import "./App.css";
-import Home from "./pages/Home";
-import Recipes from "./pages/Recipes";
-import Login from "./pages/Login";
-import Profile from "./pages/Profile";
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import TopNavbar from "./components/TopNavbar";
-import NewRecipe from "./pages/NewRecipe";
-import RecipeDetail from "./pages/RecipeDetail";
 
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -17,6 +9,13 @@ import "./assets/styles/tailwind.css";
 
 // Bootstrap CSS
 import "bootstrap/dist/css/bootstrap.min.css";
+
+import TopNavbar from "./components/TopNavbar";
+import NewRecipe from "./pages/NewRecipe";
+import RecipeDetail from "./pages/RecipeDetail";
+import Home from "./pages/Home";
+import Recipes from "./pages/Recipes";
+import Profile from "./pages/Profile";
 
 function RequireAuth({ children }) {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -41,7 +40,6 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/recipes" element={<Recipes />}></Route>
           <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
-          <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />}>
             <Route path=":userId" element={<Profile />} />
           </Route>
@@ -52,7 +50,7 @@ function App() {
                 <NewRecipe />
               </RequireAuth>
             }
-          ></Route>
+          />
           <Route
             path="*"
             element={

@@ -5,13 +5,14 @@ import { useParams } from "react-router-dom";
 import RecipeList from "../components/RecipeList";
 import ReviewList from "../components/ReviewList";
 import ProfileCard from "../components/ProfileCard";
+import LoginButton from "../components/LoginButton";
 
-const userUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
+const baseUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
 
 const Profile = () => {
   const params = useParams();
   const userId = params.userId;
-  const url = userUrl + params.userId;
+  const url = baseUrl + params.userId;
 
   const {
     isLoading,
@@ -22,18 +23,18 @@ const Profile = () => {
 
   return (
     <>
-      <ProfileCard />
+      {!userId && <ProfileCard />}
 
       {userId && !isLoading && !error && (
         <>
           <div>
             <h2>{user.name}'s recipes</h2>
-            <RecipeList recipes={user.recipes} />
+            <RecipeList url={url + "/recipes"} />
           </div>
 
           <div>
             <h2>{user.name}'s reviews</h2>
-            <ReviewList reviews={user.reviews} />
+            <ReviewList url={url + "/reviews"} />
           </div>
         </>
       )}

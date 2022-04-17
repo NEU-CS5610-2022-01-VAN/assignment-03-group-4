@@ -65,7 +65,7 @@ const UserNavbarDropdown = () => {
               </Dropdown.Item>
             </>
           ) : (
-            <Dropdown.Item>
+            <Dropdown.Item eventKey="4">
               <LoginButton>Log in</LoginButton>
             </Dropdown.Item>
           )}

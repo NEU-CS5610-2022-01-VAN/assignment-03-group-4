@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import Navbar from "@material-tailwind/react/Navbar";
 import NavbarContainer from "@material-tailwind/react/NavbarContainer";
 import NavbarWrapper from "@material-tailwind/react/NavbarWrapper";
@@ -8,16 +7,12 @@ import NavbarToggler from "@material-tailwind/react/NavbarToggler";
 import NavbarCollapse from "@material-tailwind/react/NavbarCollapse";
 import Nav from "@material-tailwind/react/Nav";
 import NavLink from "@material-tailwind/react/NavLink";
-import Dropdown from "@material-tailwind/react/Dropdown";
-import DropdownItem from "@material-tailwind/react/DropdownItem";
 import Icon from "@material-tailwind/react/Icon";
-import Button from "@material-tailwind/react/Button";
-import { useAuth0 } from "@auth0/auth0-react";
+
 import UserNavbarDropdown from "./UserNavbarDropdown";
 
 export default function TopNavbar() {
   const [openNavbar, setOpenNavbar] = useState(false);
-  const { user, isAuthenticated, isLoading } = useAuth0();
 
   return (
     <div
@@ -45,11 +40,6 @@ export default function TopNavbar() {
                   &nbsp;Home
                 </NavLink>
 
-                <NavLink href="/login" rel="noreferrer" ripple="light">
-                  <Icon name="/apps" size="2xl" />
-                  &nbsp;Login
-                </NavLink>
-
                 <NavLink href="/recipes" rel="noreferrer" ripple="light">
                   <Icon name="apps" size="2xl" />
                   &nbsp;Recipes
@@ -67,6 +57,7 @@ export default function TopNavbar() {
               </div>
             </Nav>
           </NavbarCollapse>
+
           <UserNavbarDropdown />
         </NavbarContainer>
       </Navbar>

@@ -1,17 +1,35 @@
+import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
+import { useQuery } from "react-query";
+
 import RecipeCard from "./RecipeCard";
 
-const RecipeList = ({ recipes }) => {
+const RecipeList = ({ url }) => {
+  const {
+    isLoading,
+    error,
+    data: recipes,
+    isFetching,
+  } = useQuery(url, () => axios.get(url).then((res) => res.data));
+
   return (
-    <Container>
-      <Row>
-        {recipes.map((recipe) => (
-          <Col md="auto" key={recipe.id}>
-            <RecipeCard recipe={recipe} key={recipe.id} />
-          </Col>
-        ))}
-      </Row>
-    </Container>
+    <>
+      {error ? (
+        <div>Error: {(error as any).mesasge}</div>
+      ) : isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Container>
+          <Row>
+            {recipes.map((recipe) => (
+              <Col md="auto" key={recipe.id}>
+                <RecipeCard recipe={recipe} key={recipe.id} />
+              </Col>
+            ))}
+          </Row>
+        </Container>
+      )}
+    </>
   );
 };
 
