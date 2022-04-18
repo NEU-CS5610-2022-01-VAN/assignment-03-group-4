@@ -50,7 +50,7 @@ app.get("/", (req: Request, res: Response) => {
 });
 
 // app.use(errorHandler);
-app.use(notFoundHandler);
+// app.use(notFoundHandler);
 
 app.listen(port, () => {
   console.log(`App running on port: ${port}`);
