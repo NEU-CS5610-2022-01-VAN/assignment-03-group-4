@@ -54,7 +54,8 @@ router.get("/:recipeId/reviews", async (req: Request, res: Response) => {
 
 router.post("/", checkJwt, async (req: Request, res: Response) => {
   try {
-    const { title, body, author, categories } = req.body;
+    const { title, body, categories } = req.body;
+    const author = (req as any).user.sub;
 
     const newRecipe = new Recipe({
       title,
