@@ -1,5 +1,9 @@
 import { Routes, Route, Navigate, Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
+import { BrowserRouter } from "react-router-dom";
+import { Auth0Provider } from "@auth0/auth0-react";
+import { QueryClient, QueryClientProvider } from "react-query";
+import { ReactQueryDevtools } from "react-query/devtools";
 
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -11,11 +15,36 @@ import "./assets/styles/tailwind.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import TopNavbar from "./components/TopNavbar";
+import { AuthTokenProvider } from "./components/AuthTokenContext";
 import NewRecipe from "./pages/NewRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import Profile from "./pages/Profile";
+import VerifyUser from "./pages/VerifyUser";
+
+const queryClient = new QueryClient();
+
+const requestedScopes = [
+  "read:current_user",
+  "update:current_user_metadata",
+  "read:recipes",
+  "write:recipes",
+  "edit:recipes",
+  "delete:recipes",
+  "read:categories",
+  "write:categories",
+  "edit:categories",
+  "delete:categories",
+  "read:reviews",
+  "write:reviews",
+  "edit:reviews",
+  "delete:reviews",
+  "read:users",
+  "write:users",
+  "edit:users",
+  "delete:users",
+];
 
 function RequireAuth({ children }) {
   const { isAuthenticated, isLoading } = useAuth0();
@@ -34,15 +63,49 @@ function App() {
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"
       />
+      <QueryClientProvider client={queryClient}>
+        <Auth0Provider
+          domain={process.env.REACT_APP_AUTH0_DOMAIN || ""}
+          clientId={process.env.REACT_APP_AUTH0_CLIENT_ID || ""}
+          redirectUri={`${window.location.origin}/verify-user`}
+          audience={process.env.REACT_APP_AUTH0_API_AUDIENCE || ""}
+          scope={requestedScopes.join(" ")}
+        >
+          <AuthTokenProvider>
+            <AppRouter />
+          </AuthTokenProvider>
+        </Auth0Provider>
+        <ReactQueryDevtools initialIsOpen={true} />
+      </QueryClientProvider>
 
+      {process.env.NODE_ENV === "development"
+        ? process.env.REACT_APP_DEV_MODE
+        : process.env.REACT_APP_PRO_MODE}
+    </div>
+  );
+}
+
+function LayoutsWithNavbar() {
+  return (
+    <>
+      <TopNavbar />
+      <Outlet />
+    </>
+  );
+}
+
+function AppRouter() {
+  return (
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<LayoutsWithNavbar />}>
           <Route path="/" element={<Home />} />
-          <Route path="/recipes" element={<Recipes />}></Route>
+          <Route path="/recipes" element={<Recipes />} />
           <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
           <Route path="/profile" element={<Profile />}>
             <Route path=":userId" element={<Profile />} />
           </Route>
+          <Route path="/verify-user" element={<VerifyUser />} />
           <Route
             path="/newrecipe"
             element={
@@ -61,20 +124,7 @@ function App() {
           />
         </Route>
       </Routes>
-
-      {process.env.NODE_ENV === "development"
-        ? process.env.REACT_APP_DEV_MODE
-        : process.env.REACT_APP_PRO_MODE}
-    </div>
-  );
-}
-
-function LayoutsWithNavbar() {
-  return (
-    <>
-      <TopNavbar />
-      <Outlet />
-    </>
+    </BrowserRouter>
   );
 }
 

@@ -1,5 +1,7 @@
 import "./css/recipeCard.css";
+
 import ReactStars from "react-rating-stars-component";
+
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -26,8 +28,16 @@ const RecipeCard = ({ recipe }) => (
       recipe.categories.map((category: any) => (
         <Button key={category._id}>{category.name}</Button>
       ))}
+    {console.log(recipe)}
 
-    <ReactStars count={5} size={24} activeColor="yellow" />
+    <ReactStars
+      count={5}
+      size={24}
+      activeColor="yellow"
+      value={recipe.rating}
+      isHalf={true}
+    />
+    <>Rating: {recipe.rating}/5</>
   </>
 );
 

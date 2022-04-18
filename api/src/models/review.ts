@@ -6,7 +6,7 @@ interface IReview {
   createdAt?: Date;
 
   recipe: Types.ObjectId;
-  author: Types.ObjectId;
+  author: String;
 }
 
 const reviewSchema = new Schema<IReview>({
@@ -30,7 +30,7 @@ const reviewSchema = new Schema<IReview>({
     required: true,
   },
   author: {
-    type: Schema.Types.ObjectId,
+    type: String,
     ref: "Author",
     required: true,
   },

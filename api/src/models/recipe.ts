@@ -3,10 +3,10 @@ import { Types, Schema, model } from "mongoose";
 interface IRecipe {
   title: string;
   body: string;
-  score?: number;
+  rating?: number;
   createdAt?: Date;
 
-  author: Types.ObjectId;
+  author: String;
   categories: Types.ObjectId[];
 }
 
@@ -20,7 +20,7 @@ const recipeSchema = new Schema<IRecipe>(
       type: String,
       required: true,
     },
-    score: {
+    rating: {
       type: Number,
       min: 1,
       max: 5,
@@ -31,7 +31,7 @@ const recipeSchema = new Schema<IRecipe>(
     },
 
     author: {
-      type: Schema.Types.ObjectId,
+      type: String,
       required: true,
       ref: "User",
     },

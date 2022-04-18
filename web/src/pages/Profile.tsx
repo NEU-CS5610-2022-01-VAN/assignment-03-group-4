@@ -1,41 +1,35 @@
-import axios from "axios";
-import { useQuery } from "react-query";
+import { useAuth0 } from "@auth0/auth0-react";
+import { Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
-import RecipeList from "../components/RecipeList";
-import ReviewList from "../components/ReviewList";
-import ProfileCard from "../components/ProfileCard";
 import LoginButton from "../components/LoginButton";
-
-const baseUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
+import ProfileCard from "../components/ProfileCard";
+import PublicProfile from "../components/PublicProfile";
 
 const Profile = () => {
-  const params = useParams();
-  const userId = params.userId;
-  const url = baseUrl + params.userId;
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
-  const {
-    isLoading,
-    error,
-    data: user,
-    isFetching,
-  } = useQuery("user", () => axios.get(url).then((res) => res.data));
+  const params = useParams();
+  console.log(user);
+
+  const userId = params.userId;
 
   return (
     <>
-      {!userId && <ProfileCard />}
+      <LoginButton>Log in (Bug to fix in the Dropdown)</LoginButton>
 
-      {userId && !isLoading && !error && (
+      {userId ? (
+        <PublicProfile userId={userId} />
+      ) : (
         <>
-          <div>
-            <h2>{user.name}'s recipes</h2>
-            <RecipeList url={url + "/recipes"} />
-          </div>
+          <ProfileCard />
 
-          <div>
-            <h2>{user.name}'s reviews</h2>
-            <ReviewList url={url + "/reviews"} />
-          </div>
+          {isAuthenticated &&
+            (isLoading ? (
+              <div>Loading</div>
+            ) : (
+              <PublicProfile userId={(user as any).sub} />
+            ))}
         </>
       )}
     </>

@@ -1,23 +1,30 @@
 import { Schema, model } from "mongoose";
 
 interface IUser {
+  _id: string;
+  // auth0Id: string;
   email: string;
-  password: string;
+  // password: string;
   name?: string;
   createdAt?: Date;
 }
 
 const userSchema = new Schema<IUser>(
   {
+    _id: {
+      type: String,
+      // unique: true,
+      // required: true,
+    },
     email: {
       type: String,
       unique: true,
       required: true,
     },
-    password: {
-      type: String,
-      required: true,
-    },
+    // password: {
+    //   type: String,
+    //   required: true,
+    // },
     name: String,
     createdAt: {
       type: Date,

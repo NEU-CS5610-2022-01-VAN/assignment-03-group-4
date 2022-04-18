@@ -24,6 +24,11 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
+// app.use(function (req: any, res: any, next: any) {
+//   console.log(req);
+//   next();
+// });
+
 //routers
 app.use("/users", userRouter);
 app.use("/recipes", recipeRouter);
@@ -44,8 +49,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
 
-app.use(errorHandler);
-app.use(notFoundHandler);
+// app.use(errorHandler);
+// app.use(notFoundHandler);
 
 app.listen(port, () => {
   console.log(`App running on port: ${port}`);

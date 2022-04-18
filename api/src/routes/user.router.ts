@@ -3,6 +3,7 @@ import { User } from "../models/user";
 import { checkJwt } from "../middlewares/check-jwt.middleware";
 import { Review } from "../models/review";
 import { Recipe } from "../models/recipe";
+var guard = require("express-jwt-permissions")();
 
 const router = Router();
 
@@ -71,7 +72,35 @@ router.get("/:userId/recipes", async (req: Request, res: Response) => {
   }
 });
 
-router.post("/", checkJwt, async (req: Request, res: Response) => {
+router.use(checkJwt);
+
+router.post("/verify-user", async (req: Request, res: Response) => {
+  try {
+    console.log(req.user);
+
+    const _id = (req as any).user.sub;
+    const email = (req as any).user[`${process.env.AUTH0_AUDIENCE}/email`];
+    const name = (req as any).user[`${process.env.AUTH0_AUDIENCE}/name`];
+
+    const user = await User.findById(_id);
+    if (user) {
+      res.send(user);
+    } else {
+      const newUser = new User({
+        _id,
+        email,
+        name,
+      });
+      await newUser.save();
+      res.send(newUser);
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
+router.post("/", async (req: Request, res: Response) => {
   try {
     const { email, name, password } = req.body;
 
@@ -89,7 +118,7 @@ router.post("/", checkJwt, async (req: Request, res: Response) => {
   }
 });
 
-router.post("/:userId", checkJwt, async (req: Request, res: Response) => {
+router.post("/:userId", async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
     const { email, name, password } = req.body;
@@ -111,7 +140,7 @@ router.post("/:userId", checkJwt, async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/", checkJwt, async (req: Request, res: Response) => {
+router.delete("/", async (req: Request, res: Response) => {
   try {
     const users = await User.deleteMany();
 
@@ -122,7 +151,7 @@ router.delete("/", checkJwt, async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/:userId", checkJwt, async (req: Request, res: Response) => {
+router.delete("/:userId", async (req: Request, res: Response) => {
   try {
     const userId = req.params.userId;
 
