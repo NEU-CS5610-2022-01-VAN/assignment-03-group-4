@@ -45,7 +45,15 @@ const RecipeDetail = () => {
               <Button key={category._id}>{category.name}</Button>
             ))}
 
-          <ReactStars count={5} size={24} activeColor="yellow" />
+          <ReactStars
+            count={5}
+            size={24}
+            activeColor="yellow"
+            value={recipe.rating}
+            isHalf={true}
+          />
+          <>Rating: {recipe.rating}/5</>
+
           <div>How to cook: {recipe.body}</div>
           <hr />
 

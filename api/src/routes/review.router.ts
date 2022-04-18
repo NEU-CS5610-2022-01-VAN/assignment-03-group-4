@@ -6,26 +6,23 @@ import { Recipe } from "../models/recipe";
 
 const router = Router();
 
-router.post("/", checkJwt, async (req: Request, res: Response) => {
-  try {
-    const { content, rating, recipe, author } = req.body;
+const updateRecipeRating = async (recipeId: any) => {
+  const reveiws = await Review.find({ recipe: recipeId });
 
-    const newReview = new Review({
-      content,
-      rating,
-      recipe,
-      author,
+  if (!reveiws) {
+    await Recipe.findByIdAndUpdate(recipeId, { rating: 0 });
+  } else {
+    const sumRating = reveiws.reduce(
+      (prev, curReivew) => prev + curReivew.rating,
+      0
+    );
+    const newRating = sumRating / reveiws.length;
+
+    await Recipe.findByIdAndUpdate(recipeId, {
+      rating: newRating,
     });
-    await newReview.save();
-
-    // const recipeToUpdate =await Recipe.findById(recipe);
-    // const newRating = recipeToUpdate.reviews?
-    res.send(newReview);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
   }
-});
+};
 
 router.get("/", async (req: Request, res: Response) => {
   try {
@@ -53,6 +50,27 @@ router.get("/:reviewId", async (req: Request, res: Response) => {
   }
 });
 
+router.post("/", checkJwt, async (req: Request, res: Response) => {
+  try {
+    const { content, rating, recipe, author } = req.body;
+
+    const newReview = new Review({
+      content,
+      rating,
+      recipe,
+      author,
+    });
+    await newReview.save();
+
+    await updateRecipeRating(recipe);
+
+    res.send(newReview);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
 router.post("/:reviewId", checkJwt, async (req: Request, res: Response) => {
   try {
     const reviewId = req.params.reviewId;
@@ -68,6 +86,8 @@ router.post("/:reviewId", checkJwt, async (req: Request, res: Response) => {
       },
       { new: true }
     );
+
+    await updateRecipeRating((review as any).recipe);
 
     res.send(review);
   } catch (err) {
@@ -92,6 +112,9 @@ router.delete("/:reviewId", checkJwt, async (req: Request, res: Response) => {
     const reviewId = req.params.reviewId;
 
     const review = await Review.findByIdAndDelete(reviewId);
+
+    await updateRecipeRating((review as any).recipe);
+
     res.send(review);
   } catch (err) {
     console.log(err);
