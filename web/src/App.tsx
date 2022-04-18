@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import Header from "./components/Header";
 
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -12,7 +13,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/tailwind.css";
 
 // Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 import TopNavbar from "./components/TopNavbar";
 import { AuthTokenProvider } from "./components/AuthTokenContext";
@@ -58,7 +59,7 @@ function RequireAuth({ children }) {
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"
@@ -88,7 +89,9 @@ function App() {
 function LayoutsWithNavbar() {
   return (
     <>
-      <TopNavbar />
+      <div className="w-full z-20">
+        <TopNavbar />
+      </div>
       <Outlet />
     </>
   );
