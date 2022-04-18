@@ -27,9 +27,9 @@ const CustomToggle = (React.forwardRef as any)(({ children, onClick }, ref) => (
 const UserNavbarDropdown = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
-  if (isLoading) {
-    return <div>Loading ...</div>;
-  }
+  // if (isLoading) {
+  //   return <div>Loading ...</div>;
+  // }
 
   return (
     <div>
