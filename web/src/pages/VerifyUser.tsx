@@ -9,7 +9,6 @@ const testToken =
 export default function VerifyUser() {
   const navigate = useNavigate();
   const { accessToken } = useAuthToken();
-  // console.log(accessToken);
 
   useEffect(() => {
     async function verifyUser() {
