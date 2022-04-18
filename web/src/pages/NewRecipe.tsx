@@ -2,12 +2,14 @@ import React from "react";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Navigate, useNavigate } from "react-router-dom";
 
 import { useAuthToken } from "../components/AuthTokenContext";
 import axios from "axios";
 
 const NewRecipe = () => {
   const { accessToken } = useAuthToken();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -27,7 +29,7 @@ const NewRecipe = () => {
           }}
           onSubmit={(values: any, { setSubmitting }) => {
             setTimeout(() => {
-              const newRecipe = axios
+              axios
                 .post(
                   `${process.env.REACT_APP_API_BASE_URL}/recipes/`,
                   values,
@@ -35,10 +37,12 @@ const NewRecipe = () => {
                     headers: { Authorization: `Bearer ${accessToken}` },
                   }
                 )
-                .then((res) => res.data)
+                .then((res) => {
+                  alert("Success");
+                  setSubmitting(false);
+                  navigate("/recipe/" + (res.data as any).id);
+                })
                 .catch((err) => console.log(err));
-              alert("Success");
-              setSubmitting(false);
             }, 200);
           }}
         >
