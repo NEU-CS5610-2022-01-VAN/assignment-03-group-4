@@ -1,5 +1,4 @@
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 
 import LoginButton from "../components/LoginButton";
