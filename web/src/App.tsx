@@ -4,7 +4,6 @@ import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import Header from "./components/Header";
 
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
