@@ -17,6 +17,7 @@ function ReviewCard({ review }) {
         value={review.rating}
         activeColor="yellow"
       />
+      <>Rating: {review.rating}/5</>
     </>
   );
 }

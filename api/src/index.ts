@@ -49,8 +49,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
 
-app.use(errorHandler);
-app.use(notFoundHandler);
+// app.use(errorHandler);
+// app.use(notFoundHandler);
 
 app.listen(port, () => {
   console.log(`App running on port: ${port}`);

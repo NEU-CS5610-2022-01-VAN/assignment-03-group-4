@@ -28,8 +28,16 @@ const RecipeCard = ({ recipe }) => (
       recipe.categories.map((category: any) => (
         <Button key={category._id}>{category.name}</Button>
       ))}
+    {console.log(recipe)}
 
-    <ReactStars count={5} size={24} activeColor="yellow" />
+    <ReactStars
+      count={5}
+      size={24}
+      activeColor="yellow"
+      value={recipe.rating}
+      isHalf={true}
+    />
+    <>Rating: {recipe.rating}/5</>
   </>
 );
 

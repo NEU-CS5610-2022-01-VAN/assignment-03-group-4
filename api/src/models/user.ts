@@ -1,8 +1,8 @@
-import { string } from "joi";
 import { Schema, model } from "mongoose";
 
 interface IUser {
-  auth0Id: string;
+  _id: string;
+  // auth0Id: string;
   email: string;
   // password: string;
   name?: string;
@@ -11,10 +11,10 @@ interface IUser {
 
 const userSchema = new Schema<IUser>(
   {
-    auth0Id: {
+    _id: {
       type: String,
-      unique: true,
-      required: true,
+      // unique: true,
+      // required: true,
     },
     email: {
       type: String,
