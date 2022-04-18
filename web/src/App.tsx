@@ -16,7 +16,7 @@ import RecipeDetail from "./pages/RecipeDetail";
 import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import Profile from "./pages/Profile";
-import VerifyUser from "./components/VerifyUser";
+import VerifyUser from "./pages/VerifyUser";
 
 function RequireAuth({ children }) {
   const { isAuthenticated, isLoading } = useAuth0();

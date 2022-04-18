@@ -2,6 +2,7 @@ import { Router, Request, Response } from "express";
 import { Review } from "../models/review";
 import { checkJwt } from "../middlewares/check-jwt.middleware";
 import { User } from "../models/user";
+import { Recipe } from "../models/recipe";
 
 const router = Router();
 
@@ -16,6 +17,9 @@ router.post("/", checkJwt, async (req: Request, res: Response) => {
       author,
     });
     await newReview.save();
+
+    // const recipeToUpdate =await Recipe.findById(recipe);
+    // const newRating = recipeToUpdate.reviews?
     res.send(newReview);
   } catch (err) {
     console.log(err);
