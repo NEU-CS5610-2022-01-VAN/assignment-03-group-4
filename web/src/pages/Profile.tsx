@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
-import LoginButton from "../components/LoginButton";
 
+import LoginButton from "../components/LoginButton";
 import ProfileCard from "../components/ProfileCard";
 import PublicProfile from "../components/PublicProfile";
 
