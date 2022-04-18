@@ -1,30 +1,82 @@
 import React from "react";
-import { Form, Button } from "react-bootstrap";
+
+import { useAuth0 } from "@auth0/auth0-react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Navigate, useNavigate } from "react-router-dom";
+
+import { useAuthToken } from "../components/AuthTokenContext";
+import axios from "axios";
 
 const NewRecipe = () => {
+  const { accessToken } = useAuthToken();
+  const navigate = useNavigate();
+
   return (
     <>
       <div>
-        <Form>
-          <Form.Group className="mb-3" controlId="formRecipeTitle">
-            <Form.Label>Recipe Title</Form.Label>
-            <Form.Control type="text" placeholder="Enter Title" />
-          </Form.Group>
+        <h1>New Recipe</h1>
+        <Formik
+          initialValues={{ title: "", body: "" }}
+          validate={(values) => {
+            const errors = {};
+            if (!values.title) {
+              (errors as any).title = "Required";
+            }
+            if (!values.body) {
+              (errors as any).body = "Required";
+            }
+            return errors;
+          }}
+          onSubmit={(values: any, { setSubmitting }) => {
+            setTimeout(() => {
+              axios
+                .post(
+                  `${process.env.REACT_APP_API_BASE_URL}/recipes/`,
+                  values,
+                  {
+                    headers: { Authorization: `Bearer ${accessToken}` },
+                  }
+                )
+                .then((res) => {
+                  alert("Success");
+                  setSubmitting(false);
+                  navigate("/recipe/" + (res.data as any).id);
+                })
+                .catch((err) => console.log(err));
+            }, 200);
+          }}
+        >
+          {({ isSubmitting }) => (
+            <Form
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                width: 400,
+                borderWidth: 3,
+              }}
+            >
+              <label htmlFor="title">Title:</label>
+              <Field
+                style={{ borderWidth: 3, borderColor: "#333" }}
+                name="title"
+                id="title"
+              />
+              <ErrorMessage name="title" component="div" />
 
-          <Form.Group className="mb-3" controlId="formRecipeContent">
-            <Form.Label>Content</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Content"
-              as="textarea"
-              rows={3}
-            />
-          </Form.Group>
+              <label htmlFor="body">Body:</label>
+              <Field
+                style={{ borderWidth: 3, borderColor: "#333" }}
+                name="body"
+                id="body"
+              />
+              <ErrorMessage name="body" component="div" />
 
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
-        </Form>
+              <button type="submit" disabled={isSubmitting}>
+                Submit
+              </button>
+            </Form>
+          )}
+        </Formik>
       </div>
     </>
   );
