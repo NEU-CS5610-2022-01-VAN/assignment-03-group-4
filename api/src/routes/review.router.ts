@@ -52,7 +52,8 @@ router.get("/:reviewId", async (req: Request, res: Response) => {
 
 router.post("/", checkJwt, async (req: Request, res: Response) => {
   try {
-    const { content, rating, recipe, author } = req.body;
+    const { content, rating, recipe } = req.body;
+    const author = (req as any).user.sub;
 
     const newReview = new Review({
       content,

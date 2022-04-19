@@ -76,8 +76,6 @@ router.use(checkJwt);
 
 router.post("/verify-user", async (req: Request, res: Response) => {
   try {
-    console.log(req.user);
-
     const _id = (req as any).user.sub;
     const email = (req as any).user[`${process.env.AUTH0_AUDIENCE}/email`];
     const name = (req as any).user[`${process.env.AUTH0_AUDIENCE}/name`];
@@ -102,12 +100,12 @@ router.post("/verify-user", async (req: Request, res: Response) => {
 
 router.post("/", async (req: Request, res: Response) => {
   try {
-    const { email, name, password } = req.body;
+    const { _id, email, name } = req.body;
 
     const newUser = new User({
       email,
       name,
-      password,
+      _id,
     });
     await newUser.save();
 
