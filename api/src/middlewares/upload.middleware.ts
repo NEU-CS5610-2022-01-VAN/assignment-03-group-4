@@ -17,6 +17,7 @@ const storage = new GridFsStorage({
     return {
       bucketName: "photos",
       filename: `${Date.now()}-recipe-${file.originalname}`,
+      recipe: "testRecipeId",
     };
   },
 });

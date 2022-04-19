@@ -3,27 +3,14 @@ import { Recipe } from "../models/recipe";
 import { checkJwt } from "../middlewares/check-jwt.middleware";
 import { Review } from "../models/review";
 import { User } from "../models/user";
-import fs from "fs";
-import path from "path";
-// import upload from "../middlewares/upload.middleware";
+
 const uploadController = require("../controllers/upload.controller");
-
-// const storage = multer.diskStorage({
-//   destination: (req, file, cb) => {
-//     cb(null, "uploads");
-//   },
-//   filename: (req, file, cb) => {
-//     cb(null, file.fieldname + "-" + Date.now());
-//   },
-// });
-
-// var upload = multer({ storage: storage });
 
 const router = Router();
 
-router.post("/upload", uploadController.uploadFiles);
-router.get("/files", uploadController.getListFiles);
-router.get("/files/:name", uploadController.download);
+router.post("/:recipeId/upload", checkJwt, uploadController.uploadFiles);
+// router.get("/:recipeId/files", uploadController.getListFiles);
+router.get("/:recipeId/files/:fileId", uploadController.download);
 
 router.get("/", async (req: Request, res: Response) => {
   try {

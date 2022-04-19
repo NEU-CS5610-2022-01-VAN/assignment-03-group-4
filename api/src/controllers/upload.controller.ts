@@ -1,3 +1,6 @@
+import mongoose from "mongoose";
+import { Recipe } from "../models/recipe";
+
 const upload = require("../middlewares/upload.middleware");
 // const dbConfig = require("../con fig/db");
 const MongoClient = require("mongodb").MongoClient;
@@ -18,6 +21,14 @@ const uploadFiles = async (req: any, res: any) => {
         message: "You must select a file.",
       });
     }
+
+    const recipeId = req.params.recipeId;
+    await Recipe.findByIdAndUpdate(recipeId, {
+      $push: {
+        photos: req.file.id,
+      },
+    });
+
     return res.send({
       message: "File has been uploaded.",
     });
@@ -60,7 +71,11 @@ const download = async (req: any, res: any) => {
     const bucket = new GridFSBucket(database, {
       bucketName: "photos",
     });
-    let downloadStream = bucket.openDownloadStreamByName(req.params.name);
+    let downloadStream = bucket.openDownloadStream(
+      new mongoose.Types.ObjectId(req.params.fileId)
+    );
+    // let downloadStream = bucket.openDownloadStreamByName(req.params.fileId);
+
     downloadStream.on("data", function (data: any) {
       return res.status(200).write(data);
     });

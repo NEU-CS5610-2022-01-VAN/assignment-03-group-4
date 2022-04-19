@@ -5,10 +5,10 @@ interface IRecipe {
   body: string;
   rating?: number;
   createdAt?: Date;
-  image?: Buffer;
 
   author: String;
   categories: Types.ObjectId[];
+  photos: Types.ObjectId[];
 }
 
 const recipeSchema = new Schema<IRecipe>(
@@ -30,10 +30,6 @@ const recipeSchema = new Schema<IRecipe>(
       type: Date,
       default: Date.now,
     },
-    image: {
-      data: Buffer,
-      contentType: String,
-    },
 
     author: {
       type: String,
@@ -45,6 +41,12 @@ const recipeSchema = new Schema<IRecipe>(
         type: Schema.Types.ObjectId,
         required: true,
         ref: "Category",
+      },
+    ],
+    photos: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Image",
       },
     ],
   },
