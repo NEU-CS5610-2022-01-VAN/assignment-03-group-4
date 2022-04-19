@@ -3,8 +3,27 @@ import { Recipe } from "../models/recipe";
 import { checkJwt } from "../middlewares/check-jwt.middleware";
 import { Review } from "../models/review";
 import { User } from "../models/user";
+import fs from "fs";
+import path from "path";
+// import upload from "../middlewares/upload.middleware";
+const uploadController = require("../controllers/upload.controller");
+
+// const storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, "uploads");
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.fieldname + "-" + Date.now());
+//   },
+// });
+
+// var upload = multer({ storage: storage });
 
 const router = Router();
+
+router.post("/upload", uploadController.uploadFiles);
+router.get("/files", uploadController.getListFiles);
+router.get("/files/:name", uploadController.download);
 
 router.get("/", async (req: Request, res: Response) => {
   try {
@@ -52,9 +71,22 @@ router.get("/:recipeId/reviews", async (req: Request, res: Response) => {
   }
 });
 
+router.post("/image", async (req: Request, res: Response) => {
+  console.log("in the recipe router");
+  try {
+    if (req.file === undefined) return res.send("you must select a file.");
+    const imgUrl = `http://localhost:8000/file/${req.file.filename}`;
+    return res.send(imgUrl);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+});
+
 router.post("/", checkJwt, async (req: Request, res: Response) => {
   try {
     const { title, body, categories } = req.body;
+
     const author = (req as any).user.sub;
 
     const newRecipe = new Recipe({
@@ -72,7 +104,9 @@ router.post("/", checkJwt, async (req: Request, res: Response) => {
   }
 });
 
-router.post("/:recipeId", checkJwt, async (req: Request, res: Response) => {
+router.use(checkJwt);
+
+router.post("/:recipeId", async (req: Request, res: Response) => {
   const { title, body, author, categories } = req.body;
 
   try {
@@ -94,7 +128,7 @@ router.post("/:recipeId", checkJwt, async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/", checkJwt, async (req: Request, res: Response) => {
+router.delete("/", async (req: Request, res: Response) => {
   try {
     const recipes = await Recipe.deleteMany();
 
@@ -105,7 +139,7 @@ router.delete("/", checkJwt, async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/:recipeId", checkJwt, async (req: Request, res: Response) => {
+router.delete("/:recipeId", async (req: Request, res: Response) => {
   try {
     const recipe = await Recipe.findByIdAndDelete(req.params.recipeId);
 
