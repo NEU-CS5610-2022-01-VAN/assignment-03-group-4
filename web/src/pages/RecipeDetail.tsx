@@ -4,12 +4,13 @@ import { Button } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { Link, useParams } from "react-router-dom";
 import ReviewList from "../components/ReviewList";
+import NewComment from "../components/NewComment";
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
 const RecipeDetail = () => {
-  const params = useParams();
-  const url = recipeUrl + params.recipeId;
+  const recipeId = useParams().recipeId;
+  const url = recipeUrl + recipeId;
 
   const {
     isLoading,
@@ -59,6 +60,9 @@ const RecipeDetail = () => {
 
           <h4>What others say about this recipe?</h4>
           <ReviewList url={url + "/reviews"} />
+          <hr />
+
+          <NewComment recipeId={recipeId} />
         </div>
       )}
     </div>
