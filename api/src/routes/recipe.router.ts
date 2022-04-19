@@ -9,7 +9,6 @@ const uploadController = require("../controllers/upload.controller");
 const router = Router();
 
 router.post("/:recipeId/upload", checkJwt, uploadController.uploadFiles);
-// router.get("/:recipeId/files", uploadController.getListFiles);
 router.get("/:recipeId/files/:fileId", uploadController.download);
 
 router.get("/", async (req: Request, res: Response) => {
@@ -55,18 +54,6 @@ router.get("/:recipeId/reviews", async (req: Request, res: Response) => {
   } catch (err) {
     res.status(500).send(err);
     console.log(err);
-  }
-});
-
-router.post("/image", async (req: Request, res: Response) => {
-  console.log("in the recipe router");
-  try {
-    if (req.file === undefined) return res.send("you must select a file.");
-    const imgUrl = `http://localhost:8000/file/${req.file.filename}`;
-    return res.send(imgUrl);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
   }
 });
 

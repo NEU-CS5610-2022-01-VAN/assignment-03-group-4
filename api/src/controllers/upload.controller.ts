@@ -2,15 +2,11 @@ import mongoose from "mongoose";
 import { Recipe } from "../models/recipe";
 
 const upload = require("../middlewares/upload.middleware");
-// const dbConfig = require("../con fig/db");
 const MongoClient = require("mongodb").MongoClient;
 const GridFSBucket = require("mongodb").GridFSBucket;
-// const url = dbConfig.url;
+import "dotenv/config";
 
-const baseUrl = "http://localhost:8000/files/";
-const mongoClient = new MongoClient(
-  "mongodb+srv://admin-yun:Test123@cluster0.xlhny.mongodb.net/recipeDB"
-);
+const mongoClient = new MongoClient(process.env.MONGO_URL || "");
 
 const uploadFiles = async (req: any, res: any) => {
   try {
@@ -39,31 +35,7 @@ const uploadFiles = async (req: any, res: any) => {
     });
   }
 };
-const getListFiles = async (req: any, res: any) => {
-  try {
-    await mongoClient.connect();
-    const database = mongoClient.db("recipeDB");
-    const images = database.collection("photos" + ".files");
-    const cursor = images.find({});
-    if ((await cursor.count()) === 0) {
-      return res.status(500).send({
-        message: "No files found!",
-      });
-    }
-    let fileInfos: any[] = [];
-    await cursor.forEach((doc: any) => {
-      fileInfos.push({
-        name: doc.filename,
-        url: baseUrl + doc.filename,
-      });
-    });
-    return res.status(200).send(fileInfos);
-  } catch (error: any) {
-    return res.status(500).send({
-      message: error.message,
-    });
-  }
-};
+
 const download = async (req: any, res: any) => {
   try {
     await mongoClient.connect();
@@ -74,7 +46,6 @@ const download = async (req: any, res: any) => {
     let downloadStream = bucket.openDownloadStream(
       new mongoose.Types.ObjectId(req.params.fileId)
     );
-    // let downloadStream = bucket.openDownloadStreamByName(req.params.fileId);
 
     downloadStream.on("data", function (data: any) {
       return res.status(200).write(data);
@@ -93,6 +64,5 @@ const download = async (req: any, res: any) => {
 };
 module.exports = {
   uploadFiles,
-  getListFiles,
   download,
 };
