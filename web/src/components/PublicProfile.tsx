@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useQuery } from "react-query";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import RecipeList from "../components/RecipeList";
 import ReviewList from "../components/ReviewList";
@@ -21,7 +22,9 @@ const PublicProfile = ({ userId }) => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>Loading...</div>
+        <div>
+          <CircularProgress color="inherit" />
+        </div>
       ) : (
         <>
           <h1>{user.name}'s Public Profile</h1>

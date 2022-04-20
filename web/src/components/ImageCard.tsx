@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { useQuery } from "react-query";
 import "./css/recipeCard.css";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const ImageCard = ({ photoId, recipeId }) => {
   const url =
@@ -22,7 +23,9 @@ const ImageCard = ({ photoId, recipeId }) => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>Loading...</div>
+        <div>
+          <CircularProgress color="inherit" />
+        </div>
       ) : (
         <img className="recipe_card_image" src={data} alt="recipe" />
       )}
