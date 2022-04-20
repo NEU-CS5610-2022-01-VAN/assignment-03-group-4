@@ -4,19 +4,17 @@ import { useParams } from "react-router-dom";
 import LoginButton from "../components/LoginButton";
 import ProfileCard from "../components/ProfileCard";
 import PublicProfile from "../components/PublicProfile";
+import CircularProgress from "@mui/material/CircularProgress";
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   const params = useParams();
-  console.log(user);
 
   const userId = params.userId;
 
   return (
     <>
-      <LoginButton>Log in (Bug to fix in the Dropdown)</LoginButton>
-
       {userId ? (
         <PublicProfile userId={userId} />
       ) : (
@@ -25,7 +23,9 @@ const Profile = () => {
 
           {isAuthenticated &&
             (isLoading ? (
-              <div>Loading</div>
+              <div>
+                <CircularProgress color="inherit" />
+              </div>
             ) : (
               <PublicProfile userId={(user as any).sub} />
             ))}

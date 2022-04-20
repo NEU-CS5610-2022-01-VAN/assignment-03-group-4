@@ -2,14 +2,20 @@ import axios from "axios";
 import ReactStars from "react-rating-stars-component";
 import { Button } from "react-bootstrap";
 import { useQuery } from "react-query";
+import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useParams } from "react-router-dom";
+
 import ReviewList from "../components/ReviewList";
+import NewComment from "../components/NewComment";
+import ImageCard from "../components/ImageCard";
+import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
 const RecipeDetail = () => {
-  const params = useParams();
-  const url = recipeUrl + params.recipeId;
+  const recipeId = useParams().recipeId;
+  const url = recipeUrl + recipeId;
+  const { user, isAuthenticated, isLoading: userIsLoading } = useAuth0();
 
   const {
     isLoading,
@@ -27,11 +33,19 @@ const RecipeDetail = () => {
       ) : (
         <div>
           <h2>{recipe.title}</h2>
-          <img
-            className="recipe_card_image"
-            src="https://x.yummlystatic.com/web/strawberry-grain.png"
-            alt="recipe"
-          />
+          {recipe.photos.length ? (
+            <>
+              {recipe.photos.map((img) => (
+                <ImageCard photoId={img} recipeId={recipe.id} key={img} />
+              ))}
+            </>
+          ) : (
+            <img
+              className="recipe_card_image"
+              src="https://x.yummlystatic.com/web/strawberry-grain.png"
+              alt="recipe"
+            />
+          )}
 
           <div>
             <span>by </span>
@@ -55,10 +69,20 @@ const RecipeDetail = () => {
           <>Rating: {recipe.rating}/5</>
 
           <div>How to cook: {recipe.body}</div>
+
+          {isAuthenticated &&
+            !userIsLoading &&
+            (user as any).sub === recipe.author.id && (
+              <DeleteRecipeButton recipeId={recipe.id} />
+            )}
+
           <hr />
 
           <h4>What others say about this recipe?</h4>
           <ReviewList url={url + "/reviews"} />
+          <hr />
+
+          <NewComment recipeId={recipeId} />
         </div>
       )}
     </div>

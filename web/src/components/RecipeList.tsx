@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Col, Container, Row } from "react-bootstrap";
 import { useQuery } from "react-query";
-
+import CircularProgress from "@mui/material/CircularProgress";
 import RecipeCard from "./RecipeCard";
 
 const RecipeList = ({ url }) => {
@@ -17,7 +17,9 @@ const RecipeList = ({ url }) => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>Loading...</div>
+        <div>
+          <CircularProgress color="inherit" />
+        </div>
       ) : (
         <section className=" pt-10 pb-48">
           <div className=" flex flex-wrap container max-w-7xl mx-auto px-4">
