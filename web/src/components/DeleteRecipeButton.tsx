@@ -1,7 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Button as BootstrapButton } from "react-bootstrap";
-import { useQuery } from "react-query";
 import { useAuthToken } from "./AuthTokenContext";
 import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
@@ -53,17 +52,18 @@ const DeleteRecipeButton = ({ recipeId }) => {
         aria-describedby="alert-dialog-description"
       >
         <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
+          {"Delete this recipe?"}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending
-            anonymous location data to Google, even when no apps are running.
+            This operation cannot be undone.
           </DialogContentText>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={onDeleteButtonClick}>Delete</Button>
+          <Button color="error" onClick={onDeleteButtonClick}>
+            Delete
+          </Button>
         </DialogActions>
       </Dialog>
     </>
