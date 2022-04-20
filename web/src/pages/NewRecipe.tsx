@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import { useAuthToken } from "../components/AuthTokenContext";
 import UploadImage from "../components/UploadImage";
+import CircularProgress from "@mui/material/CircularProgress";
 
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
@@ -140,7 +141,9 @@ const NewRecipe = () => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>Loading...</div>
+        <div>
+          <CircularProgress color="inherit" />
+        </div>
       ) : (
         <Select
           closeMenuOnSelect={false}
