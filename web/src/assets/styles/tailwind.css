@@ -823,6 +823,10 @@ video {
 .pt-8 {
   padding-top: 2rem;
 }
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
 .pb-6 {
   padding-bottom: 1.5rem;
 }
@@ -837,6 +841,9 @@ video {
 }
 .pt-16 {
   padding-top: 4rem;
+}
+.pb-16 {
+  padding-bottom: 4rem;
 }
 .pb-32 {
   padding-bottom: 8rem;
@@ -1769,6 +1776,9 @@ video {
 }
 .h-10 {
   height: 2.5rem;
+}
+.h-64 {
+  height: 16rem;
 }
 .h-32 {
   height: 8rem;
