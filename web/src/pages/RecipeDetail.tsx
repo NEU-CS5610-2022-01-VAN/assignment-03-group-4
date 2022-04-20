@@ -32,7 +32,6 @@ const RecipeDetail = () => {
           <h2>{recipe.title}</h2>
           {recipe.photos.length ? (
             <>
-              s
               {recipe.photos.map((img) => (
                 <ImageCard photoId={img} recipeId={recipe.id} key={img} />
               ))}
