@@ -1,14 +1,60 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useNavigate } from "react-router-dom";
 
 import { useAuthToken } from "../components/AuthTokenContext";
+import UploadImage from "../components/UploadImage";
 
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import { useQuery } from "react-query";
+
+const animatedComponents = makeAnimated();
+const url = process.env.REACT_APP_API_BASE_URL + "/categories";
 const NewRecipe = () => {
   const { accessToken } = useAuthToken();
   const navigate = useNavigate();
+
+  const [images, setImages] = useState<any>([]);
+  const [imageUrls, setImageUrls] = useState<any>([]);
+
+  const [catLabels, setCatLabels] = useState<any>([]);
+  const [selectedCategories, setSelectedCategories] = useState<any>([]);
+
+  const {
+    isLoading,
+    error,
+    data: categories,
+    isFetching,
+  } = useQuery("categories", () =>
+    axios.get(url).then((res) => {
+      setCatLabels(
+        res.data.map((category) => {
+          return { value: category._id, label: category.name };
+        })
+      );
+
+      return res.data;
+    })
+  );
+
+  useEffect(() => {
+    if (images.length < 1) return;
+
+    const newImageUrls = images.map((image) => URL.createObjectURL(image));
+    setImageUrls(newImageUrls);
+  }, [images]);
+
+  function onImageChange(e) {
+    setImages([...e.target.files]);
+  }
+
+  function onLabelChange(e) {
+    const newSelectedCategories = e.map((category) => category.value);
+    setSelectedCategories(newSelectedCategories);
+  }
 
   return (
     <>
@@ -25,18 +71,37 @@ const NewRecipe = () => {
           }
           return errors;
         }}
-        onSubmit={(values: any, { setSubmitting }) => {
-          setTimeout(() => {
-            axios
-              .post(`${process.env.REACT_APP_API_BASE_URL}/recipes/`, values, {
-                headers: { Authorization: `Bearer ${accessToken}` },
-              })
-              .then((res) => {
-                alert("Success");
-                setSubmitting(false);
-                navigate("/recipe/" + (res.data as any).id);
-              })
-              .catch((err) => console.log(err));
+        onSubmit={async (values: any, { setSubmitting }) => {
+          setTimeout(async () => {
+            try {
+              values.categories = selectedCategories;
+              const res = await axios.post(
+                `${process.env.REACT_APP_API_BASE_URL}/recipes/`,
+                values,
+                {
+                  headers: { Authorization: `Bearer ${accessToken}` },
+                }
+              );
+              const newRecipe = res.data;
+
+              images.forEach(async (img) => {
+                const formData = new FormData();
+                formData.append("file", img);
+                await axios.post(
+                  `${process.env.REACT_APP_API_BASE_URL}/recipes/${newRecipe.id}/upload`,
+                  formData,
+                  {
+                    headers: { Authorization: `Bearer ${accessToken}` },
+                  }
+                );
+              });
+
+              alert("Success");
+              setSubmitting(false);
+              navigate("/recipe/" + newRecipe.id);
+            } catch (err) {
+              console.log(err);
+            }
           }, 200);
         }}
       >
@@ -71,6 +136,34 @@ const NewRecipe = () => {
           </Form>
         )}
       </Formik>
+
+      {error ? (
+        <div>Error: {(error as any).mesasge}</div>
+      ) : isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Select
+          closeMenuOnSelect={false}
+          components={animatedComponents}
+          isMulti
+          options={catLabels}
+          onChange={onLabelChange}
+        />
+      )}
+
+      <>
+        <input type="file" multiple accept="image/*" onChange={onImageChange} />
+        {imageUrls.map((imageSrc) => (
+          <img
+            style={{ width: 400 }}
+            src={imageSrc}
+            alt={imageSrc}
+            key={imageSrc}
+          />
+        ))}
+      </>
+
+      {/* <UploadImage /> */}
     </>
   );
 };

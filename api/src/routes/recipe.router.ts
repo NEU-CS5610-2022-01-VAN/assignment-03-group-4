@@ -4,7 +4,12 @@ import { checkJwt } from "../middlewares/check-jwt.middleware";
 import { Review } from "../models/review";
 import { User } from "../models/user";
 
+const uploadController = require("../controllers/upload.controller");
+
 const router = Router();
+
+router.post("/:recipeId/upload", checkJwt, uploadController.uploadFiles);
+router.get("/:recipeId/files/:fileId", uploadController.download);
 
 router.get("/", async (req: Request, res: Response) => {
   try {
@@ -55,6 +60,7 @@ router.get("/:recipeId/reviews", async (req: Request, res: Response) => {
 router.post("/", checkJwt, async (req: Request, res: Response) => {
   try {
     const { title, body, categories } = req.body;
+
     const author = (req as any).user.sub;
 
     const newRecipe = new Recipe({
@@ -72,7 +78,9 @@ router.post("/", checkJwt, async (req: Request, res: Response) => {
   }
 });
 
-router.post("/:recipeId", checkJwt, async (req: Request, res: Response) => {
+router.use(checkJwt);
+
+router.post("/:recipeId", async (req: Request, res: Response) => {
   const { title, body, author, categories } = req.body;
 
   try {
@@ -94,7 +102,7 @@ router.post("/:recipeId", checkJwt, async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/", checkJwt, async (req: Request, res: Response) => {
+router.delete("/", async (req: Request, res: Response) => {
   try {
     const recipes = await Recipe.deleteMany();
 
@@ -105,7 +113,7 @@ router.delete("/", checkJwt, async (req: Request, res: Response) => {
   }
 });
 
-router.delete("/:recipeId", checkJwt, async (req: Request, res: Response) => {
+router.delete("/:recipeId", async (req: Request, res: Response) => {
   try {
     const recipe = await Recipe.findByIdAndDelete(req.params.recipeId);
 
