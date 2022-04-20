@@ -11,6 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useQuery } from "react-query";
+import { Snackbar } from "@mui/material";
 
 const animatedComponents = makeAnimated();
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
@@ -20,6 +21,7 @@ const NewRecipe = () => {
 
   const [images, setImages] = useState<any>([]);
   const [imageUrls, setImageUrls] = useState<any>([]);
+  const [open, setOpen] = useState(false);
 
   const [catLabels, setCatLabels] = useState<any>([]);
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
@@ -56,6 +58,17 @@ const NewRecipe = () => {
     const newSelectedCategories = e.map((category) => category.value);
     setSelectedCategories(newSelectedCategories);
   }
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: string
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
 
   return (
     <>
@@ -98,6 +111,7 @@ const NewRecipe = () => {
               });
 
               alert("Success");
+              // setOpen(true);
               setSubmitting(false);
               navigate("/recipe/" + newRecipe.id);
             } catch (err) {
@@ -165,6 +179,13 @@ const NewRecipe = () => {
           />
         ))}
       </>
+      <Snackbar
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message="Note archived"
+        // action={action}
+      />
 
       {/* <UploadImage /> */}
     </>
