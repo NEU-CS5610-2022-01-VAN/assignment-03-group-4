@@ -9,7 +9,6 @@ const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
   const params = useParams();
-  console.log(user);
 
   const userId = params.userId;
 
