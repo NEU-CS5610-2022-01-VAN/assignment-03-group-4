@@ -11,12 +11,6 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useQuery } from "react-query";
 
-const options = [
-  { value: "chocolate", label: "Chocolate" },
-  { value: "strawberry", label: "Strawberry" },
-  { value: "vanilla", label: "Vanilla" },
-];
-
 const animatedComponents = makeAnimated();
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
 const NewRecipe = () => {
@@ -26,9 +20,8 @@ const NewRecipe = () => {
   const [images, setImages] = useState<any>([]);
   const [imageUrls, setImageUrls] = useState<any>([]);
 
-  const [catLoaded, setCatLoaded] = useState<any>(false);
-
   const [catLabels, setCatLabels] = useState<any>([]);
+  const [selectedCategories, setSelectedCategories] = useState<any>([]);
 
   const {
     isLoading,
@@ -39,24 +32,13 @@ const NewRecipe = () => {
     axios.get(url).then((res) => {
       setCatLabels(
         res.data.map((category) => {
-          return { value: category, label: category.name };
+          return { value: category._id, label: category.name };
         })
       );
-      // console.log(catLabels);
 
       return res.data;
     })
   );
-
-  // useEffect(() => {
-  //   if (catLoaded) return;
-  //   const newLabels = categories.map((category) => {
-  //     return { value: category.id, label: category.name };
-  //   });
-  //   setCatLoaded(true);
-
-  //   setCatLabels(newLabels);
-  // }, [catLoaded, categories]);
 
   useEffect(() => {
     if (images.length < 1) return;
@@ -67,6 +49,11 @@ const NewRecipe = () => {
 
   function onImageChange(e) {
     setImages([...e.target.files]);
+  }
+
+  function onLabelChange(e) {
+    const newSelectedCategories = e.map((category) => category.value);
+    setSelectedCategories(newSelectedCategories);
   }
 
   return (
@@ -87,6 +74,7 @@ const NewRecipe = () => {
         onSubmit={async (values: any, { setSubmitting }) => {
           setTimeout(async () => {
             try {
+              values.categories = selectedCategories;
               const res = await axios.post(
                 `${process.env.REACT_APP_API_BASE_URL}/recipes/`,
                 values,
@@ -96,7 +84,6 @@ const NewRecipe = () => {
               );
               const newRecipe = res.data;
 
-              // var cnt = 0;
               images.forEach(async (img) => {
                 const formData = new FormData();
                 formData.append("file", img);
@@ -158,9 +145,9 @@ const NewRecipe = () => {
         <Select
           closeMenuOnSelect={false}
           components={animatedComponents}
-          // defaultValue={[options[2], options[3]]}
           isMulti
           options={catLabels}
+          onChange={onLabelChange}
         />
       )}
 
