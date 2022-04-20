@@ -52,16 +52,29 @@ const NewRecipe = () => {
               );
               const newRecipe = res.data;
 
-              const formData = new FormData();
-              formData.append("file", images[0]);
+              // var cnt = 0;
+              images.forEach(async (img) => {
+                const formData = new FormData();
+                formData.append("file", img);
+                await axios.post(
+                  `${process.env.REACT_APP_API_BASE_URL}/recipes/${newRecipe.id}/upload`,
+                  formData,
+                  {
+                    headers: { Authorization: `Bearer ${accessToken}` },
+                  }
+                );
+              });
+              // const formData = new FormData();
 
-              const fileRes = await axios.post(
-                `${process.env.REACT_APP_API_BASE_URL}/recipes/${newRecipe.id}/upload`,
-                formData,
-                {
-                  headers: { Authorization: `Bearer ${accessToken}` },
-                }
-              );
+              // formData.append("file", images[0]);
+
+              // await axios.post(
+              //   `${process.env.REACT_APP_API_BASE_URL}/recipes/${newRecipe.id}/upload`,
+              //   formData,
+              //   {
+              //     headers: { Authorization: `Bearer ${accessToken}` },
+              //   }
+              // );
 
               alert("Success");
               setSubmitting(false);
@@ -107,7 +120,12 @@ const NewRecipe = () => {
       <>
         <input type="file" multiple accept="image/*" onChange={onImageChange} />
         {imageUrls.map((imageSrc) => (
-          <img style={{ width: 400 }} src={imageSrc} alt={imageSrc} />
+          <img
+            style={{ width: 400 }}
+            src={imageSrc}
+            alt={imageSrc}
+            key={imageSrc}
+          />
         ))}
       </>
 

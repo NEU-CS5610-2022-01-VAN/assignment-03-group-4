@@ -6,6 +6,7 @@ import { Link, useParams } from "react-router-dom";
 
 import ReviewList from "../components/ReviewList";
 import NewComment from "../components/NewComment";
+import ImageCard from "../components/ImageCard";
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
@@ -29,11 +30,20 @@ const RecipeDetail = () => {
       ) : (
         <div>
           <h2>{recipe.title}</h2>
-          <img
-            className="recipe_card_image"
-            src="https://x.yummlystatic.com/web/strawberry-grain.png"
-            alt="recipe"
-          />
+          {recipe.photos.length ? (
+            <>
+              s
+              {recipe.photos.map((img) => (
+                <ImageCard photoId={img} recipeId={recipe.id} key={img} />
+              ))}
+            </>
+          ) : (
+            <img
+              className="recipe_card_image"
+              src="https://x.yummlystatic.com/web/strawberry-grain.png"
+              alt="recipe"
+            />
+          )}
 
           <div>
             <span>by </span>
