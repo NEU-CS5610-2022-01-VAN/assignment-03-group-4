@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Navbar from "@material-tailwind/react/Navbar";
+// import Navbar from "@material-tailwind/react/Navbar";
 import NavbarContainer from "@material-tailwind/react/NavbarContainer";
 import NavbarWrapper from "@material-tailwind/react/NavbarWrapper";
 import NavbarBrand from "@material-tailwind/react/NavbarBrand";
@@ -15,52 +15,55 @@ export default function TopNavbar() {
   const [openNavbar, setOpenNavbar] = useState(false);
 
   return (
-    <div
-      style={{
-        position: "sticky",
-        top: 0,
-      }}
+    <nav
+      className={`flex flex-wrap items-center justify-between py-1 px-2 border-b`}
+      style={{ backgroundColor: "#FFFFFF" }}
     >
-      <Navbar color="blue" navbar>
-        <NavbarContainer>
-          <NavbarWrapper>
-            <NavbarBrand>Navbar</NavbarBrand>
-            <NavbarToggler
-              color="white"
-              onClick={() => setOpenNavbar(!openNavbar)}
-              ripple="light"
-            />
-          </NavbarWrapper>
-
-          <NavbarCollapse open={openNavbar}>
-            <Nav>
-              <div className="flex flex-col z-50 lg:flex-row lg:items-center">
-                <NavLink href="/" rel="noreferrer" ripple="light">
-                  <Icon name="description" size="2xl" />
-                  &nbsp;Home
-                </NavLink>
-
-                <NavLink href="/recipes" rel="noreferrer" ripple="light">
-                  <Icon name="apps" size="2xl" />
-                  &nbsp;Recipes
-                </NavLink>
-
-                <NavLink href="/newrecipe" rel="noreferrer" ripple="light">
-                  <Icon name="apps" size="2xl" />
-                  &nbsp;New Recipe
-                </NavLink>
-
-                <NavLink href="/profile" rel="noreferrer" ripple="light">
-                  <Icon name="apps" size="2xl" />
-                  &nbsp;Profile
-                </NavLink>
+      <NavbarContainer>
+        <NavbarWrapper>
+          <NavbarBrand>
+            <div className="text-amber-500 text-xl">🥖 &nbsp;Recipe</div>
+          </NavbarBrand>
+          <NavbarToggler
+            color="white"
+            onClick={() => setOpenNavbar(!openNavbar)}
+            ripple="dark"
+          />
+        </NavbarWrapper>
+        <NavbarCollapse open={openNavbar}>
+          <Nav>
+            <NavLink href="/" rel="noreferrer" ripple="light">
+              <div className="text-black flex lg:flex-row lg:items-center">
+                <Icon name="description" size="xl" />
+                &nbsp;Home
               </div>
-            </Nav>
-          </NavbarCollapse>
+            </NavLink>
 
-          <UserNavbarDropdown />
-        </NavbarContainer>
-      </Navbar>
-    </div>
+            <NavLink href="/recipes" rel="noreferrer" ripple="light">
+              <div className="text-black flex lg:flex-row lg:items-center">
+                <Icon name="apps" size="xl" />
+                &nbsp;Recipes
+              </div>
+            </NavLink>
+
+            <NavLink href="/newrecipe" rel="noreferrer" ripple="light">
+              <div className="text-black flex lg:flex-row lg:items-center">
+                <Icon name="apps" size="xl" />
+                &nbsp;New Recipe
+              </div>
+            </NavLink>
+
+            <NavLink href="/profile" rel="noreferrer" ripple="light">
+              <div className="text-black flex lg:flex-row lg:items-center">
+                <Icon name="apps" size="xl" />
+                &nbsp;Profile
+              </div>
+            </NavLink>
+          </Nav>
+        </NavbarCollapse>
+        <UserNavbarDropdown />
+      </NavbarContainer>
+      {/* </Navbar> */}
+    </nav>
   );
 }

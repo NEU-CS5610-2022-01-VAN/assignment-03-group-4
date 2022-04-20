@@ -27,7 +27,19 @@ const ImageCard = ({ photoId, recipeId }) => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        <img className="recipe_card_image" src={data} alt="recipe" />
+        // <img className="recipe_card_image" src={data} alt="recipe" />
+
+        <div
+          className={`rounded-lg -mt-9 shadow-lg`}
+          style={{
+            width: "255px",
+            height: "240px",
+            backgroundPosition: "center",
+            // backgroundImage: `url(https://www.maggi.co.uk/sites/default/files/styles/maggi_desktop_image_style/public/NUK1265%20maggi%20Recipes%20banner%201500x700px%20opt2A.jpg?h=4f5b30f1&itok=DcsF1RwA)`,
+            backgroundImage: `url(${data})`,
+            backgroundSize: "cover",
+          }}
+        />
       )}
     </>
   );

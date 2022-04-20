@@ -58,7 +58,7 @@ function RequireAuth({ children }) {
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <link
         href="https://fonts.googleapis.com/icon?family=Material+Icons"
         rel="stylesheet"
@@ -88,7 +88,9 @@ function App() {
 function LayoutsWithNavbar() {
   return (
     <>
-      <TopNavbar />
+      <div className="w-full z-20">
+        <TopNavbar />
+      </div>
       <Outlet />
     </>
   );

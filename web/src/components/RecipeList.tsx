@@ -21,15 +21,15 @@ const RecipeList = ({ url }) => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        <Container>
-          <Row>
+        <section className=" pt-10 pb-48">
+          <div className=" flex flex-wrap container max-w-7xl mx-auto px-4">
             {recipes.map((recipe) => (
-              <Col md="auto" key={recipe.id}>
+              <div className="px-3 pt-6 pb-8" key={recipe._id}>
                 <RecipeCard recipe={recipe} key={recipe.id} />
-              </Col>
+              </div>
             ))}
-          </Row>
-        </Container>
+          </div>
+        </section>
       )}
     </>
   );

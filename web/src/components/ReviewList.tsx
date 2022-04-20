@@ -19,15 +19,17 @@ const ReviewList = ({ url }) => {
       ) : isLoading ? (
         <div>Loading...</div>
       ) : (
-        <Container>
-          <Row>
-            {reviews.map((review) => (
-              <Col md="auto" key={review._id}>
-                <ReviewCard review={review} />
-              </Col>
-            ))}
-          </Row>
-        </Container>
+        <section className="pt-20 pb-48">
+          <div className=" container max-w-7xl mx-auto px-4">
+            <div className="flex flex-wrap">
+              {reviews.map((review) => (
+                <div key={review._id}>
+                  <ReviewCard review={review} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
       )}
     </>
   );
