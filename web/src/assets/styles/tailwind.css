@@ -770,8 +770,7 @@ video {
   background-color: rgba(239, 68, 68, var(--tw-bg-opacity));
 }
 .bg-landing-background {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
-    url(https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80);
+  background-image: url("../img/recipe2.png");
 }
 .bg-login-background {
   background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)),
@@ -824,6 +823,10 @@ video {
 .pt-8 {
   padding-top: 2rem;
 }
+.pb-8 {
+  padding-bottom: 2rem;
+}
+
 .pb-6 {
   padding-bottom: 1.5rem;
 }
@@ -838,6 +841,9 @@ video {
 }
 .pt-16 {
   padding-top: 4rem;
+}
+.pb-16 {
+  padding-bottom: 4rem;
 }
 .pb-32 {
   padding-bottom: 8rem;
@@ -1771,6 +1777,9 @@ video {
 .h-10 {
   height: 2.5rem;
 }
+.h-64 {
+  height: 16rem;
+}
 .h-32 {
   height: 8rem;
 }
@@ -1791,6 +1800,9 @@ video {
 }
 .h-28 {
   height: 7rem;
+}
+.h-60 {
+  height: 15rem;
 }
 .h-5 {
   height: 1.25rem;
@@ -2522,6 +2534,9 @@ video {
 }
 .bg-opacity-20 {
   --tw-bg-opacity: 0.2;
+}
+.bg-opacity-20 {
+  --tw-bg-opacity: 0.6;
 }
 .bg-opacity-80 {
   --tw-bg-opacity: 0.8;
