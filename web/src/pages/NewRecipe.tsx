@@ -7,12 +7,38 @@ import { useNavigate } from "react-router-dom";
 import { useAuthToken } from "../components/AuthTokenContext";
 import UploadImage from "../components/UploadImage";
 
+import Select from "react-select";
+import makeAnimated from "react-select/animated";
+import { useQuery } from "react-query";
+
+const animatedComponents = makeAnimated();
+const url = process.env.REACT_APP_API_BASE_URL + "/categories";
 const NewRecipe = () => {
   const { accessToken } = useAuthToken();
   const navigate = useNavigate();
 
   const [images, setImages] = useState<any>([]);
   const [imageUrls, setImageUrls] = useState<any>([]);
+
+  const [catLabels, setCatLabels] = useState<any>([]);
+  const [selectedCategories, setSelectedCategories] = useState<any>([]);
+
+  const {
+    isLoading,
+    error,
+    data: categories,
+    isFetching,
+  } = useQuery("categories", () =>
+    axios.get(url).then((res) => {
+      setCatLabels(
+        res.data.map((category) => {
+          return { value: category._id, label: category.name };
+        })
+      );
+
+      return res.data;
+    })
+  );
 
   useEffect(() => {
     if (images.length < 1) return;
@@ -23,6 +49,11 @@ const NewRecipe = () => {
 
   function onImageChange(e) {
     setImages([...e.target.files]);
+  }
+
+  function onLabelChange(e) {
+    const newSelectedCategories = e.map((category) => category.value);
+    setSelectedCategories(newSelectedCategories);
   }
 
   return (
@@ -43,6 +74,7 @@ const NewRecipe = () => {
         onSubmit={async (values: any, { setSubmitting }) => {
           setTimeout(async () => {
             try {
+              values.categories = selectedCategories;
               const res = await axios.post(
                 `${process.env.REACT_APP_API_BASE_URL}/recipes/`,
                 values,
@@ -52,7 +84,6 @@ const NewRecipe = () => {
               );
               const newRecipe = res.data;
 
-              // var cnt = 0;
               images.forEach(async (img) => {
                 const formData = new FormData();
                 formData.append("file", img);
@@ -64,17 +95,6 @@ const NewRecipe = () => {
                   }
                 );
               });
-              // const formData = new FormData();
-
-              // formData.append("file", images[0]);
-
-              // await axios.post(
-              //   `${process.env.REACT_APP_API_BASE_URL}/recipes/${newRecipe.id}/upload`,
-              //   formData,
-              //   {
-              //     headers: { Authorization: `Bearer ${accessToken}` },
-              //   }
-              // );
 
               alert("Success");
               setSubmitting(false);
@@ -116,6 +136,20 @@ const NewRecipe = () => {
           </Form>
         )}
       </Formik>
+
+      {error ? (
+        <div>Error: {(error as any).mesasge}</div>
+      ) : isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <Select
+          closeMenuOnSelect={false}
+          components={animatedComponents}
+          isMulti
+          options={catLabels}
+          onChange={onLabelChange}
+        />
+      )}
 
       <>
         <input type="file" multiple accept="image/*" onChange={onImageChange} />
