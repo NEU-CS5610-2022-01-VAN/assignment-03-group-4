@@ -12,7 +12,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/tailwind.css";
 
 // Bootstrap CSS
-// import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import TopNavbar from "./components/TopNavbar";
 import { AuthTokenProvider } from "./components/AuthTokenContext";

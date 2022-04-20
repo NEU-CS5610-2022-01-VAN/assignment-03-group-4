@@ -20,22 +20,17 @@ const RecipeCard = ({ recipe }) => (
         {recipe.photos.length ? (
           <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
         ) : (
-          <img
-            className="recipe_card_image"
-            src="https://x.yummlystatic.com/web/strawberry-grain.png"
-            alt="recipe"
+          <div
+            className={`rounded-lg -mt-9 shadow-lg`}
+            style={{
+              width: "255px",
+              height: "240px",
+              backgroundPosition: "center",
+              backgroundImage: `url(https://www.maggi.co.uk/sites/default/files/styles/maggi_desktop_image_style/public/NUK1265%20maggi%20Recipes%20banner%201500x700px%20opt2A.jpg?h=4f5b30f1&itok=DcsF1RwA)`,
+              backgroundSize: "cover",
+            }}
           />
         )}
-        {/* <div
-          className={`rounded-lg -mt-9 shadow-lg`}
-          style={{
-            width: "255px",
-            height: "240px",
-            backgroundPosition: "center",
-            backgroundImage: `url(https://www.maggi.co.uk/sites/default/files/styles/maggi_desktop_image_style/public/NUK1265%20maggi%20Recipes%20banner%201500x700px%20opt2A.jpg?h=4f5b30f1&itok=DcsF1RwA)`,
-            backgroundSize: "cover",
-          }}
-        /> */}
 
         <div className="p-4">
           <H6 color="gray">{recipe.title}</H6>
