@@ -3,14 +3,10 @@ import React from "react";
 import { useQuery } from "react-query";
 import "./css/recipeCard.css";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Skeleton } from "@mui/material";
 
 const ImageCard = ({ photoId, recipeId }) => {
-  const url =
-    process.env.REACT_APP_API_BASE_URL +
-    "/recipes/" +
-    recipeId +
-    "/files/" +
-    photoId;
+  const url = `${process.env.REACT_APP_API_BASE_URL}/recipes/${recipeId}/files/${photoId}`;
 
   const { isLoading, error, data, isFetching } = useQuery(url, () =>
     axios
@@ -23,11 +19,19 @@ const ImageCard = ({ photoId, recipeId }) => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <Skeleton variant="rectangular" animation="wave">
+          <div
+            className={`rounded-lg -mt-9 shadow-lg`}
+            style={{
+              width: "255px",
+              height: "240px",
+              backgroundPosition: "center",
+              backgroundSize: "cover",
+            }}
+          />
+        </Skeleton>
       ) : (
-        // <img className="recipe_card_image" src={data} alt="recipe" />
+        //* <CircularProgress color="inherit" /> */
 
         <div
           className={`rounded-lg -mt-9 shadow-lg`}
@@ -35,7 +39,6 @@ const ImageCard = ({ photoId, recipeId }) => {
             width: "255px",
             height: "240px",
             backgroundPosition: "center",
-            // backgroundImage: `url(https://www.maggi.co.uk/sites/default/files/styles/maggi_desktop_image_style/public/NUK1265%20maggi%20Recipes%20banner%201500x700px%20opt2A.jpg?h=4f5b30f1&itok=DcsF1RwA)`,
             backgroundImage: `url(${data})`,
             backgroundSize: "cover",
           }}

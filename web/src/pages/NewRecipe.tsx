@@ -12,6 +12,8 @@ import Select from "react-select";
 import makeAnimated from "react-select/animated";
 import { useQuery } from "react-query";
 import { Snackbar } from "@mui/material";
+import Backdrop from "@mui/material/Backdrop";
+import AppBackdrop from "../components/AppBackdrop";
 
 const animatedComponents = makeAnimated();
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
@@ -25,6 +27,14 @@ const NewRecipe = () => {
 
   const [catLabels, setCatLabels] = useState<any>([]);
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
+
+  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
+  const handlebackdropClose = () => {
+    setBackdropOpen(false);
+  };
+  const handleToggle = () => {
+    setBackdropOpen(!backdropOpen);
+  };
 
   const {
     isLoading,
@@ -67,7 +77,7 @@ const NewRecipe = () => {
       return;
     }
 
-    setOpen(false);
+    setBackdropOpen(false);
   };
 
   return (
@@ -88,6 +98,8 @@ const NewRecipe = () => {
         onSubmit={async (values: any, { setSubmitting }) => {
           setTimeout(async () => {
             try {
+              setBackdropOpen(true);
+
               values.categories = selectedCategories;
               const res = await axios.post(
                 `${process.env.REACT_APP_API_BASE_URL}/recipes/`,
@@ -179,6 +191,7 @@ const NewRecipe = () => {
           />
         ))}
       </>
+
       <Snackbar
         open={open}
         autoHideDuration={6000}
@@ -186,6 +199,8 @@ const NewRecipe = () => {
         message="Note archived"
         // action={action}
       />
+
+      {backdropOpen && <AppBackdrop />}
 
       {/* <UploadImage /> */}
     </>

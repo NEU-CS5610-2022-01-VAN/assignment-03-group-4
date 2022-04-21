@@ -8,6 +8,7 @@ import { IoMdArrowDropdown } from "react-icons/io";
 
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
+import { Skeleton } from "@mui/material";
 
 // The forwardRef is important!!
 // Dropdown needs access to the DOM node in order to position the Menu
@@ -36,16 +37,26 @@ const UserNavbarDropdown = () => {
       <Dropdown>
         <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
           <div className="dropdown-card">
-            <Image
-              className="avatar"
-              src={
-                isAuthenticated
-                  ? (user as any).picture
-                  : "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA="
-              }
-              alt={"user avatar"}
-              roundedCircle={true}
-            />
+            {isLoading ? (
+              <Skeleton variant="circular" animation="wave">
+                <Image
+                  className="avatar"
+                  alt={"user avatar"}
+                  roundedCircle={true}
+                />
+              </Skeleton>
+            ) : (
+              <Image
+                className="avatar"
+                src={
+                  isAuthenticated
+                    ? (user as any).picture
+                    : "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA="
+                }
+                alt={"user avatar"}
+                roundedCircle={true}
+              />
+            )}
             <IoMdArrowDropdown color="white" size={25} />
           </div>
         </Dropdown.Toggle>
