@@ -5,14 +5,14 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
+// Bootstrap CSS
+// import "bootstrap/dist/css/bootstrap.min.css";
+
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Tailwind CSS Style Sheet
 import "./assets/styles/tailwind.css";
-
-// Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
 
 import TopNavbar from "./components/TopNavbar";
 import { AuthTokenProvider } from "./components/AuthTokenContext";

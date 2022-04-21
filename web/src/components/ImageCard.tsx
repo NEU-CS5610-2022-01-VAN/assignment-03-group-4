@@ -37,7 +37,7 @@ const ImageCard = ({ photoId, recipeId }) => {
           className={`rounded-lg -mt-9 shadow-lg`}
           style={{
             width: "255px",
-            height: "240px",
+            height: "200px",
             backgroundPosition: "center",
             backgroundImage: `url(${data})`,
             backgroundSize: "cover",

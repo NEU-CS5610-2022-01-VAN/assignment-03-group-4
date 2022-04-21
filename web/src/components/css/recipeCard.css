@@ -14,7 +14,17 @@
   min-height: 200px;
 }
 
-.recipe_card_image {
-  width: 300px;
-  height: 200px;
+.recipe-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.recipe-category {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
