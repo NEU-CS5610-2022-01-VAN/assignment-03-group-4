@@ -46,7 +46,6 @@ const RecipeCard = ({ recipe }) => (
             recipe.categories.map((category: any) => (
               <Button key={category._id}>{category.name}</Button>
             ))}
-          {console.log(recipe)}
 
           {/* <ReactStars
             count={5}

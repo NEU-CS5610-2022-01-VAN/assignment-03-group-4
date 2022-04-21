@@ -23,7 +23,6 @@ export default function VerifyUser() {
       );
 
       const user = await data.json();
-      console.log(user);
 
       if (user._id) {
         navigate("/profile");

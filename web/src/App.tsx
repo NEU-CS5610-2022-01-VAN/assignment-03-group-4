@@ -22,6 +22,7 @@ import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import Profile from "./pages/Profile";
 import VerifyUser from "./pages/VerifyUser";
+import Category from "./pages/Category";
 
 const queryClient = new QueryClient();
 
@@ -107,7 +108,7 @@ function AppRouter() {
           <Route path="/profile" element={<Profile />}>
             <Route path=":userId" element={<Profile />} />
           </Route>
-          <Route path="/verify-user" element={<VerifyUser />} />
+          <Route path="/categories/:categoryId" element={<Category />} />
           <Route
             path="/newrecipe"
             element={
@@ -116,6 +117,8 @@ function AppRouter() {
               </RequireAuth>
             }
           />
+          <Route path="/verify-user" element={<VerifyUser />} />
+
           <Route
             path="*"
             element={
