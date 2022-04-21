@@ -1,23 +1,20 @@
 import "./css/recipeCard.css";
-import { Image } from "react-bootstrap";
-import ReactStars from "react-rating-stars-component";
 import ImageCard from "./ImageCard";
 
-import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
-import React from "react";
 import { Rating } from "@mui/material";
-
-import H6 from "@material-tailwind/react/Heading6";
-import { url } from "inspector";
 
 const RecipeCard = ({ recipe }) => (
   <>
     <Link to={`/recipe/${recipe.id}`}>
       <div className={`w-72 h-84 rounded-xl overflow-hdden shadow-md p-4`}>
         {recipe.photos.length ? (
-          <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
+          <ImageCard
+            photoId={recipe.photos[0]}
+            recipeId={recipe.id}
+            card={true}
+          />
         ) : (
           <div
             className={`rounded-lg -mt-9 shadow-lg`}
@@ -44,11 +41,6 @@ const RecipeCard = ({ recipe }) => (
               ))}
             {console.log(recipe)}
           </div>
-          {recipe.categories &&
-            recipe.categories.map((category: any) => (
-              <Button key={category._id}>{category.name}</Button>
-            ))}
-
           <div className="recipe-title font-serif text-xl font-semibold pb-1">
             {recipe.title}
           </div>
@@ -56,7 +48,7 @@ const RecipeCard = ({ recipe }) => (
           <Rating name="read-only" value={recipe.rating} readOnly />
 
           <h3 className="">
-            by&nbsp;
+            By&nbsp;
             <Link to={`/profile/${recipe.author.id}`}>
               {recipe.author.name}
             </Link>
