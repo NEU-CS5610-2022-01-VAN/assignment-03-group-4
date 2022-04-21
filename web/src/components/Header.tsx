@@ -1,6 +1,14 @@
 import H2 from "@material-tailwind/react/Heading2";
 import LeadText from "@material-tailwind/react/LeadText";
 
+import Card from "@material-tailwind/react/Card";
+import CardImage from "@material-tailwind/react/CardImage";
+import CardBody from "@material-tailwind/react/CardBody";
+import CardFooter from "@material-tailwind/react/CardFooter";
+import H6 from "@material-tailwind/react/Heading6";
+import Paragraph from "@material-tailwind/react/Paragraph";
+import Button from "@material-tailwind/react/Button";
+
 export default function Header() {
   return (
     <div className="relative pt-16 pb-32 flex content-center items-center justify-center h-screen">
@@ -9,6 +17,7 @@ export default function Header() {
         <div className="items-center flex flex-wrap">
           <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
             <H2 color="white">Your story starts with us.</H2>
+           
             <div className="text-gray-200">
               <LeadText color="gray-200">
                 This is a simple example of a Landing Page you can build using
@@ -20,5 +29,7 @@ export default function Header() {
         </div>
       </div>
     </div>
+   
+
   );
 }
