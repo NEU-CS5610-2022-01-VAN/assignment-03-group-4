@@ -4,7 +4,7 @@ import { useQuery } from "react-query";
 import "./css/recipeCard.css";
 import CircularProgress from "@mui/material/CircularProgress";
 
-const ImageCard = ({ photoId, recipeId }) => {
+const ImageCard = ({ photoId, recipeId, card }) => {
   const url =
     process.env.REACT_APP_API_BASE_URL +
     "/recipes/" +
@@ -26,7 +26,7 @@ const ImageCard = ({ photoId, recipeId }) => {
         <div>
           <CircularProgress color="inherit" />
         </div>
-      ) : (
+      ) : card ? (
         // <img className="recipe_card_image" src={data} alt="recipe" />
 
         <div
@@ -40,6 +40,8 @@ const ImageCard = ({ photoId, recipeId }) => {
             backgroundSize: "cover",
           }}
         />
+      ) : (
+        <img className="w-120 recipe_card_image " src={data} alt="recipe" />
       )}
     </>
   );

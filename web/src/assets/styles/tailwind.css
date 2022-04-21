@@ -1714,6 +1714,12 @@ video {
 .mb-1 {
   margin-bottom: 0.25rem;
 }
+.ml-50 {
+  margin-left: 12.5rem;
+}
+.ml-30 {
+  margin-left: 7.5rem;
+}
 .ml-1 {
   margin-left: 0.25rem;
 }
@@ -1845,6 +1851,9 @@ video {
 }
 .w-\[28rem\] {
   width: 28rem;
+}
+.w-120 {
+  width: 30rem;
 }
 .w-64 {
   width: 16rem;
