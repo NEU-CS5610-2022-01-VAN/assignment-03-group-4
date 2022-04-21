@@ -13,6 +13,7 @@ import makeAnimated from "react-select/animated";
 import { useQuery } from "react-query";
 import { Snackbar } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
+import AppBackdrop from "../components/AppBackdrop";
 
 const animatedComponents = makeAnimated();
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
@@ -191,17 +192,6 @@ const NewRecipe = () => {
         ))}
       </>
 
-      <Backdrop
-        sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={backdropOpen}
-        onClick={handleClose}
-      >
-        <div>
-          <h3>Creating New Recipe</h3>
-          <CircularProgress color="inherit" />
-        </div>
-      </Backdrop>
-
       <Snackbar
         open={open}
         autoHideDuration={6000}
@@ -209,6 +199,8 @@ const NewRecipe = () => {
         message="Note archived"
         // action={action}
       />
+
+      {backdropOpen && <AppBackdrop />}
 
       {/* <UploadImage /> */}
     </>
