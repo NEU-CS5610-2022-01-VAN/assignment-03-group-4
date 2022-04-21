@@ -5,7 +5,7 @@ import "./css/recipeCard.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import { Skeleton } from "@mui/material";
 
-const ImageCard = ({ photoId, recipeId }) => {
+const ImageCard = ({ photoId, recipeId, card }) => {
   const url = `${process.env.REACT_APP_API_BASE_URL}/recipes/${recipeId}/files/${photoId}`;
 
   const { isLoading, error, data, isFetching } = useQuery(url, () =>
@@ -30,19 +30,21 @@ const ImageCard = ({ photoId, recipeId }) => {
             }}
           />
         </Skeleton>
-      ) : (
-        //* <CircularProgress color="inherit" /> */
+      ) : card ? (
+        // <img className="recipe_card_image" src={data} alt="recipe" />
 
         <div
           className={`rounded-lg -mt-9 shadow-lg`}
           style={{
             width: "255px",
-            height: "240px",
+            height: "200px",
             backgroundPosition: "center",
             backgroundImage: `url(${data})`,
             backgroundSize: "cover",
           }}
         />
+      ) : (
+        <img className="w-120 recipe_card_image " src={data} alt="recipe" />
       )}
     </>
   );

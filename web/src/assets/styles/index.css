@@ -19,3 +19,15 @@
     --tw-translate-x: -50% !important;
   }
 }
+
+.font-roboto {
+  font-family: Roboto, Helvetica, sans-serif;
+}
+
+.font-source {
+  font-family: SourceSerif, helvetica, sans-serif;
+}
+
+.font-mont {
+  font-family: Montserrat, sans-serif;
+}
