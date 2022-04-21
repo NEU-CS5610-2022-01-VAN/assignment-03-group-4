@@ -9,6 +9,7 @@ import ReviewList from "../components/ReviewList";
 import NewComment from "../components/NewComment";
 import ImageCard from "../components/ImageCard";
 
+
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
 const RecipeDetail = () => {
