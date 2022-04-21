@@ -29,6 +29,7 @@ const NewRecipe = () => {
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
 
   const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
+
   const handlebackdropClose = () => {
     setBackdropOpen(false);
   };
@@ -96,10 +97,10 @@ const NewRecipe = () => {
           return errors;
         }}
         onSubmit={async (values: any, { setSubmitting }) => {
+          setBackdropOpen(true);
+
           setTimeout(async () => {
             try {
-              setBackdropOpen(true);
-
               values.categories = selectedCategories;
               const res = await axios.post(
                 `${process.env.REACT_APP_API_BASE_URL}/recipes/`,
@@ -200,7 +201,7 @@ const NewRecipe = () => {
         // action={action}
       />
 
-      {backdropOpen && <AppBackdrop />}
+      {backdropOpen && <AppBackdrop text={"Creating New Recipe"} />}
 
       {/* <UploadImage /> */}
     </>

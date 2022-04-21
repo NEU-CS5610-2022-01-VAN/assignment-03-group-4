@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import axios from "axios";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -7,10 +7,12 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import { useAuthToken } from "./AuthTokenContext";
 import LoginButton from "./LoginButton";
+import AppBackdrop from "./AppBackdrop";
 
 const NewComment = ({ recipeId }) => {
   const { accessToken } = useAuthToken();
   const { user, error, isAuthenticated, isLoading } = useAuth0();
+  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -48,6 +50,7 @@ const NewComment = ({ recipeId }) => {
           return errors;
         }}
         onSubmit={(values: any, { setSubmitting }) => {
+          setBackdropOpen(true);
           setTimeout(() => {
             axios
               .post(`${process.env.REACT_APP_API_BASE_URL}/reviews/`, values, {
@@ -57,6 +60,7 @@ const NewComment = ({ recipeId }) => {
                 alert("Success");
                 setSubmitting(false);
                 navigate("/recipe/" + recipeId);
+                setBackdropOpen(false);
               })
               .catch((err) => console.log(err));
           }, 200);
@@ -93,6 +97,8 @@ const NewComment = ({ recipeId }) => {
           </Form>
         )}
       </Formik>
+
+      {backdropOpen && <AppBackdrop text={"Creating New Comment"} />}
     </>
   );
 };
