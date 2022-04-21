@@ -11,7 +11,6 @@ const mongoClient = new MongoClient(process.env.MONGO_URL || "");
 const uploadFiles = async (req: any, res: any) => {
   try {
     await upload(req, res);
-    console.log(req.file);
     if (req.file == undefined) {
       return res.send({
         message: "You must select a file.",
