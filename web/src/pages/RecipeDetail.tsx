@@ -8,6 +8,7 @@ import { Link, useParams } from "react-router-dom";
 import ReviewList from "../components/ReviewList";
 import NewComment from "../components/NewComment";
 import ImageCard from "../components/ImageCard";
+import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
@@ -72,7 +73,9 @@ const RecipeDetail = () => {
 
           {isAuthenticated &&
             !userIsLoading &&
-            (user as any).sub === recipe.author.id && <h1>My recipe!!!</h1>}
+            (user as any).sub === recipe.author.id && (
+              <DeleteRecipeButton recipeId={recipe.id} />
+            )}
 
           <hr />
 
