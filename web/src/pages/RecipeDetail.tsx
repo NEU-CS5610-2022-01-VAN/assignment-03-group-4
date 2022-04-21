@@ -98,10 +98,10 @@ const RecipeDetail = () => {
               (user as any).sub === recipe.author.id && (
                 <DeleteRecipeButton recipeId={recipe.id} />
               )}
-            <hr />
+            <hr className="mt-24" />
             <h4>What others say about this recipe?</h4>
             <ReviewList url={url + "/reviews"} />
-            <hr />
+            <hr className="mt-24" />
             <NewComment recipeId={recipeId} />
           </div>
         </>
