@@ -1927,6 +1927,9 @@ video {
 .max-w-6xl {
   max-width: 72rem;
 }
+.max-w-4xl {
+  max-width: 60rem;
+}
 .max-w-3xl {
   max-width: 48rem;
 }
@@ -2056,6 +2059,7 @@ video {
 .overflow-hidden {
   overflow: hidden;
 }
+
 .overflow-y-scroll {
   overflow-y: scroll;
 }

@@ -17,7 +17,7 @@ export default function TopNavbar() {
 
   return (
     <nav
-      className={`flex flex-wrap items-center justify-between py-1 px-2 border-b`}
+      className={`flex flex-wrap items-center justify-between py-1 border-b`}
       style={{ backgroundColor: "#FFFFFF" }}
     >
       <NavbarContainer>

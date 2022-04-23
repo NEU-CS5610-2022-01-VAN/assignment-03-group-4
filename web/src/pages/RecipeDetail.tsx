@@ -10,6 +10,7 @@ import ReviewList from "../components/ReviewList";
 import NewComment from "../components/NewComment";
 import ImageCard from "../components/ImageCard";
 import Avatar from "@mui/material/Avatar";
+import MyCarousel from "../components/MyCarousel";
 
 import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
@@ -28,7 +29,7 @@ const RecipeDetail = () => {
   } = useQuery("recipeDetail", () => axios.get(url).then((res) => res.data));
 
   return (
-    <div className="w-full pt-10 pb-48">
+    <div className="w-full pt-10 pb-48 ">
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
@@ -36,7 +37,7 @@ const RecipeDetail = () => {
       ) : (
         <>
           <div className="fixed float-left bg-amber-500 ml-30 p-3">share</div>
-          <div className="container max-w-7xl mx-auto px-4 ml-50">
+          <div className="container max-w-4xl mx-auto px-4 ml-50">
             <div className="recipe-category text-sm font-medium flex pb-8">
               FILED UNDER: &nbsp;
               {recipe.categories &&
@@ -74,24 +75,26 @@ const RecipeDetail = () => {
             </div>
             <hr />
 
+            <MyCarousel />
             {/* {recipe.photos.length ? (
-            <>
-              {recipe.photos.map((img) => (
-                <ImageCard
-                  photoId={img}
-                  recipeId={recipe.id}
-                  card={false}
-                  key={img}
-                />
-              ))}
-            </>
-          ) : (
-            <img
-              className="recipe_card_image"
-              src="https://x.yummlystatic.com/web/strawberry-grain.png"
-              alt="recipe"
-            />
-          )} */}
+              <>
+                {recipe.photos.map((img) => (
+                  <ImageCard
+                    photoId={img}
+                    recipeId={recipe.id}
+                    card={false}
+                    key={img}
+                  />
+                ))}
+              </>
+            ) : (
+              <img
+                className="recipe_card_image"
+                src="https://x.yummlystatic.com/web/strawberry-grain.png"
+                alt="recipe"
+              />
+            )} */}
+
             <div>How to cook: {recipe.body}</div>
             {isAuthenticated &&
               !userIsLoading &&
