@@ -2,7 +2,7 @@ import { CircularProgress } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import { useState } from "react";
 
-const AppBackdrop = () => {
+const AppBackdrop = ({ text }) => {
   const [open, setOpen] = useState<boolean>(true);
   return (
     <Backdrop
@@ -10,8 +10,14 @@ const AppBackdrop = () => {
       open={open}
       onClick={() => setOpen(false)}
     >
-      <div>
-        <h3>Creating New Recipe</h3>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+        }}
+      >
+        <h3>{text}</h3>
         <CircularProgress color="inherit" />
       </div>
     </Backdrop>

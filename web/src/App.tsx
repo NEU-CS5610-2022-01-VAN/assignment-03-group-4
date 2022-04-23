@@ -23,6 +23,7 @@ import Recipes from "./pages/Recipes";
 import Profile from "./pages/Profile";
 import VerifyUser from "./pages/VerifyUser";
 import Category from "./pages/Category";
+import Footer from "./components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -93,6 +94,7 @@ function LayoutsWithNavbar() {
         <TopNavbar />
       </div>
       <Outlet />
+      <Footer />
     </>
   );
 }

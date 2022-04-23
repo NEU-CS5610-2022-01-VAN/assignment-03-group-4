@@ -1,31 +1,26 @@
-import { NextFunction, Request, Response } from "express";
+import type { ErrorRequestHandler } from "express";
 
-export const errorHandler = (
-  error: any,
-  request: Request,
-  response: Response,
-  next: NextFunction
-) => {
+export const errorHandler: ErrorRequestHandler = (err, req, res, next) => {
   if (
-    error &&
-    error.status &&
-    error.status === 401 &&
-    error.code &&
-    error.code === "credentials_required"
+    err &&
+    err.status &&
+    err.status === 401 &&
+    err.code &&
+    err.code === "credentials_required"
   ) {
-    response.status(error.status).json({ message: "Requires authentication" });
+    res.status(err.status).json({ message: "Requires authentication" });
 
     return;
   }
 
-  if (error && error.status && error.status === 401) {
-    response.status(error.status).json({ message: "Bad credentials" });
+  if (err && err.status && err.status === 401) {
+    res.status(err.status).json({ message: "Bad credentials" });
 
     return;
   }
 
-  const status = error.statusCode || error.code || 500;
-  const message = error.message || "internal error";
+  const status = err.statusCode || err.code || 500;
+  const message = err.message || "internal error";
 
-  response.status(status).json({ message });
+  res.status(status).json({ message });
 };

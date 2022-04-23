@@ -12,6 +12,12 @@ import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { IoFastFoodOutline, IoFastFood } from "react-icons/io5";
+import {
+  AiOutlineShareAlt,
+  AiOutlineSetting,
+  AiOutlineBell,
+} from "react-icons/ai";
 
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
 
@@ -54,7 +60,7 @@ export default function LeftCategoryDrawer() {
             onKeyDown={toggleDrawer(false)}
           >
             <List>
-              {["🥖 Recipe", "Oh I love it"].map((text, index) => (
+              {["🥖   Recipe", "Oh I love it"].map((text, index) => (
                 <ListItem
                   button
                   key={text}
@@ -81,6 +87,8 @@ export default function LeftCategoryDrawer() {
                       key={category._id}
                       onClick={() => navigate(`/categories/${category._id}`)}
                     >
+                      <IoFastFoodOutline />
+                      &nbsp; &nbsp;
                       <ListItemText primary={category.name} />
                     </ListItem>
                   ))}
@@ -90,11 +98,23 @@ export default function LeftCategoryDrawer() {
             )}
 
             <List>
-              {["Subscribe", "Settings", "Share"].map((text, index) => (
-                <ListItem button key={text}>
-                  <ListItemText primary={text} />
-                </ListItem>
-              ))}
+              <ListItem button>
+                <AiOutlineBell />
+                &nbsp; &nbsp;
+                <ListItemText primary={"Subscribe"} />
+              </ListItem>
+
+              <ListItem button>
+                <AiOutlineSetting />
+                &nbsp; &nbsp;
+                <ListItemText primary={"Settings"} />
+              </ListItem>
+
+              <ListItem button>
+                <AiOutlineShareAlt />
+                &nbsp; &nbsp;
+                <ListItemText primary={"Share"} />
+              </ListItem>
             </List>
           </Box>
         </Drawer>

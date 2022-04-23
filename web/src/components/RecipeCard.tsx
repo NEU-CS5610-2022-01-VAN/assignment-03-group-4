@@ -39,7 +39,6 @@ const RecipeCard = ({ recipe }) => (
                   {category.name}
                 </div>
               ))}
-            {console.log(recipe)}
           </div>
           <div className="recipe-title font-serif text-xl font-semibold pb-1">
             {recipe.title}

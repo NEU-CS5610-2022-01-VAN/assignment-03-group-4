@@ -3,85 +3,96 @@ import "./css/userNavbarDropdown.css";
 import React from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Dropdown } from "react-bootstrap";
-import Image from "react-bootstrap/Image";
 import { IoMdArrowDropdown } from "react-icons/io";
+
+import Button from "@mui/material/Button";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import { Link, useNavigate } from "react-router-dom";
+import Divider from "@mui/material/Divider";
 
 import LogoutButton from "./LogoutButton";
 import LoginButton from "./LoginButton";
-import { Skeleton } from "@mui/material";
-
-// The forwardRef is important!!
-// Dropdown needs access to the DOM node in order to position the Menu
-const CustomToggle = (React.forwardRef as any)(({ children, onClick }, ref) => (
-  <a
-    href=""
-    ref={ref}
-    onClick={(e) => {
-      e.preventDefault();
-      onClick(e);
-    }}
-  >
-    {children}
-  </a>
-));
+import { MenuList, Skeleton } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 
 const UserNavbarDropdown = () => {
-  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { user, isAuthenticated, isLoading, logout, loginWithRedirect } =
+    useAuth0();
 
-  // if (isLoading) {
-  //   return <div>Loading ...</div>;
-  // }
+  const navigate = useNavigate();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const onMenuItemClick = (link) => {
+    navigate(link);
+    setAnchorEl(null);
+  };
 
   return (
     <div>
-      <Dropdown>
-        <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
-          <div className="dropdown-card">
-            {isLoading ? (
-              <Skeleton variant="circular" animation="wave">
-                <Image
-                  className="avatar"
-                  alt={"user avatar"}
-                  roundedCircle={true}
-                />
-              </Skeleton>
-            ) : (
-              <Image
-                className="avatar"
-                src={
-                  isAuthenticated
-                    ? (user as any).picture
-                    : "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA="
-                }
-                alt={"user avatar"}
-                roundedCircle={true}
-              />
-            )}
-            <IoMdArrowDropdown color="white" size={25} />
-          </div>
-        </Dropdown.Toggle>
+      <Button
+        id="basic-button"
+        aria-controls={open ? "basic-menu" : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? "true" : undefined}
+        onClick={handleClick}
+      >
+        {isLoading ? (
+          <Skeleton variant="circular">
+            <Avatar alt={"user avatar"} />
+          </Skeleton>
+        ) : (
+          <Avatar
+            src={
+              isAuthenticated
+                ? (user as any).picture
+                : "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA="
+            }
+            alt={"user avatar"}
+          />
+        )}
+      </Button>
 
-        <Dropdown.Menu>
-          {isAuthenticated ? (
-            <>
-              <Dropdown.Item href="/profile">
-                <>Signed in as</>
-                <br />
+      <Menu
+        id="basic-menu"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        MenuListProps={{
+          "aria-labelledby": "basic-button",
+        }}
+      >
+        {isAuthenticated ? (
+          <MenuList>
+            <MenuItem onClick={() => onMenuItemClick("/profile")}>
+              <div>
+                <p>Signed in as</p>
                 <b>{(user as any).name}</b>
-              </Dropdown.Item>
-              <Dropdown.Item href="/profile">Your Profile</Dropdown.Item>
-              <Dropdown.Divider />
-              <Dropdown.Item>
-                <LogoutButton>Sign out</LogoutButton>
-              </Dropdown.Item>
-            </>
-          ) : (
-            <Dropdown.Item eventKey="4">
-              <LoginButton>Log in</LoginButton>
-            </Dropdown.Item>
-          )}
-        </Dropdown.Menu>
-      </Dropdown>
+              </div>
+            </MenuItem>
+            <Divider sx={{ my: 0.5 }} />
+
+            <MenuItem onClick={() => onMenuItemClick("/profile")}>
+              Profile
+            </MenuItem>
+            <MenuItem
+              onClick={() => logout({ returnTo: window.location.origin })}
+            >
+              Log out
+            </MenuItem>
+          </MenuList>
+        ) : (
+          <MenuItem onClick={() => loginWithRedirect()}>Sign in</MenuItem>
+        )}
+      </Menu>
     </div>
   );
 };

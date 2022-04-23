@@ -9,6 +9,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Button from "@mui/material/Button";
+import AppBackdrop from "./AppBackdrop";
 
 const DeleteRecipeButton = ({ recipeId }) => {
   const url = process.env.REACT_APP_API_BASE_URL + "/recipes/" + recipeId;
@@ -17,7 +18,11 @@ const DeleteRecipeButton = ({ recipeId }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
+  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
+
   const onDeleteButtonClick = () => {
+    setOpen(false);
+    setBackdropOpen(true);
     setTimeout(() => {
       axios
         .delete(url, {
@@ -25,6 +30,7 @@ const DeleteRecipeButton = ({ recipeId }) => {
         })
         .then(() => {
           alert("Success");
+          setBackdropOpen(false);
           navigate(-1);
         })
         .catch((err) => console.log(err));
@@ -66,6 +72,8 @@ const DeleteRecipeButton = ({ recipeId }) => {
           </Button>
         </DialogActions>
       </Dialog>
+
+      {backdropOpen && <AppBackdrop text={"Deleting Recipe"} />}
     </>
   );
 };
