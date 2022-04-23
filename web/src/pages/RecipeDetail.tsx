@@ -5,10 +5,9 @@ import { Button } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useParams } from "react-router-dom";
-
+import { CheckBox } from "@mui/icons-material";
 import ReviewList from "../components/ReviewList";
 import NewComment from "../components/NewComment";
-import ImageCard from "../components/ImageCard";
 import Avatar from "@mui/material/Avatar";
 import MyCarousel from "../components/MyCarousel";
 
@@ -52,8 +51,8 @@ const RecipeDetail = () => {
                 ))}
             </div>
             <div className="text-6xl font-serif">{recipe.title}</div>
-
-            <div className="pt-6 flex">
+            <hr className="mt-4" />
+            <div className="pt-4 flex">
               <Avatar alt="avater" src="../assets/img/recipe.png" />
 
               <div className="px-2">
@@ -74,7 +73,6 @@ const RecipeDetail = () => {
               <div>1 Reviews</div>
             </div>
             <hr />
-
             <MyCarousel />
             {/* {recipe.photos.length ? (
               <>
@@ -94,13 +92,41 @@ const RecipeDetail = () => {
                 alt="recipe"
               />
             )} */}
-
-            <div>How to cook: {recipe.body}</div>
+            {/* <div>How to cook: {recipe.body}</div>
+             */}
+            <hr className="mt-2" />
+            <div className="text-3xl font-serif pt-3">Ingredients</div>
+            <div className="font-serif flex flex-col gap-2 py-4">
+              <div>👌 2 slices whole grain bread </div>
+              <div>👌 ½ avocado </div>
+              <div>👌 2 tablespoons</div>
+            </div>
+            <hr className="mt-2" />
+            <div className="text-3xl font-serif pt-3">Directions</div>
+            <div className="py-2 font-serif flex flex-col gap-2 py-4">
+              <div className="text-xl font-medium">Step 1</div>
+              <div className="ml-16">
+                Toast bread slices to desired doneness, 3 to 5 minutes.
+              </div>
+              <div className="py-2 text-xl font-medium">Step 2</div>
+              <div className="ml-16">
+                Mash avocado in a bowl; stir in cilantro, Meyer lemon juice,
+                Meyer lemon zest, cayenne pepper, and sea salt. Spread avocado
+                mixture onto toast and top with chia seeds.
+              </div>
+            </div>
             {isAuthenticated &&
               !userIsLoading &&
               (user as any).sub === recipe.author.id && (
                 <DeleteRecipeButton recipeId={recipe.id} />
               )}
+            <div
+              className="mt-10 flex flex-col place-items-center w-full p-6 text-xl font-serif"
+              style={{ backgroundColor: "#F5F1E7" }}
+            >
+              ❤️ How would you rate this recipe?
+              <Rating className="pt-2" size="large" name="rate" value={0} />
+            </div>
             <hr className="mt-24" />
             <h4>What others say about this recipe?</h4>
             <ReviewList url={url + "/reviews"} />

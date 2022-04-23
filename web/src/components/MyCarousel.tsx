@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-
 const images = [
   {
     image:
@@ -17,14 +16,28 @@ const images = [
 
 const videos = [{ id: "hj4WR2aSxSk" }];
 
+const Thumbnail = (props) => {
+  return (
+    <div
+      style={{
+        margin: "5px",
+        width: "200px",
+        padding: "10px",
+        height: "100px",
+        backgroundPosition: "center",
+        backgroundImage: `url(${props.url})`,
+        backgroundSize: "cover",
+      }}
+    />
+  );
+};
+
 function MyCarousel() {
   const [urlCurrent, setUrlCurrent] = useState(
     `https://www.youtube.com/embed/${videos[0].id}`
   );
   const [video, setVideo] = useState(true);
-  useEffect(() => {
-    // document.title = `You clicked ${count} times`;
-  });
+  useEffect(() => {});
   return (
     <>
       {video ? (
@@ -55,44 +68,32 @@ function MyCarousel() {
         <>
           {videos.map((v) => {
             return (
-              <div
+              <button
+                key={v.id}
                 onClick={() => {
                   setUrlCurrent(`https://www.youtube.com/embed/${v.id}`);
                   setVideo(true);
                 }}
-                key={v.id}
-                style={{
-                  marginRight: "20px",
-                  width: "200px",
-                  padding: "10px",
-                  height: "100px",
-                  backgroundPosition: "center",
-                  backgroundImage: `url(https://img.youtube.com/vi/${v.id}/mqdefault.jpg)`,
-                  backgroundSize: "cover",
-                }}
-              />
+              >
+                <Thumbnail
+                  url={`https://img.youtube.com/vi/${v.id}/mqdefault.jpg`}
+                />
+              </button>
             );
           })}
         </>
         <>
           {images.map((c) => {
             return (
-              <div
+              <button
+                key={c.image}
                 onClick={() => {
                   setUrlCurrent(c.image);
                   setVideo(false);
                 }}
-                key={c.image}
-                style={{
-                  marginRight: "20px",
-                  width: "200px",
-                  padding: "10px",
-                  height: "100px",
-                  backgroundPosition: "center",
-                  backgroundImage: `url(${c.image})`,
-                  backgroundSize: "cover",
-                }}
-              />
+              >
+                <Thumbnail url={c.image} />
+              </button>
             );
           })}
         </>
