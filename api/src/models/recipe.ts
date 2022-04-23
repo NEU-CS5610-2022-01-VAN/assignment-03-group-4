@@ -4,8 +4,6 @@ interface IRecipe {
   title: string;
   body: string;
   rating?: number;
-  createdAt?: Date;
-
   author: String;
   categories: Types.ObjectId[];
   photos: Types.ObjectId[];
@@ -26,11 +24,6 @@ const recipeSchema = new Schema<IRecipe>(
       min: 1,
       max: 5,
     },
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
-
     author: {
       type: String,
       required: true,
@@ -51,13 +44,14 @@ const recipeSchema = new Schema<IRecipe>(
     ],
   },
   {
-    //add populated fields to json and object
+    //add virtual fields to json and object
     toJSON: {
       virtuals: true,
     },
     toObject: {
       virtuals: true,
     },
+    timestamps: true,
   }
 );
 
@@ -66,21 +60,6 @@ recipeSchema.virtual("reviews", {
   localField: "_id",
   foreignField: "recipe",
 });
-
-// recipeSchema.pre("find", function () {
-//   this.populate("reviews").populate("categories");
-// });
-
-// recipeSchema.pre("find", function (next) {
-//   // if ((this as any).options._recursed) {
-//   //   return next();
-//   // }
-//   this.populate({
-//     path: "reviews author categories",
-//     options: { _recursed: true },
-//   });
-//   next();
-// });
 
 const Recipe = model<IRecipe>("Recipe", recipeSchema);
 

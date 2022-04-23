@@ -4,7 +4,6 @@ interface IUser {
   _id: string;
   email: string;
   name?: string;
-  createdAt?: Date;
 }
 
 const userSchema = new Schema<IUser>(
@@ -19,26 +18,18 @@ const userSchema = new Schema<IUser>(
       required: true,
     },
     name: String,
-    createdAt: {
-      type: Date,
-      default: Date.now,
-    },
   },
   {
-    //add populated fields to json and object
+    //add virtual fields to json and object
     toJSON: {
       virtuals: true,
     },
     toObject: {
       virtuals: true,
     },
+    timestamps: true,
   }
 );
-
-// only id in populated recipes
-// userSchema.pre("find", function () {
-//   this.populate("recipes", "id -author");
-// });
 
 userSchema.virtual("recipes", {
   ref: "Recipe",

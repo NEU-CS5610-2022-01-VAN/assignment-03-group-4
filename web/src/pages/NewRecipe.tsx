@@ -115,7 +115,7 @@ const NewRecipe = () => {
                 const formData = new FormData();
                 formData.append("file", img);
                 await axios.post(
-                  `${process.env.REACT_APP_API_BASE_URL}/recipes/${newRecipe.id}/upload`,
+                  `${process.env.REACT_APP_API_BASE_URL}/recipes/${newRecipe.id}/files`,
                   formData,
                   {
                     headers: { Authorization: `Bearer ${accessToken}` },
