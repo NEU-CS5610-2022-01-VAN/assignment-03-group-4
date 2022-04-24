@@ -1,165 +1,17 @@
-import { Router, Request, Response } from "express";
-import { User } from "../models/user";
+import { Router } from "express";
 import { checkJwt } from "../middlewares/check-jwt.middleware";
-import { Review } from "../models/review";
-import { Recipe } from "../models/recipe";
-var guard = require("express-jwt-permissions")();
+import * as userController from "../controllers/user.controller";
+const guard = require("express-jwt-permissions")();
 
 const router = Router();
 
-router.get("/", async (req: Request, res: Response) => {
-  try {
-    const users = await User.find();
-
-    res.send(users);
-  } catch (err) {
-    res.status(500).send(err);
-    console.log(err);
-  }
-});
-
-router.get("/:userId", async (req: Request, res: Response) => {
-  try {
-    const userId = req.params.userId;
-
-    const user = await User.findById(userId)
-      .populate("recipes")
-      .populate("reviews");
-
-    res.send(user);
-  } catch (err) {
-    res.status(500).send(err);
-    console.log(err);
-  }
-});
-
-router.get("/:userId/reviews", async (req: Request, res: Response) => {
-  try {
-    const userId = req.params.userId;
-
-    const reviews = await Review.find({
-      author: userId,
-    }).populate({
-      path: "author",
-      model: User,
-    });
-
-    res.send(reviews);
-  } catch (err) {
-    res.status(500).send(err);
-    console.log(err);
-  }
-});
-
-router.get("/:userId/recipes", async (req: Request, res: Response) => {
-  try {
-    const userId = req.params.userId;
-
-    const recipes = await Recipe.find({
-      author: userId,
-    })
-      .populate("reviews")
-      .populate("categories")
-      .populate({
-        path: "author",
-        model: User,
-      });
-
-    res.send(recipes);
-  } catch (err) {
-    res.status(500).send(err);
-    console.log(err);
-  }
-});
-
-router.use(checkJwt);
-
-router.post("/verify-user", async (req: Request, res: Response) => {
-  try {
-    const _id = (req as any).user.sub;
-    const email = (req as any).user[`${process.env.AUTH0_AUDIENCE}/email`];
-    const name = (req as any).user[`${process.env.AUTH0_AUDIENCE}/name`];
-
-    const user = await User.findById(_id);
-    if (user) {
-      res.send(user);
-    } else {
-      const newUser = new User({
-        _id,
-        email,
-        name,
-      });
-      await newUser.save();
-      res.send(newUser);
-    }
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
-});
-
-router.post("/", async (req: Request, res: Response) => {
-  try {
-    const { _id, email, name } = req.body;
-
-    const newUser = new User({
-      email,
-      name,
-      _id,
-    });
-    await newUser.save();
-
-    res.send(newUser);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
-});
-
-router.post("/:userId", async (req: Request, res: Response) => {
-  try {
-    const userId = req.params.userId;
-    const { email, name, password } = req.body;
-
-    const user = await User.findByIdAndUpdate(
-      userId,
-      {
-        email,
-        password,
-        name,
-      },
-      { new: true }
-    );
-
-    res.send(user);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
-});
-
-router.delete("/", async (req: Request, res: Response) => {
-  try {
-    const users = await User.deleteMany();
-
-    res.send(users);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
-});
-
-router.delete("/:userId", async (req: Request, res: Response) => {
-  try {
-    const userId = req.params.userId;
-
-    const user = await User.findByIdAndDelete(userId);
-
-    res.send(user);
-  } catch (err) {
-    console.log(err);
-    res.status(500).send(err);
-  }
-});
+router.get("/", userController.getAllUsers);
+router.get("/:userId", userController.getUserById);
+router.get("/:userId/reviews", userController.getReviewsByUserId);
+router.get("/:userId/recipes", userController.getRecipesByUserId);
+router.post("/verify-user", checkJwt, userController.verifyUser);
+router.post("/", checkJwt, userController.createUser);
+router.post("/:userId", checkJwt, userController.updateUserById);
+router.delete("/:userId", checkJwt, userController.DeleteUserById);
 
 export default router;

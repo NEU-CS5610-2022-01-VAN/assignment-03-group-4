@@ -5,14 +5,14 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
+// Bootstrap CSS
+// import "bootstrap/dist/css/bootstrap.min.css";
+
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
 
 // Tailwind CSS Style Sheet
 import "./assets/styles/tailwind.css";
-
-// Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
 
 import TopNavbar from "./components/TopNavbar";
 import { AuthTokenProvider } from "./components/AuthTokenContext";
@@ -23,6 +23,8 @@ import Recipes from "./pages/Recipes";
 import Profile from "./pages/Profile";
 import VerifyUser from "./pages/VerifyUser";
 import SearchPage from "./pages/SearchPage";
+import Category from "./pages/Category";
+import Footer from "./components/Footer";
 
 const queryClient = new QueryClient();
 
@@ -93,6 +95,7 @@ function LayoutsWithNavbar() {
         <TopNavbar />
       </div>
       <Outlet />
+      <Footer />
     </>
   );
 }
@@ -109,7 +112,7 @@ function AppRouter() {
           <Route path="/profile" element={<Profile />}>
             <Route path=":userId" element={<Profile />} />
           </Route>
-          <Route path="/verify-user" element={<VerifyUser />} />
+          <Route path="/categories/:categoryId" element={<Category />} />
           <Route
             path="/newrecipe"
             element={
@@ -118,6 +121,8 @@ function AppRouter() {
               </RequireAuth>
             }
           />
+          <Route path="/verify-user" element={<VerifyUser />} />
+
           <Route
             path="*"
             element={

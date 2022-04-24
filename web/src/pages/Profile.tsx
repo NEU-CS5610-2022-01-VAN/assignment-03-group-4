@@ -5,6 +5,7 @@ import LoginButton from "../components/LoginButton";
 import ProfileCard from "../components/ProfileCard";
 import PublicProfile from "../components/PublicProfile";
 import CircularProgress from "@mui/material/CircularProgress";
+import { useRef } from "react";
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -12,6 +13,12 @@ const Profile = () => {
   const params = useParams();
 
   const userId = params.userId;
+
+  const inputEl = useRef(null);
+  const onButtonClick = () => {
+    // `current` 指向已挂载到 DOM 上的文本输入元素
+    (inputEl as any).current.focus();
+  };
 
   return (
     <>

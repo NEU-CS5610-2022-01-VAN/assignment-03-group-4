@@ -10,16 +10,19 @@ import NavLink from "@material-tailwind/react/NavLink";
 import Icon from "@material-tailwind/react/Icon";
 
 import UserNavbarDropdown from "./UserNavbarDropdown";
+import LeftCategoryDrawer from "./LeftCategoryDrawer";
 
 export default function TopNavbar() {
   const [openNavbar, setOpenNavbar] = useState(false);
 
   return (
     <nav
-      className={`flex flex-wrap items-center justify-between py-1 px-2 border-b`}
+      className={`flex flex-wrap items-center justify-between py-1 border-b`}
       style={{ backgroundColor: "#FFFFFF" }}
     >
       <NavbarContainer>
+        <LeftCategoryDrawer />
+
         <NavbarWrapper>
           <NavbarBrand>
             <div className="text-amber-500 text-xl">🥖 &nbsp;Recipe</div>

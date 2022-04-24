@@ -1,5 +1,5 @@
-import React from "react";
-import ReactDOM from 'react-dom';
+import React, { useState } from "react";
+
 import axios from "axios";
 // import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useFormik } from 'formik';
@@ -11,6 +11,7 @@ import TextField from '@mui/material/TextField';
 
 import { useAuthToken } from "./AuthTokenContext";
 import LoginButton from "./LoginButton";
+import AppBackdrop from "./AppBackdrop";
 
 
 const validationSchema = yup.object({
@@ -52,6 +53,8 @@ const NewComment = ({ recipeId }) => {
 
   const { accessToken } = useAuthToken();
   const { user, error, isAuthenticated, isLoading } = useAuth0();
+  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
+
   const navigate = useNavigate();
 
   if (isLoading) {

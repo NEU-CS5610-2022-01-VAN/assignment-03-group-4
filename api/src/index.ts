@@ -1,12 +1,8 @@
-import express, { Express, Request, Response } from "express";
-import Joi from "joi";
-import mongoose, { connect } from "mongoose";
+import express, { Express } from "express";
+import mongoose from "mongoose";
 import morgan from "morgan";
-import { createValidator } from "express-joi-validation";
 import "dotenv/config";
 import cors from "cors";
-import { GridFsStorage } from "multer-gridfs-storage";
-import multer from "multer";
 
 //routers
 import userRouter from "./routes/user.router";
@@ -25,11 +21,6 @@ app.use(express.json());
 app.use(morgan("dev"));
 app.use(cors());
 
-// app.use(function (req: any, res: any, next: any) {
-//   console.log(req);
-//   next();
-// });
-
 //routers
 app.use("/users", userRouter);
 app.use("/recipes", recipeRouter);
@@ -37,30 +28,17 @@ app.use("/categories", categoryRouter);
 app.use("/reviews", reviewRouter);
 
 async function connectDatabase() {
-  const databaseUrl: string = <string>process.env.MONGO_URL;
+  const databaseUrl = <string>process.env.MONGO_URL;
   await mongoose.connect(databaseUrl, {});
-  console.log("MongoDB connected oh yeah!");
+  console.log("MongoDB connected.");
 }
 
 connectDatabase().catch((err) => console.log(err));
 
-// let bucket;
-// mongoose.connection.on("connected", () => {
-//   var db = mongoose.connections[0].db;
-//   bucket = new mongoose.mongo.GridFSBucket(db, {
-//     bucketName: "newBucket",
-//   });
-//   console.log(bucket);
-// });
-
 const port: number = Number(process.env.PORT) || 8000;
 
-app.get("/", (req: Request, res: Response) => {
-  res.send("Express + TypeScript Server");
-});
-
-// app.use(errorHandler);
-// app.use(notFoundHandler);
+app.use(errorHandler);
+app.use(notFoundHandler);
 
 app.listen(port, () => {
   console.log(`App running on port: ${port}`);
