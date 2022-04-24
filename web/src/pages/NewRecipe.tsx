@@ -443,6 +443,7 @@ const NewRecipe = () => {
                 disabled={isSubmitting}
                 type="submit"
                 onMouseDown={(e) => e.preventDefault()}
+                sx={{ margin: "5vh" }}
               >
                 Submit
               </Button>
