@@ -10,6 +10,9 @@ import NewComment from "../components/NewComment";
 import ImageCard from "../components/ImageCard";
 import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
+import { FacebookShareButton, TwitterShareButton } from "react-share";
+import { FacebookIcon, TwitterIcon } from "react-share";
+
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
@@ -33,6 +36,20 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <div>
+          <div>
+            <FacebookShareButton
+              url={"https://baidu.com"}
+              quote={recipe.title}
+            >
+            <FacebookIcon size={32} round /></FacebookShareButton>
+            <br />
+            <TwitterShareButton
+              title={recipe.title}
+              url={url}
+            >
+            <TwitterIcon size={32} round />
+            </TwitterShareButton>
+          </div>
           <h2>{recipe.title}</h2>
           {recipe.photos.length ? (
             <>
@@ -79,7 +96,7 @@ const RecipeDetail = () => {
 
           <hr />
 
-          <h4>What others say about this recipe?</h4>
+          <h4 className="font-serif mb-6">Reviews</h4>
           <ReviewList url={url + "/reviews"} />
           <hr />
 
