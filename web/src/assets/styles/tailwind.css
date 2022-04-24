@@ -1727,6 +1727,9 @@ video {
 .ml-30 {
   margin-left: 7.5rem;
 }
+.ml-10 {
+  margin-left: 2.5rem;
+}
 .ml-1 {
   margin-left: 0.25rem;
 }
@@ -1762,6 +1765,9 @@ video {
 }
 .mr-10 {
   margin-right: 2.5rem;
+}
+.mr-20 {
+  margin-right: 6rem;
 }
 .block {
   display: block;

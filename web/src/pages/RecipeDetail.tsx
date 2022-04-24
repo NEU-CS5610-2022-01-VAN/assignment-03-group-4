@@ -12,6 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import MyCarousel from "../components/MyCarousel";
 
 import DeleteRecipeButton from "../components/DeleteRecipeButton";
+import { grey } from "@mui/material/colors";
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
@@ -37,8 +38,10 @@ const RecipeDetail = () => {
         <>
           <div className="fixed float-left bg-amber-500 ml-30 p-3">share</div>
           <div className="container max-w-4xl mx-auto px-4 ml-50">
-            <div className="recipe-category text-sm font-medium flex pb-8">
-              FILED UNDER: &nbsp;
+            <div className="recipe-category text-sm font-medium flex content-center pb-16">
+              <div className="font-roboto px-1 py-1 text-sm uppercase ">
+                FILED UNDER: &nbsp;
+              </div>
               {recipe.categories &&
                 recipe.categories.map((category: any) => (
                   <div
@@ -51,8 +54,12 @@ const RecipeDetail = () => {
                 ))}
             </div>
             <div className="text-6xl font-serif">{recipe.title}</div>
-            <hr className="mt-4" />
-            <div className="pt-4 flex">
+            <div className="text-gray-800 pt-4 text-xl font-serif">
+              This quick and easy sheet pan dinner is on the table in less than
+              30 minutes and the whole family will love it!
+            </div>
+            {/* <hr className="mt-4" /> */}
+            <div className="py-4 flex">
               <Avatar alt="avater" src="../assets/img/recipe.png" />
 
               <div className="px-2">
@@ -67,11 +74,11 @@ const RecipeDetail = () => {
                 </div>
               </div>
             </div>
-            <div className="py-3 inline-flex">
+            {/* <div className="py-3 inline-flex">
               <Rating name="read-only" value={recipe.rating} readOnly />
               <div>0 Ratings</div>
               <div>1 Reviews</div>
-            </div>
+            </div> */}
             <hr />
             <MyCarousel />
             {/* {recipe.photos.length ? (
