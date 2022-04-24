@@ -42,10 +42,10 @@ export default function TopNavbar() {
               </div>
             </NavLink>
 
-            <NavLink href="/recipes" rel="noreferrer" ripple="light">
+            <NavLink href="/search" rel="noreferrer" ripple="light">
               <div className="text-black flex lg:flex-row lg:items-center">
                 <Icon name="apps" size="xl" />
-                &nbsp;Recipes
+                &nbsp;Search
               </div>
             </NavLink>
 

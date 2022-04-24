@@ -22,6 +22,7 @@ import Home from "./pages/Home";
 import Recipes from "./pages/Recipes";
 import Profile from "./pages/Profile";
 import VerifyUser from "./pages/VerifyUser";
+import SearchPage from "./pages/SearchPage";
 import Category from "./pages/Category";
 import Footer from "./components/Footer";
 
@@ -105,7 +106,8 @@ function AppRouter() {
       <Routes>
         <Route path="/" element={<LayoutsWithNavbar />}>
           <Route path="/" element={<Home />} />
-          <Route path="/recipes" element={<Recipes />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<SearchPage />} />
           <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
           <Route path="/profile" element={<Profile />}>
             <Route path=":userId" element={<Profile />} />

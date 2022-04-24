@@ -14,6 +14,10 @@ import MyCarousel from "../components/MyCarousel";
 import DeleteRecipeButton from "../components/DeleteRecipeButton";
 import { grey } from "@mui/material/colors";
 
+import { FacebookShareButton, TwitterShareButton } from "react-share";
+import { FacebookIcon, TwitterIcon } from "react-share";
+
+
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
 const RecipeDetail = () => {
