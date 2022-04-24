@@ -39,7 +39,7 @@ const Thumbnail = (props) => {
   );
 };
 
-function MyCarousel() {
+function MyCarousel(props) {
   const [urlCurrent, setUrlCurrent] = useState(
     `https://www.youtube.com/embed/${videos[0].id}`
   );
@@ -72,42 +72,7 @@ function MyCarousel() {
             }}
           />
         )}
-        <div
-          style={{
-            width: "210px",
-            height: "260px",
-            borderWidth: 2,
-            borderColor: "#D9D9D9",
-          }}
-          className="flex flex-col mr-2 bg-amber-300 rounded"
-        >
-          <div className="ml-auto border-none">
-            <IoTimerOutline color="#E7AB47" size="30" />
-          </div>
-          {/* <div className="font-serif ml-2 pb-2">Aboute This Recipe</div> */}
-          <div className="mt-2 font-serif flex flex-col ml-10 gap-2 py-2">
-            <div className="flex content-center  ">
-              <div className=" text-gray-800 font-bold mr-2">5.0</div>
-              <Rating name="read-only" value={5} readOnly />
-            </div>
-
-            <div className=" text-sm">17 Ratings 10 reviews</div>
-            <div className="flex flex-col gap-2">
-              <div className="flex content-center mt-5 ">
-                Total Minutes
-                <div className="text-gray-800 font-bold ml-2">3</div>
-              </div>
-              <div className="flex content-center ">
-                <div>Ingredients </div>
-                <div className="text-gray-800 font-bold ml-2">4</div>
-              </div>
-              <div className="flex content-center ">
-                <div>Cooking Steps </div>
-                <div className="text-gray-800 font-bold ml-2">4</div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {props.children}
       </div>
       <div
         className="flex items-center h-full overflow-y-scroll"

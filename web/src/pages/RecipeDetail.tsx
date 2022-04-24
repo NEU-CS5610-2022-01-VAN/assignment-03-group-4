@@ -84,7 +84,46 @@ const RecipeDetail = () => {
               <div>1 Reviews</div>
             </div> */}
             <hr />
-            <MyCarousel />
+            <MyCarousel>
+              <div
+                style={{
+                  width: "200px",
+                  height: "378px",
+                  borderColor: "#D9D9D9",
+                  backgroundColor: "#F5F1E7",
+                }}
+                className="flex flex-col mx-auto bg-amber-300 rounded"
+              >
+                {/* <div className="ml-auto border-none">
+            <IoTimerOutline color="#E7AB47" size="30" />
+          </div> */}
+                {/* <div className="font-serif ml-2 pb-2">Aboute This Recipe</div> */}
+                <div className="mt-10 font-serif flex flex-col items-center gap-2 py-2">
+                  <div className="flex content-center  ">
+                    <div className=" text-gray-800 font-bold mr-2">5.0</div>
+                    <Rating name="read-only" value={5} readOnly />
+                  </div>
+
+                  <div className="items-center text-sm">
+                    17 Ratings 10 reviews
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex content-center mt-5 ">
+                      Total Minutes
+                      <div className="text-gray-800 font-bold ml-2">3</div>
+                    </div>
+                    <div className="flex content-center ">
+                      <div>Ingredients </div>
+                      <div className="text-gray-800 font-bold ml-2">4</div>
+                    </div>
+                    <div className="flex content-center ">
+                      <div>Cooking Steps </div>
+                      <div className="text-gray-800 font-bold ml-2">4</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </MyCarousel>
             {/* {recipe.photos.length ? (
               <>
                 {recipe.photos.map((img) => (
