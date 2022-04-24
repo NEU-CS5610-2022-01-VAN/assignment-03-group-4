@@ -1,5 +1,4 @@
 import "./css/waterFall.css";
-import Search from "./Search";
 import RecipeCard from "./RecipeCard";
 import { useEffect, useState } from "react";
 import { Col, Container, Row } from "react-bootstrap";
@@ -38,7 +37,6 @@ function WaterFall() {
             alt=""
           />
           <div>
-            <Search />
           </div>
           <img src="https://x.yummlystatic.com/web/img-fruit-bowl.png" alt="" />
         </div>
