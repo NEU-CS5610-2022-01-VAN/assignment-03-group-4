@@ -1,19 +1,16 @@
 import mongoose from "mongoose";
 import asyncHandler from "express-async-handler";
-
-import { Recipe } from "../models/recipe";
+import { MongoClient, GridFSBucket } from "mongodb";
 import "dotenv/config";
-
-const upload = require("../middlewares/upload.middleware");
-const MongoClient = require("mongodb").MongoClient;
-const GridFSBucket = require("mongodb").GridFSBucket;
+import { Recipe } from "../models/recipe";
+import { uploadFilesMiddleware } from "../middlewares/upload.middleware";
 
 const mongoClient = new MongoClient(process.env.MONGO_URL || "");
 
 export const uploadFilesByRecipeId = asyncHandler(
   async (req: any, res: any) => {
     const recipeId = req.params.recipeId;
-    await upload(req, res);
+    await uploadFilesMiddleware(req, res);
     if (req.file == undefined) {
       return res.send({
         message: "You must select a file.",

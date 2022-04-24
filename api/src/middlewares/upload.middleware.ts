@@ -1,12 +1,13 @@
-const multer = require("multer");
+import multer from "multer";
 import { GridFsStorage } from "multer-gridfs-storage";
 import "dotenv/config";
-const util = require("util");
+import util from "util";
+import { Request } from "express";
 
 const storage = new GridFsStorage({
   url: process.env.MONGO_URL || "",
   options: { useNewUrlParser: true, useUnifiedTopology: true },
-  file: (req: any, file: any) => {
+  file: (req: Request, file: any) => {
     const match = ["image/png", "image/jpeg"];
 
     if (match.indexOf(file.mimetype) === -1) {
@@ -21,7 +22,7 @@ const storage = new GridFsStorage({
     };
   },
 });
-var uploadFiles = multer({ storage: storage }).single("file");
-var uploadFilesMiddleware = util.promisify(uploadFiles);
+const uploadFiles = multer({ storage: storage }).single("file");
+const uploadFilesMiddleware = util.promisify(uploadFiles);
 
-module.exports = uploadFilesMiddleware;
+export { uploadFilesMiddleware };

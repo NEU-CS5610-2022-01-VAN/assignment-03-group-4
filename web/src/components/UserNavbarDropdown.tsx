@@ -44,6 +44,7 @@ const UserNavbarDropdown = () => {
         aria-haspopup="true"
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
+        onMouseDown={(e) => e.preventDefault()}
       >
         {isLoading ? (
           <Skeleton variant="circular">
