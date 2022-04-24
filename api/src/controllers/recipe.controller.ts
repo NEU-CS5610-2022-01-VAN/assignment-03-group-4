@@ -39,13 +39,15 @@ export const getReviewsByRecipeId = asyncHandler(
 
 export const createRecipe = asyncHandler(
   async (req: Request, res: Response) => {
-    const { title, body, categories } = req.body;
+    const { title, body, categories, ingredients, instructions } = req.body;
     const author = (req as any).user.sub;
     const newRecipe = new Recipe({
       title,
       body,
       author,
       categories,
+      ingredients,
+      instructions,
     });
     await newRecipe.save();
     res.send(newRecipe);
@@ -54,7 +56,8 @@ export const createRecipe = asyncHandler(
 
 export const updateRecipeById = asyncHandler(
   async (req: Request, res: Response) => {
-    const { title, body, author, categories } = req.body;
+    const { title, body, author, categories, ingredients, instructions } =
+      req.body;
     const recipeId = req.params.recipeId;
     const recipe = await Recipe.findByIdAndUpdate(
       recipeId,
@@ -63,6 +66,8 @@ export const updateRecipeById = asyncHandler(
         body,
         author,
         categories,
+        ingredients,
+        instructions,
       },
       { new: true }
     );

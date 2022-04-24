@@ -4,6 +4,8 @@ interface IRecipe {
   title: string;
   body: string;
   rating?: number;
+  ingredients: String[];
+  instructions: String[];
   author: String;
   categories: Types.ObjectId[];
   photos: Types.ObjectId[];
@@ -24,6 +26,18 @@ const recipeSchema = new Schema<IRecipe>(
       min: 1,
       max: 5,
     },
+    ingredients: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
+    instructions: [
+      {
+        type: String,
+        required: true,
+      },
+    ],
     author: {
       type: String,
       required: true,

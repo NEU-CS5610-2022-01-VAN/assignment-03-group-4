@@ -17,14 +17,13 @@ const Footer = () => (
       }}
     >
       <BiFoodMenu size={35} style={{ marginBottom: 10 }} />
-      <div>© 2022 ZJY Inc. All rights reserved</div>
+      <div>© 2022 Lazy Daisy Inc. All rights reserved</div>
       {/* <div>
         No time to cook? Check out{" "}
         <a href="https://www.ubereats.com/">uber eats</a>
       </div> */}
 
       <div style={{ display: "flex", flexDirection: "row" }}>
-        {/* <a style={{ color: "#6e6e73", fontSize: 10 }}>Privacy Policy</a> */}
         <Link
           href="/profile"
           underline="hover"

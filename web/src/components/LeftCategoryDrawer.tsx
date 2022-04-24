@@ -19,6 +19,7 @@ import {
   AiOutlineBell,
 } from "react-icons/ai";
 
+import { BiHelpCircle } from "react-icons/bi";
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
 
 export default function LeftCategoryDrawer() {
@@ -48,7 +49,10 @@ export default function LeftCategoryDrawer() {
   return (
     <div>
       <React.Fragment>
-        <IconButton onClick={toggleDrawer(true)}>
+        <IconButton
+          onClick={toggleDrawer(true)}
+          onMouseDown={(e) => e.preventDefault()}
+        >
           <MenuIcon />
         </IconButton>
 
@@ -108,6 +112,12 @@ export default function LeftCategoryDrawer() {
                 <AiOutlineSetting />
                 &nbsp; &nbsp;
                 <ListItemText primary={"Settings"} />
+              </ListItem>
+
+              <ListItem button>
+                <BiHelpCircle />
+                &nbsp; &nbsp;
+                <ListItemText primary={"Help"} />
               </ListItem>
 
               <ListItem button>

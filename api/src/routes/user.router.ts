@@ -7,8 +7,8 @@ const router = Router();
 
 router.get("/", userController.getAllUsers);
 router.get("/:userId", userController.getUserById);
-router.get("/:userId/reviews", userController.getUserReviews);
-router.get("/:userId/recipes", userController.getUserRecipes);
+router.get("/:userId/reviews", userController.getReviewsByUserId);
+router.get("/:userId/recipes", userController.getRecipesByUserId);
 router.post("/verify-user", checkJwt, userController.verifyUser);
 router.post("/", checkJwt, userController.createUser);
 router.post("/:userId", checkJwt, userController.updateUserById);

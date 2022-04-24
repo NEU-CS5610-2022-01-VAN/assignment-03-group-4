@@ -17,7 +17,7 @@ export const getUserById = asyncHandler(async (req: Request, res: Response) => {
   res.send(user);
 });
 
-export const getUserReviews = asyncHandler(
+export const getReviewsByUserId = asyncHandler(
   async (req: Request, res: Response) => {
     const userId = req.params.userId;
     const reviews = await Review.find({
@@ -30,7 +30,7 @@ export const getUserReviews = asyncHandler(
   }
 );
 
-export const getUserRecipes = asyncHandler(
+export const getRecipesByUserId = asyncHandler(
   async (req: Request, res: Response) => {
     const userId = req.params.userId;
     const recipes = await Recipe.find({
