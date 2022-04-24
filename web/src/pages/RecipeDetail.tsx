@@ -35,7 +35,6 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <>
-          {console.log(recipe)}
           <div className="fixed float-left bg-amber-500 ml-30 p-3">share</div>
           <div className="container max-w-7xl mx-auto px-4 ml-50">
             <div className="recipe-category text-sm font-medium flex pb-8">
