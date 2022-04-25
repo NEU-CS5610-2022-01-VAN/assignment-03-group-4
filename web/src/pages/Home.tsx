@@ -2,7 +2,7 @@ import Header from "../components/Header";
 import H2 from "@material-tailwind/react/Heading2";
 import Welcome from "../components/Welcome";
 import RecipeList from "../components/RecipeList";
-
+import Popular from "../components/Popular";
 const url = process.env.REACT_APP_API_BASE_URL + "/recipes";
 
 const Home = () => {
@@ -28,7 +28,8 @@ const Home = () => {
       <div className="pt-16 mx-auto m-full md:w-8/12 flex flex-col place-items-center">
         <hr />
         <div className="font-serif text-xl font-bold pb-4">Most Popular</div>
-        <img src="https://assets.epicurious.com/photos/6058d90df2b833b1d0cc27fc/9:4/w_2008,h_892,c_limit/GemCakes_HERO_031821_10783.jpg" />
+        {/* <img src="https://assets.epicurious.com/photos/6058d90df2b833b1d0cc27fc/9:4/w_2008,h_892,c_limit/GemCakes_HERO_031821_10783.jpg" /> */}
+        <Popular />
       </div>
       {/* <RecipeList url={url} /> */}
     </>
