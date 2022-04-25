@@ -27,8 +27,9 @@ const Home = () => {
 
       <div className="pt-16 mx-auto m-full md:w-8/12 flex flex-col place-items-center">
         <hr />
-        <div className="font-serif text-xl font-bold pb-4">Most Popular</div>
-        {/* <img src="https://assets.epicurious.com/photos/6058d90df2b833b1d0cc27fc/9:4/w_2008,h_892,c_limit/GemCakes_HERO_031821_10783.jpg" /> */}
+        <div className="font-serif text-xl font-bold pt-2 pb-3">
+          Most Popular
+        </div>
         <Popular />
       </div>
       {/* <RecipeList url={url} /> */}

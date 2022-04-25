@@ -1,4 +1,5 @@
 import Carousel from "react-bootstrap/Carousel";
+import Card from "react-bootstrap/Card";
 
 const Popular = () => {
   return (
@@ -8,7 +9,7 @@ const Popular = () => {
           className="d-block w-100"
           src="https://assets.epicurious.com/photos/6058d90df2b833b1d0cc27fc/9:4/w_2008,h_892,c_limit/GemCakes_HERO_031821_10783.jpg"
           alt="First slide"
-        />
+        ></img>
       </Carousel.Item>
       <Carousel.Item>
         <img
