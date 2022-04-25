@@ -17,8 +17,8 @@ const RecipeCard = ({ recipe }) => (
           <div
             className={`rounded-lg -mt-9 shadow-lg`}
             style={{
-              width: "255px",
-              height: "200px",
+              width: "15rem",
+              height: "14rem",
               backgroundPosition: "center",
               backgroundImage: `url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F02%2F22%2F16383-basic-crepes-mfs_003.jpg)`,
               backgroundSize: "cover",

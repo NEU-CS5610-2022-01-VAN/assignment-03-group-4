@@ -27,7 +27,7 @@ const SearchPage = () => {
     <>
       <div className="container max-w-8xl relative mx-auto">
         <div className="items-center flex flex-wrap">
-          <div className="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+          <div className="w-full lg:w-6/12 px-4 mx-auto text-center">
             <H2 color="black">Find Your Recipe.</H2>
             <input
               className="bg-amber-100 w-96 bg-opacity-80 p-4 text-black"
@@ -47,8 +47,8 @@ const SearchPage = () => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        <section className=" pt-10 pb-48">
-          <div className=" flex flex-wrap container max-w-7xl mx-auto px-4">
+        <section className="pt-10 pb-48">
+          <div className="flex flex-wrap container  md:justify-start justify-evenly mx-auto px-4">
             {recipes
               .filter((recipe) => recipe.title.includes(keyword))
               .map((recipe) => (
