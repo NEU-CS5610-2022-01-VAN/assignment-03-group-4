@@ -24,6 +24,8 @@ const originalImages = [
 const videos = [{ id: "hj4WR2aSxSk" }];
 
 const Thumbnail = (props) => {
+
+
   return (
     <div
       style={{

@@ -63,16 +63,18 @@ const UserNavbarDropdown = () => {
       </Button>
 
       <Menu
+       
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
       >
         {isAuthenticated ? (
-          <MenuList>
+          <MenuList  className="outline-none">
             <MenuItem onClick={() => onMenuItemClick("/profile")}>
               <div>
                 <p>Signed in as</p>

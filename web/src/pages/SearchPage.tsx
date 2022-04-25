@@ -5,8 +5,9 @@ import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
 import RecipeCard from "../components/RecipeCard";
 import { useParams } from "react-router-dom";
-import H2 from "@material-tailwind/react/Heading2";
-import H4 from "@material-tailwind/react/Heading4";
+import H3 from "@material-tailwind/react/Heading3";
+import H5 from "@material-tailwind/react/Heading5";
+import RecipeList from "../components/RecipeList";
 
 const url = process.env.REACT_APP_API_BASE_URL + "/recipes";
 const SearchPage = () => {
@@ -18,28 +19,35 @@ const SearchPage = () => {
   } = useQuery(url, () => axios.get(url).then((res) => res.data));
 
   const [keyword, setKeyword] = useState("");
+
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       setKeyword(e.target.value);
     }
   };
+
   return (
     <>
       <div className="container max-w-8xl relative mx-auto">
         <div className="items-center flex flex-wrap">
           <div className="w-full lg:w-6/12 px-4 mx-auto text-center">
-            <H2 color="black">Find Your Recipe.</H2>
-            <input
-              className="bg-gray-200 border-gray-200 w-96 bg-opacity-80 p-4 text-black"
-              type="text"
-              placeholder="Search recipes"
+            <div className="mt-3">
+              <H3 color="black">Find Your Recipe</H3>
+            </div>
+            <input className="bg-gray-200 border-gray-200 w-96 bg-opacity-80 p-4 text-black outline-none" type = "text" 
+              placeholder="Search recipes"   
               onKeyPress={handleKeyPress}
-            ></input>
+             >
+            </input>
           </div>
         </div>
       </div>
 
-      <H4 color="black">Search Results:</H4>
+      <div className="ml-16">
+        <H5 color="black">Search Results:</H5>
+      </div>
+      
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
@@ -47,17 +55,7 @@ const SearchPage = () => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        <section className="pt-10 pb-48">
-          <div className="flex flex-wrap container  md:justify-start justify-evenly mx-auto px-4">
-            {recipes
-              .filter((recipe) => recipe.title.includes(keyword))
-              .map((recipe) => (
-                <div className="px-2 pt-6 pb-8" key={recipe._id}>
-                  <RecipeCard recipe={recipe} key={recipe.id} />
-                </div>
-              ))}
-          </div>
-        </section>
+          <RecipeList recipes={recipes.filter((recipe) => recipe.title.toLowerCase().includes(keyword.toLowerCase()))}></RecipeList>
       )}
     </>
   );

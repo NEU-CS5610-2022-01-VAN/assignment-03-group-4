@@ -3,22 +3,9 @@ import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
 import RecipeCard from "./RecipeCard";
 
-const RecipeList = ({ url }) => {
-  const {
-    isLoading,
-    error,
-    data: recipes,
-  } = useQuery(url, () => axios.get(url).then((res) => res.data));
-
+const RecipeList = ({ recipes }) => {
   return (
     <>
-      {error ? (
-        <div>Error: {(error as any).mesasge}</div>
-      ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
-      ) : (
         <section className="pt-10 pb-48">
           <div className="justify-evenly flex flex-wrap container max-w-8xl mx-auto px-4 ">
             {recipes.map((recipe) => (
@@ -28,7 +15,6 @@ const RecipeList = ({ url }) => {
             ))}
           </div>
         </section>
-      )}
     </>
   );
 };
