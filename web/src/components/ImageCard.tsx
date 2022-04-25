@@ -3,10 +3,7 @@ import GetImageById from "../api/ImageAPI";
 import "./css/recipeCard.css";
 
 const ImageCard = ({ photoId, recipeId }) => {
-  const { isLoading, error, data, isFetching } = GetImageById(
-    photoId,
-    recipeId
-  );
+  const { isLoading, error, data } = GetImageById(photoId, recipeId);
   return (
     <>
       {error ? (

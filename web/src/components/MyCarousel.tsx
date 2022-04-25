@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import GetImageById from "../api/ImageAPI";
-import Recipes from "../pages/Recipes";
 
 // const images = [
 //   {

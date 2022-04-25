@@ -8,7 +8,6 @@ const RecipeList = ({ url }) => {
     isLoading,
     error,
     data: recipes,
-    isFetching,
   } = useQuery(url, () => axios.get(url).then((res) => res.data));
 
   return (
