@@ -513,6 +513,10 @@ video {
   margin-top: 1.5rem;
   margin-bottom: 1.5rem;
 }
+.my-32 {
+  margin-top: 8rem;
+  margin-bottom: 8rem;
+}
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
@@ -630,6 +634,9 @@ video {
 }
 .w-full {
   width: 100%;
+}
+.h-half {
+  height: 60%;
 }
 .w-10 {
   width: 2.5rem;
@@ -1829,12 +1836,16 @@ video {
 .h-screen {
   height: 100vh;
 }
+.h-half-screen {
+  height: 60vh;
+}
 .h-auto {
   height: auto;
 }
 .h-full {
   height: 100%;
 }
+
 .h-84 {
   height: 21rem;
 }
@@ -2024,6 +2035,9 @@ video {
 }
 .justify-center {
   justify-content: center;
+}
+.justify-evenly {
+  justify-content: space-evenly;
 }
 .justify-start {
   justify-content: flex-start;

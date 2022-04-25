@@ -1,22 +1,18 @@
 import axios from "axios";
 import { Rating } from "@mui/material";
 
-import { Button } from "react-bootstrap";
 import { useQuery } from "react-query";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useParams } from "react-router-dom";
-import { CheckBox } from "@mui/icons-material";
 import ReviewList from "../components/ReviewList";
 import NewComment from "../components/NewComment";
 import Avatar from "@mui/material/Avatar";
 import MyCarousel from "../components/MyCarousel";
-
+import { BsDot } from "react-icons/bs";
 import DeleteRecipeButton from "../components/DeleteRecipeButton";
-import { grey } from "@mui/material/colors";
 
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
-
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
@@ -68,13 +64,18 @@ const RecipeDetail = () => {
                     {category.name}
                   </div>
                 ))}
+              {isAuthenticated &&
+                !userIsLoading &&
+                (user as any).sub === recipe.author.id && (
+                  <div className="ml-auto font-serif">
+                    <DeleteRecipeButton recipeId={recipe.id} />
+                  </div>
+                )}
             </div>
             <div className="text-6xl font-serif">{recipe.title}</div>
             <div className="text-gray-800 pt-4 text-xl font-serif">
-              This quick and easy sheet pan dinner is on the table in less than
-              30 minutes and the whole family will love it!
+              {recipe.body}
             </div>
-            {/* <hr className="mt-4" /> */}
             <div className="py-4 flex">
               <Avatar alt="avater" src="../assets/img/recipe.png" />
 
@@ -86,17 +87,59 @@ const RecipeDetail = () => {
                   </Link>
                 </h3>
                 <div className="text-gray-600 text-sm">
-                  on September 20, 2021{" "}
+                  on {recipe.createdAt.split("T")[0]}
                 </div>
               </div>
             </div>
-            {/* <div className="py-3 inline-flex">
-              <Rating name="read-only" value={recipe.rating} readOnly />
-              <div>0 Ratings</div>
-              <div>1 Reviews</div>
-            </div> */}
+
             <hr />
-            <MyCarousel />
+            <MyCarousel>
+              <div
+                style={{
+                  width: "200px",
+                  height: "378px",
+                  borderColor: "#D9D9D9",
+                  backgroundColor: "#F5F1E7",
+                }}
+                className="flex flex-col mx-auto bg-amber-300 rounded"
+              >
+                {/* <div className="ml-auto border-none">
+            <IoTimerOutline color="#E7AB47" size="30" />
+          </div> */}
+                {/* <div className="font-serif ml-2 pb-2">Aboute This Recipe</div> */}
+                <div className="mt-10 font-serif flex flex-col items-center gap-2 py-2">
+                  <div className="flex content-center  ">
+                    <div className=" text-gray-800 font-bold mr-2">
+                      {recipe.rating.toFixed(1)}
+                    </div>
+                    <Rating name="read-only" value={recipe.rating} readOnly />
+                  </div>
+
+                  <div className="items-center text-sm">
+                    {recipe.reviews.length} Ratings {recipe.reviews.length}{" "}
+                    reviews
+                  </div>
+                  <div className="flex flex-col gap-2">
+                    <div className="flex content-center mt-5 ">
+                      Total Minutes
+                      <div className="text-gray-800 font-bold ml-2">{3}</div>
+                    </div>
+                    <div className="flex content-center ">
+                      <div>Ingredients </div>
+                      <div className="text-gray-800 font-bold ml-2">
+                        {recipe.ingredients.length}
+                      </div>
+                    </div>
+                    <div className="flex content-center ">
+                      <div>Cooking Steps </div>
+                      <div className="text-gray-800 font-bold ml-2">
+                        {recipe.instructions.length}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </MyCarousel>
             {/* {recipe.photos.length ? (
               <>
                 {recipe.photos.map((img) => (
@@ -120,29 +163,24 @@ const RecipeDetail = () => {
             <hr className="mt-2" />
             <div className="text-3xl font-serif pt-3">Ingredients</div>
             <div className="font-serif flex flex-col gap-2 py-4">
-              <div>👌 2 slices whole grain bread </div>
-              <div>👌 ½ avocado </div>
-              <div>👌 2 tablespoons</div>
+              {recipe.ingredients.map((item) => (
+                <div className="ml-10 flex items-center">
+                  <BsDot />
+                  <div className="ml-2">{item}</div>
+                </div>
+              ))}
             </div>
             <hr className="mt-2" />
             <div className="text-3xl font-serif pt-3">Directions</div>
             <div className="py-2 font-serif flex flex-col gap-2 py-4">
-              <div className="text-xl font-medium">Step 1</div>
-              <div className="ml-16">
-                Toast bread slices to desired doneness, 3 to 5 minutes.
-              </div>
-              <div className="py-2 text-xl font-medium">Step 2</div>
-              <div className="ml-16">
-                Mash avocado in a bowl; stir in cilantro, Meyer lemon juice,
-                Meyer lemon zest, cayenne pepper, and sea salt. Spread avocado
-                mixture onto toast and top with chia seeds.
-              </div>
+              {recipe.instructions.map((step, index) => (
+                <>
+                  <div className="text-xl font-medium">Step {index + 1}</div>
+                  <div className="ml-16">{step}</div>
+                </>
+              ))}
             </div>
-            {isAuthenticated &&
-              !userIsLoading &&
-              (user as any).sub === recipe.author.id && (
-                <DeleteRecipeButton recipeId={recipe.id} />
-              )}
+
             <div
               className="mt-10 flex flex-col place-items-center w-full p-6 text-xl font-serif"
               style={{ backgroundColor: "#F5F1E7" }}

@@ -1,6 +1,7 @@
 import { Types, Schema, model } from "mongoose";
 
 interface IReview {
+  title: string;
   content: string;
   rating: number;
   recipe: Types.ObjectId;
@@ -9,6 +10,10 @@ interface IReview {
 
 const reviewSchema = new Schema<IReview>(
   {
+    title: {
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
       required: true,

@@ -23,28 +23,26 @@ const ImageCard = ({ photoId, recipeId, card }) => {
           <div
             className={`rounded-lg -mt-9 shadow-lg`}
             style={{
-              width: "255px",
-              height: "240px",
+              width: "15rem",
+              height: "14rem",
               backgroundPosition: "center",
               backgroundSize: "cover",
             }}
           />
         </Skeleton>
-      ) : card ? (
+      ) : (
         // <img className="recipe_card_image" src={data} alt="recipe" />
 
         <div
           className={`rounded-lg -mt-9 shadow-lg`}
           style={{
-            width: "255px",
-            height: "200px",
+            width: "15rem",
+            height: "14rem",
             backgroundPosition: "center",
             backgroundImage: `url(${data})`,
             backgroundSize: "cover",
           }}
         />
-      ) : (
-        <img className="w-120 recipe_card_image " src={data} alt="recipe" />
       )}
     </>
   );
