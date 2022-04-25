@@ -1,24 +1,25 @@
-import { useState, useEffect } from "react";
 import GetImageById from "../api/ImageAPI";
+import axios from "axios";
+import { useState, useEffect } from "react";
 
-// const images = [
-//   {
-//     image:
-//       "https://images.immediate.co.uk/production/volatile/sites/30/2013/05/Puttanesca-fd5810c.jpg",
-//   },
-//   {
-//     image:
-//       "https://static.onecms.io/wp-content/uploads/sites/19/2019/03/04/pasta-with-italian-sunday-sauce-1812-p29-2000.jpg",
-//   },
-//   {
-//     image:
-//       "https://static01.nyt.com/images/2016/10/05/dining/05KITCH-WEB1/05KITCH-WEB1-superJumbo.jpg",
-//   },
-//   {
-//     image:
-//       "https://www.licious.in/blog/wp-content/uploads/2020/12/Roast-Chicken.jpg",
-//   },
-// ];
+const originalImages = [
+  {
+    image:
+      "https://images.immediate.co.uk/production/volatile/sites/30/2013/05/Puttanesca-fd5810c.jpg",
+  },
+  {
+    image:
+      "https://static.onecms.io/wp-content/uploads/sites/19/2019/03/04/pasta-with-italian-sunday-sauce-1812-p29-2000.jpg",
+  },
+  {
+    image:
+      "https://static01.nyt.com/images/2016/10/05/dining/05KITCH-WEB1/05KITCH-WEB1-superJumbo.jpg",
+  },
+  {
+    image:
+      "https://www.licious.in/blog/wp-content/uploads/2020/12/Roast-Chicken.jpg",
+  },
+];
 
 const videos = [{ id: "hj4WR2aSxSk" }];
 
@@ -39,21 +40,36 @@ const Thumbnail = (props) => {
 };
 
 function MyCarousel(props) {
-  const images = props.photos.map(async (photo) => {
-    return await GetImageById(photo, props.recipeId).data;
-  });
-
   const [urlCurrent, setUrlCurrent] = useState(
     props.video
-      ? `https://www.youtube.com/embed/${props.video.id}`
-      : `https://www.youtube.com/embed/${videos[0].id}`
+      ? `https://www.youtube.com/embed/${props.video}`
+      : `http://img.zcool.cn/community/017f365d157e1ea8012051cd848a88.gif`
   );
   const [video, setVideo] = useState(props.video ? true : false);
-  useEffect(() => {});
+
+  const [images, setImages] = useState([]);
+
+  useEffect(() => {
+    Promise.all(
+      props.photos.map((photoId) =>
+        axios
+          .get(
+            `${process.env.REACT_APP_API_BASE_URL}/recipes/${props.recipeId}/files/${photoId}`,
+            { responseType: "blob" }
+          )
+          .then((res) => URL.createObjectURL(res.data as any))
+      )
+    ).then((res: any) => {
+      setImages(res);
+      if (!props.video) {
+        setUrlCurrent(res[0]);
+      }
+    });
+  }, [props.photos, props.recipeId]);
 
   return (
     <>
-      {console.log(images)}
+      {console.log(props.video)}
 
       <div className="inline-flex justify-between w-full">
         {video ? (
@@ -95,7 +111,7 @@ function MyCarousel(props) {
         }}
       >
         <>
-          {video && (
+          {props.video && (
             <button
               onClick={() => {
                 setUrlCurrent(`https://www.youtube.com/embed/${props.video}`);
@@ -109,20 +125,17 @@ function MyCarousel(props) {
           )}
         </>
         <>
-          {props.photos
-            .map(async (photo) => {
-              return await GetImageById(photo, props.recipeId).data;
-            })
-            .map((c) => {
+          {images.length !== 0 &&
+            images.map((img) => {
               return (
                 <button
-                  key={c.image}
+                  key={img}
                   onClick={() => {
-                    setUrlCurrent(c.image);
+                    setUrlCurrent(img);
                     setVideo(false);
                   }}
                 >
-                  <Thumbnail url={c.image} />
+                  <Thumbnail url={img} />
                 </button>
               );
             })}
