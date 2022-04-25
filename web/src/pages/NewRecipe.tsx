@@ -416,7 +416,7 @@ const NewRecipe = () => {
                 )}
 
                 <InputLabel htmlFor="youtube-id" className={classes.inputLabel}>
-                  Youtube Vedio
+                  Youtube Video
                 </InputLabel>
                 <TextField
                   id="youtube-id"
@@ -426,7 +426,7 @@ const NewRecipe = () => {
                   type="text"
                   name="youtubeVideoId"
                   size="small"
-                  placeholder="Add your YouTube vedio id "
+                  placeholder="Add your YouTube video id "
                   onChange={handleChange}
                   onBlur={handleBlur}
                   value={values.youtubeVideoId}

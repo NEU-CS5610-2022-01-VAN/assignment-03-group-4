@@ -91,7 +91,7 @@ const Category = () => {
                 style={{ color: "#666" }}
               >
                 <BsPeople size={18} />
-                <Typography sx={{ ml: 0.5 }}>66 reviews</Typography>
+                <Typography sx={{ ml: 0.5 }}>66 comments</Typography>
               </div>
               {buttonRight && (
                 <Button
