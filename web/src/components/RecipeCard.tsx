@@ -1,12 +1,10 @@
 import "./css/recipeCard.css";
+import { Link } from "react-router-dom";
+import { Box, Rating } from "@mui/material";
 import ImageCard from "./ImageCard";
 
-import { Link } from "react-router-dom";
-
-import { Rating } from "@mui/material";
-
 const RecipeCard = ({ recipe }) => (
-  <>
+  <Box>
     <Link to={`/recipe/${recipe.id}`}>
       <div className={`w-72 h-84 rounded-xl overflow-hdden shadow-md p-4`}>
         {recipe.photos.length ? (
@@ -55,7 +53,7 @@ const RecipeCard = ({ recipe }) => (
         </div>
       </div>
     </Link>
-  </>
+  </Box>
 );
 
 export default RecipeCard;

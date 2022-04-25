@@ -17,7 +17,6 @@ import { grey } from "@mui/material/colors";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
 
-
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
 const RecipeDetail = () => {
@@ -40,6 +39,7 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <>
+          {console.log(recipe)}
           <div className="fixed float-left bg-amber-500 ml-30 p-3">share</div>
           <div className="container max-w-4xl mx-auto px-4 ml-50">
             <div className="recipe-category text-sm font-medium flex content-center pb-16">

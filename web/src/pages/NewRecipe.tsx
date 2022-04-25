@@ -1,33 +1,33 @@
-import React, { useEffect, useState } from "react";
 import "./css/newRecipe.css";
-
-import axios from "axios";
-import { Formik, Form, Field, ErrorMessage, FieldArray, getIn } from "formik";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { makeStyles } from "@material-ui/styles";
-// import Typography from "@material-ui/core/Typography";
-import { Typography } from "@mui/material";
-import { useAuthToken } from "../components/AuthTokenContext";
-import UploadImage from "../components/UploadImage";
-import CircularProgress from "@mui/material/CircularProgress";
-
+import { Formik, Form, FieldArray, getIn } from "formik";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
+import axios from "axios";
 import { useQuery } from "react-query";
-import { Button, IconButton, Snackbar, TextField } from "@mui/material";
-import Backdrop from "@mui/material/Backdrop";
-import AppBackdrop from "../components/AppBackdrop";
-// import Input from "@material-tailwind/react/Input";
-import Input from "@mui/material/Input";
-import { InputLabel } from "@mui/material";
-
-import TextInput from "../components/TextInput";
-import { IoImagesOutline } from "react-icons/io5";
-import { IoIosRemoveCircleOutline, IoMdAdd } from "react-icons/io";
 import * as yup from "yup";
-import { InputAdornment } from "@mui/material";
-import { TiDeleteOutline } from "react-icons/ti";
+import {
+  InputAdornment,
+  ImageList,
+  Button,
+  IconButton,
+  Snackbar,
+  TextField,
+  CircularProgress,
+  InputLabel,
+  ImageListItem,
+  Typography,
+  Divider,
+} from "@mui/material";
+import { makeStyles } from "@material-ui/styles";
+// icons
+import { IoMdAdd } from "react-icons/io";
 import { BiMinus } from "react-icons/bi";
+import { HiUpload } from "react-icons/hi";
+
+import { useAuthToken } from "../components/AuthTokenContext";
+import AppBackdrop from "../components/AppBackdrop";
 
 const animatedComponents = makeAnimated();
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
@@ -41,6 +41,10 @@ const validationSchema = yup.object({
   instructions: yup
     .array()
     .of(yup.string().required("Instruction content is required.")),
+  youtubeVideoId: yup
+    .string()
+    .min(11, "The length of youtube video id must be 11")
+    .max(11, "The length of youtube video id must be 11"),
 });
 
 const useStyles = makeStyles((theme) => ({
@@ -68,18 +72,10 @@ const NewRecipe = () => {
 
   const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
 
-  const handlebackdropClose = () => {
-    setBackdropOpen(false);
-  };
-  const handleToggle = () => {
-    setBackdropOpen(!backdropOpen);
-  };
-
   const {
     isLoading,
     error,
     data: categories,
-    isFetching,
   } = useQuery("categories", () =>
     axios.get(url).then((res) => {
       setCatLabels(
@@ -87,14 +83,12 @@ const NewRecipe = () => {
           return { value: category._id, label: category.name };
         })
       );
-
       return res.data;
     })
   );
 
   useEffect(() => {
     if (images.length < 1) return;
-
     const newImageUrls = images.map((image) => URL.createObjectURL(image));
     setImageUrls(newImageUrls);
   }, [images]);
@@ -115,7 +109,6 @@ const NewRecipe = () => {
     if (reason === "clickaway") {
       return;
     }
-
     setBackdropOpen(false);
   };
 
@@ -127,6 +120,7 @@ const NewRecipe = () => {
           body: "",
           ingredients: [""],
           instructions: [""],
+          youtubeVideoId: "",
         }}
         validationSchema={validationSchema}
         onSubmit={async (values: any, { setSubmitting }) => {
@@ -177,17 +171,22 @@ const NewRecipe = () => {
           handleSubmit,
           isSubmitting,
         }) => (
-          // <form onSubmit={handleSubmit}>
           <Form noValidate autoComplete="off">
             <div className="form-container">
               <div
                 className="input-section"
-                style={{ marginTop: 14, marginBottom: 10 }}
+                style={{ marginTop: 20, marginBottom: 10 }}
               >
-                <Typography variant="h4">New Recipe</Typography>
+                <Typography
+                  variant="h4"
+                  sx={{ fontSize: 40, marginBottom: "5px" }}
+                >
+                  New Recipe
+                </Typography>
                 <Typography variant="h6" color="#777">
                   Share your recipe with the community
                 </Typography>
+                <Divider sx={{ marginTop: "12px", marginBottom: "6px" }} />
               </div>
               <div className="input-section">
                 <InputLabel htmlFor="title" className={classes.inputLabel}>
@@ -256,7 +255,7 @@ const NewRecipe = () => {
                         sx={{
                           marginBottom: "2px",
                         }}
-                        startIcon={<IoMdAdd size={18} />}
+                        startIcon={<IoMdAdd size={20} />}
                       >
                         Add item
                       </Button>
@@ -297,7 +296,6 @@ const NewRecipe = () => {
                                         onMouseDown={(e) => e.preventDefault()}
                                         edge="end"
                                       >
-                                        {/* <TiDeleteOutline /> */}
                                         <BiMinus />
                                       </IconButton>
                                     </InputAdornment>
@@ -328,7 +326,7 @@ const NewRecipe = () => {
                         sx={{
                           marginBottom: "2px",
                         }}
-                        startIcon={<IoMdAdd size={18} />}
+                        startIcon={<IoMdAdd size={20} />}
                       >
                         Add item
                       </Button>
@@ -369,7 +367,6 @@ const NewRecipe = () => {
                                         onMouseDown={(e) => e.preventDefault()}
                                         edge="end"
                                       >
-                                        {/* <TiDeleteOutline /> */}
                                         <BiMinus />
                                       </IconButton>
                                     </InputAdornment>
@@ -406,17 +403,62 @@ const NewRecipe = () => {
               )}
 
               <div className="input-section">
+                {values.youtubeVideoId.length === 11 && (
+                  <iframe
+                    width="560"
+                    height="315"
+                    src={`https://www.youtube.com/embed/${values.youtubeVideoId}`}
+                    title="YouTube video player"
+                    frameBorder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                  ></iframe>
+                )}
+
+                <InputLabel htmlFor="youtube-id" className={classes.inputLabel}>
+                  Youtube Vedio
+                </InputLabel>
+                <TextField
+                  id="youtube-id"
+                  color="success"
+                  InputLabelProps={{ shrink: true }}
+                  sx={{ width: "100%" }}
+                  type="text"
+                  name="youtubeVideoId"
+                  size="small"
+                  placeholder="Add your YouTube vedio id "
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  value={values.youtubeVideoId}
+                  error={
+                    Boolean(errors.youtubeVideoId) &&
+                    Boolean(touched.youtubeVideoId)
+                  }
+                  helperText={
+                    Boolean(errors.youtubeVideoId) &&
+                    Boolean(touched.youtubeVideoId)
+                      ? errors.youtubeVideoId
+                      : " "
+                  }
+                />
+              </div>
+
+              <div className="input-section">
                 <InputLabel className={classes.inputLabel}>Images</InputLabel>
+
                 <label htmlFor="files-upload">
-                  <div
-                    style={{
-                      display: "flex",
-                      flexDirection: "row",
-                      alignItems: "center",
+                  <Button
+                    color="success"
+                    size="small"
+                    component="span"
+                    onMouseDown={(e) => e.preventDefault()}
+                    sx={{
+                      marginBottom: "2px",
                     }}
+                    startIcon={<HiUpload size={20} />}
                   >
-                    <IoImagesOutline size={20} /> <>&nbsp; Add Images</>
-                  </div>
+                    Add Images
+                  </Button>
                 </label>
 
                 <input
@@ -427,14 +469,21 @@ const NewRecipe = () => {
                   onChange={onImageChange}
                   style={{ display: "none" }}
                 />
-                {imageUrls.map((imageSrc) => (
-                  <img
-                    style={{ width: 400 }}
-                    src={imageSrc}
-                    alt={imageSrc}
-                    key={imageSrc}
-                  />
-                ))}
+
+                {imageUrls.length > 0 && (
+                  <ImageList sx={{ width: "100%" }} cols={3} rowHeight={164}>
+                    {imageUrls.map((url) => (
+                      <ImageListItem key={url}>
+                        <img
+                          src={`${url}`}
+                          srcSet={`${url}`}
+                          alt={"uploaded file"}
+                          loading="lazy"
+                        />
+                      </ImageListItem>
+                    ))}
+                  </ImageList>
+                )}
               </div>
 
               <Button
@@ -449,7 +498,6 @@ const NewRecipe = () => {
               </Button>
             </div>
           </Form>
-          // </form>
         )}
       </Formik>
 
@@ -462,8 +510,6 @@ const NewRecipe = () => {
       />
 
       {backdropOpen && <AppBackdrop text={"Creating New Recipe"} />}
-
-      {/* <UploadImage /> */}
     </>
   );
 };

@@ -2,7 +2,7 @@ import axios from "axios";
 import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
 
-import RecipeList from "../components/RecipeList";
+import RecipeList from "./RecipeList";
 import ReviewList from "../components/ReviewList";
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
