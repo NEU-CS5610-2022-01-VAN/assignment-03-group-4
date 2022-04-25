@@ -29,12 +29,10 @@ const SearchPage = () => {
         <div className="items-center flex flex-wrap">
           <div className="w-full lg:w-6/12 px-4 mx-auto text-center">
             <H2 color="black">Find Your Recipe.</H2>
-            <input
-              className="bg-amber-100 w-96 bg-opacity-80 p-4 text-black"
-              type="text"
-              placeholder="Search recipes"
-              onKeyPress={handleKeyPress}
-            ></input>
+            <input className="bg-gray-200 border-gray-200 w-96 bg-opacity-80 p-4 text-black" type = "text" 
+              placeholder="Search recipes"   
+              onKeyPress={handleKeyPress}>
+            </input>
           </div>
         </div>
       </div>
