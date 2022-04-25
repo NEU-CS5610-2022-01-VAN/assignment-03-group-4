@@ -8,19 +8,23 @@ import { Rating } from "@mui/material";
 const RecipeRow = ({ recipe }) => (
   <>
     <Link to={`/recipe/${recipe.id}`}>
-      <div style={{width:"50rem", height:"13rem"}} className="flex flex-row rounded-xl overflow-hdden shadow-md p-4">
+      <div style={{width:"46rem", height:"13rem"}} className="flex flex-row rounded-xl overflow-hdden shadow-md p-4">
         {recipe.photos.length ? (
+            <div style={{
+                width: "15rem",
+                height: "14rem"}}>
           <ImageCard
             photoId={recipe.photos[0]}
             recipeId={recipe.id}
             card={true}
           />
+          </div>
         ) : (
           <div
             className={`rounded-lg -mt-9 shadow-lg`}
             style={{
-              width: "255px",
-              height: "200px",
+              width: "15rem",
+              height: "14rem",
               backgroundPosition: "center",
               backgroundImage: `url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F02%2F22%2F16383-basic-crepes-mfs_003.jpg)`,
               backgroundSize: "cover",
@@ -28,7 +32,7 @@ const RecipeRow = ({ recipe }) => (
           />
         )}
 
-        <div className="p-2">
+        <div className="ml-10">
           <div className="recipe-category flex" style={{ color: "#03897B" }}>
             {recipe.categories &&
               recipe.categories.map((category: any) => (

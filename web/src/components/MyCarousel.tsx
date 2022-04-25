@@ -24,6 +24,8 @@ const images = [
 const videos = [{ id: "hj4WR2aSxSk" }];
 
 const Thumbnail = (props) => {
+
+
   return (
     <div
       style={{
@@ -44,6 +46,7 @@ function MyCarousel(props) {
     `https://www.youtube.com/embed/${videos[0].id}`
   );
   const [video, setVideo] = useState(true);
+
   useEffect(() => {});
   return (
     <>

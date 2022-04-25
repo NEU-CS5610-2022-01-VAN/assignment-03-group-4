@@ -12,7 +12,7 @@ import {
 
 // import RecipeList from "../components/RecipeList";
 import Container from "@mui/material/Container";
-import RecipeList from "../components/RecipeList";
+
 
 import { ImSpoonKnife } from "react-icons/im";
 import { BiFoodMenu } from "react-icons/bi";
@@ -20,6 +20,7 @@ import { MdOutlineRateReview } from "react-icons/md";
 import { BsPeople, BsThreeDots } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
+import RecipeListByURL from "../components/RecipeListByURL";
 
 const buttonRight = true;
 const Category = () => {
@@ -137,7 +138,7 @@ const Category = () => {
           </div>
         )}
       </Box>
-      <RecipeList url={url} />
+      <RecipeListByURL url={url} />
     </>
   );
 };
