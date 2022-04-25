@@ -19,7 +19,6 @@ import { AuthTokenProvider } from "./components/AuthTokenContext";
 import NewRecipe from "./pages/NewRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
 import Home from "./pages/Home";
-import Recipes from "./pages/Recipes";
 import Profile from "./pages/Profile";
 import VerifyUser from "./pages/VerifyUser";
 import SearchPage from "./pages/SearchPage";

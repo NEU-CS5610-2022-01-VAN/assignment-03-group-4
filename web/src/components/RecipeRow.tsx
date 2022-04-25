@@ -8,17 +8,12 @@ import { Rating } from "@mui/material";
 const RecipeRow = ({ recipe }) => (
   <>
     <Link to={`/recipe/${recipe.id}`}>
-      <div style={{width:"46rem", height:"13rem"}} className="flex flex-row rounded-xl overflow-hdden shadow-md p-4">
+      <div
+        style={{ width: "50rem", height: "13rem" }}
+        className="flex flex-row rounded-xl overflow-hdden shadow-md p-4"
+      >
         {recipe.photos.length ? (
-            <div style={{
-                width: "15rem",
-                height: "14rem"}}>
-          <ImageCard
-            photoId={recipe.photos[0]}
-            recipeId={recipe.id}
-            card={true}
-          />
-          </div>
+          <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
         ) : (
           <div
             className={`rounded-lg -mt-9 shadow-lg`}
@@ -47,12 +42,10 @@ const RecipeRow = ({ recipe }) => (
           <div className="recipe-title font-serif text-xl font-semibold pb-1">
             {recipe.title}
           </div>
-       
-            <br/>
-          <br/>
+
+          <br />
+          <br />
           <Rating name="read-only" value={recipe.rating} readOnly />
-          
-        
         </div>
       </div>
     </Link>

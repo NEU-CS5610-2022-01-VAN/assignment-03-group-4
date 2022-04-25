@@ -1,19 +1,9 @@
-import axios from "axios";
-import React from "react";
-import { useQuery } from "react-query";
-import "./css/recipeCard.css";
-import CircularProgress from "@mui/material/CircularProgress";
 import { Skeleton } from "@mui/material";
+import GetImageById from "../api/ImageAPI";
+import "./css/recipeCard.css";
 
-const ImageCard = ({ photoId, recipeId, card }) => {
-  const url = `${process.env.REACT_APP_API_BASE_URL}/recipes/${recipeId}/files/${photoId}`;
-
-  const { isLoading, error, data, isFetching } = useQuery(url, () =>
-    axios
-      .get(url, { responseType: "blob" })
-      .then((res) => URL.createObjectURL(res.data as any))
-  );
-
+const ImageCard = ({ photoId, recipeId }) => {
+  const { isLoading, error, data } = GetImageById(photoId, recipeId);
   return (
     <>
       {error ? (
@@ -32,7 +22,6 @@ const ImageCard = ({ photoId, recipeId, card }) => {
         </Skeleton>
       ) : (
         // <img className="recipe_card_image" src={data} alt="recipe" />
-
         <div
           className={`rounded-lg -mt-9 shadow-lg`}
           style={{

@@ -434,7 +434,6 @@ iframe,
 embed,
 object {
   display: block;
-  vertical-align: middle;
 }
 /**
  * Constrain images and videos to the parent width and preserve
@@ -1463,7 +1462,6 @@ iframe,
 embed,
 object {
   display: block;
-  vertical-align: middle;
 }
 /**
  * Constrain images and videos to the parent width and preserve
@@ -1846,8 +1844,8 @@ video {
   height: 100%;
 }
 
-.h-84 {
-  height: 21rem;
+.h-90 {
+  height: 22.5rem;
 }
 .h-9 {
   height: 2.25rem;
