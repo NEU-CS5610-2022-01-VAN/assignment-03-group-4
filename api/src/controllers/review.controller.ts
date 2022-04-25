@@ -24,14 +24,9 @@ export const getReviewById = asyncHandler(
 
 export const createReview = asyncHandler(
   async (req: Request, res: Response) => {
-    const { content, rating, recipe } = req.body;
+    const { title, content, rating, recipe } = req.body;
     const author = (req as any).user.sub;
-    const newReview = new Review({
-      content,
-      rating,
-      recipe,
-      author,
-    });
+    const newReview = new Review({ title, content, rating, recipe, author });
     await newReview.save();
     await updateRecipeRating(recipe);
     res.send(newReview);
@@ -41,15 +36,10 @@ export const createReview = asyncHandler(
 export const updateReviewById = asyncHandler(
   async (req: Request, res: Response) => {
     const reviewId = req.params.reviewId;
-    const { content, rating, recipe, author } = req.body;
+    const { title, content, rating, recipe, author } = req.body;
     const review = await Review.findByIdAndUpdate(
       reviewId,
-      {
-        content,
-        rating,
-        recipe,
-        author,
-      },
+      { title, content, rating, recipe, author },
       { new: true }
     );
     await updateRecipeRating((review as any).recipe);
