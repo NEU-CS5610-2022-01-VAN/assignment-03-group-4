@@ -6,13 +6,9 @@ import ImageCard from "./ImageCard";
 const RecipeCard = ({ recipe }) => (
   <Box>
     <Link to={`/recipe/${recipe.id}`}>
-      <div className={`w-72 h-84 rounded-xl overflow-hdden shadow-md p-4`}>
+      <div className={`w-72 h-90 rounded-xl overflow-hdden shadow-md p-4`}>
         {recipe.photos.length ? (
-          <ImageCard
-            photoId={recipe.photos[0]}
-            recipeId={recipe.id}
-            card={true}
-          />
+          <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
         ) : (
           <div
             className={`rounded-lg -mt-9 shadow-lg`}
