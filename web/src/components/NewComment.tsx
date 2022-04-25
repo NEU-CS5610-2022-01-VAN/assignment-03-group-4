@@ -15,6 +15,9 @@ import AppBackdrop from "./AppBackdrop";
 
 
 const validationSchema = yup.object({
+  title: yup
+  .string()
+  .required('Review Title Required'),
   content: yup
     .string()
     .required('Review Content Required'),
@@ -30,6 +33,7 @@ const validationSchema = yup.object({
 const NewComment = ({ recipeId }) => {
   const formik = useFormik({
     initialValues: {
+      title: "",
       content: "", 
       rating: "", 
       recipe: recipeId
@@ -77,10 +81,23 @@ const NewComment = ({ recipeId }) => {
           <h4 className="font-serif">Leave a Review:</h4>
         </div>
         <div className="ml-7 mr-10">
-        <form className="flex flex-col mt-4 mb-10" onSubmit={formik.handleSubmit}>
+        <form className="flex flex-col mt-5 mb-10" onSubmit={formik.handleSubmit}>
+          <TextField
+            className="mt-4"
+            id="title"
+            color="success"
+            name="title"
+            label="Title"
+            value={formik.values.title}
+            onChange={formik.handleChange}
+            error={formik.touched.title && Boolean(formik.errors.title)}
+            helperText={formik.touched.title && formik.errors.title}
+          />
+          <br/>
           <TextField
             className="mt-4"
             id="content"
+            color="success"
             name="content"
             label="Content"
             value={formik.values.content}
@@ -88,9 +105,11 @@ const NewComment = ({ recipeId }) => {
             error={formik.touched.content && Boolean(formik.errors.content)}
             helperText={formik.touched.content && formik.errors.content}
           />
+          <br/>
           <TextField
-            className="mt-4"
+            className="mt-5"
             id="rating"
+            color="success"
             name="rating"
             label="Rating"
             value={formik.values.rating}
@@ -98,7 +117,8 @@ const NewComment = ({ recipeId }) => {
             error={formik.touched.rating && Boolean(formik.errors.rating)}
             helperText={formik.touched.rating && formik.errors.rating}
           />
-          <Button className="mt-4 " color="primary" variant="contained" type="submit">
+          <br/>
+          <Button className="mt-5 " color="success"  variant="outlined" type="submit">
             Submit
           </Button>
         </form>

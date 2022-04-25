@@ -40,7 +40,19 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <>
-          <div className="fixed float-left bg-amber-500 ml-30 p-3">share</div>
+          <div className="fixed float-left ml-30 p-3">
+            <FacebookShareButton
+              url={url}
+              quote={recipe.title}
+            >
+            <FacebookIcon size={32} round /></FacebookShareButton>
+            <br />
+            <TwitterShareButton
+              title={recipe.title}
+              url={url}
+            >
+            <TwitterIcon size={32} round /></TwitterShareButton>
+          </div>
           <div className="container max-w-4xl mx-auto px-4 ml-50">
             <div className="recipe-category text-sm font-medium flex content-center pb-16">
               <div className="font-roboto px-1 py-1 text-sm uppercase ">
@@ -138,10 +150,10 @@ const RecipeDetail = () => {
               ❤️ How would you rate this recipe?
               <Rating className="pt-2" size="large" name="rate" value={0} />
             </div>
-            <hr className="mt-24" />
-            <h4>What others say about this recipe?</h4>
+            {/* <hr className="mt-24" /> */}
+            <h4 className="font-serif mt-10">What others say about this recipe?</h4>
             <ReviewList url={url + "/reviews"} />
-            <hr className="mt-24" />
+            <hr className="mt-10" />
             <NewComment recipeId={recipeId} />
           </div>
         </>
