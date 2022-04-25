@@ -20,8 +20,8 @@ const RecipeList = ({ url }) => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        <section className=" pt-10 pb-48">
-          <div className="flex flex-wrap container max-w-7xl mx-auto px-4">
+        <section className="pt-10 pb-48">
+          <div className="justify-evenly flex flex-wrap container max-w-8xl mx-auto px-4 ">
             {recipes.map((recipe) => (
               <div className="px-3 pt-6 pb-8" key={recipe._id}>
                 <RecipeCard recipe={recipe} key={recipe.id} />

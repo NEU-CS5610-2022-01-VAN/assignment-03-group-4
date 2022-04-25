@@ -6,6 +6,7 @@ interface IRecipe {
   rating?: number;
   ingredients: String[];
   instructions: String[];
+  youtubeVideoId?: String;
   author: String;
   categories: Types.ObjectId[];
   photos: Types.ObjectId[];
@@ -38,6 +39,7 @@ const recipeSchema = new Schema<IRecipe>(
         required: true,
       },
     ],
+    youtubeVideoId: { type: String },
     author: {
       type: String,
       required: true,
