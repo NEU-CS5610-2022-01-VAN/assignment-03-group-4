@@ -1,9 +1,11 @@
-import { Schema, model } from "mongoose";
+import { Schema, model, Types } from "mongoose";
 
 interface IUser {
   _id: string;
   email: string;
   name?: string;
+  bio?: string;
+  picture?: Types.ObjectId;
 }
 
 const userSchema = new Schema<IUser>(
@@ -18,6 +20,11 @@ const userSchema = new Schema<IUser>(
       required: true,
     },
     name: String,
+    bio: String,
+    picture: {
+      type: Schema.Types.ObjectId,
+      ref: "Image",
+    },
   },
   {
     //add virtual fields to json and object
