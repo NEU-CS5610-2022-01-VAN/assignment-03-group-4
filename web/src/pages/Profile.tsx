@@ -46,7 +46,7 @@ const Profile = () => {
       ):(
         <>
           <Container maxWidth="lg">
-            <div className="flex flex row mt-10">
+            <div className="flex flex-row mt-10">
               <div className="flex flex-col">
                 <ProfileCard />
                 <Box className="ml-7 mt-10" sx={{ width: 320, maxWidth: '100%' }}>
