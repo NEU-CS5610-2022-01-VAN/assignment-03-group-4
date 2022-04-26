@@ -1,27 +1,5 @@
-import GetImageById from "../api/ImageAPI";
 import axios from "axios";
 import { useState, useEffect } from "react";
-
-const originalImages = [
-  {
-    image:
-      "https://images.immediate.co.uk/production/volatile/sites/30/2013/05/Puttanesca-fd5810c.jpg",
-  },
-  {
-    image:
-      "https://static.onecms.io/wp-content/uploads/sites/19/2019/03/04/pasta-with-italian-sunday-sauce-1812-p29-2000.jpg",
-  },
-  {
-    image:
-      "https://static01.nyt.com/images/2016/10/05/dining/05KITCH-WEB1/05KITCH-WEB1-superJumbo.jpg",
-  },
-  {
-    image:
-      "https://www.licious.in/blog/wp-content/uploads/2020/12/Roast-Chicken.jpg",
-  },
-];
-
-const videos = [{ id: "hj4WR2aSxSk" }];
 
 const Thumbnail = (props) => {
   return (

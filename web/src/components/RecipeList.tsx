@@ -1,6 +1,3 @@
-import axios from "axios";
-import { useQuery } from "react-query";
-import CircularProgress from "@mui/material/CircularProgress";
 import RecipeCard from "./RecipeCard";
 
 const RecipeList = ({ recipes }) => {

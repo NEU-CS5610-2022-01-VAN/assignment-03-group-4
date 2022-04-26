@@ -1,6 +1,4 @@
-import Carousel from "react-bootstrap/Carousel";
-import GetImageById from "../api/ImageAPI";
-import { CircularProgress, Skeleton } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { Link } from "react-router-dom";
 
 import axios from "axios";
@@ -28,7 +26,6 @@ const TypeSection = ({ recipes }) => {
     isLoading,
     error,
     data: categories,
-    isFetching,
   } = useQuery(url, () => axios.get(url).then((res) => res.data));
   return (
     <>
