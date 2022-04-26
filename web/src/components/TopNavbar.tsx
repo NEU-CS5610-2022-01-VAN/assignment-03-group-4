@@ -37,14 +37,14 @@ export default function TopNavbar() {
       className={`flex flex-wrap items-center justify-between py-1 border-b`}
       style={{ backgroundColor: "#FFFFFF" }}
     >
-      <NavbarContainer className="bg-white">
+      <NavbarContainer>
         <LeftCategoryDrawer />
         <NavbarWrapper>
           <NavbarBrand>
             <div className="text-amber-500 text-xl">🥖 &nbsp;Recipe</div>
           </NavbarBrand>
           <NavbarToggler
-            color="white"
+            color="red"
             onClick={() => setOpenNavbar(!openNavbar)}
             ripple="dark"
           />
