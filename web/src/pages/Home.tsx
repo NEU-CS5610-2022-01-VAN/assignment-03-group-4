@@ -1,11 +1,23 @@
-import Header from "../components/Header";
+import React, { useEffect, useState } from "react";
 import H2 from "@material-tailwind/react/Heading2";
-import Welcome from "../components/Welcome";
-import RecipeList from "../components/RecipeList";
 import Popular from "../components/Popular";
+import { useNavigate } from "react-router-dom";
+
 const url = process.env.REACT_APP_API_BASE_URL + "/recipes";
 
+
+
 const Home = () => {
+ 
+  const navigate = useNavigate();
+
+
+
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/search/${e.target.value}`);  
+    }
+  };
   return (
     <>
       <main>
@@ -18,6 +30,7 @@ const Home = () => {
                 className="bg-amber-100 w-96 bg-opacity-80 p-4 text-white outline-none"
                 type="text"
                 placeholder="Search recipes"
+                onKeyPress={handleKeyPress}
               ></input>
             </div>
           </div>
