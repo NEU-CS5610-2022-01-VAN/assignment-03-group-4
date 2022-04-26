@@ -21,6 +21,7 @@ import ContentPaste from '@mui/icons-material/ContentPaste';
 
 import SoupKitchenIcon from '@mui/icons-material/SoupKitchen';
 import EmailIcon from '@mui/icons-material/Email';
+import EditIcon from '@mui/icons-material/Edit';
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
@@ -46,7 +47,7 @@ const Profile = () => {
       ):(
         <>
           <Container maxWidth="lg">
-            <div className="flex flex row mt-10">
+            <div className="flex flex-row mt-10">
               <div className="flex flex-col">
                 <ProfileCard />
                 <Box className="ml-7 mt-10" sx={{ width: 320, maxWidth: '100%' }}>
@@ -58,6 +59,7 @@ const Profile = () => {
                       <ListItemText>{(user as any).email}</ListItemText>
                     </MenuItem>
                     <Divider />
+                   
                     <MenuItem>
                       <ListItemIcon>
                         <SoupKitchenIcon fontSize="small" />
@@ -73,6 +75,14 @@ const Profile = () => {
                       <ListItemText onClick={() => {
                               setShowRecipe(false);
                             }} >Reviews</ListItemText>
+                    </MenuItem>
+                    <MenuItem>
+                      <ListItemIcon>
+                        <EditIcon fontSize="small" />
+                      </ListItemIcon>
+                      <ListItemText onClick={() => {
+                              setShowRecipe(true);
+                            }}>Edit Profile</ListItemText>
                     </MenuItem>
                   </MenuList>
                 </Box>

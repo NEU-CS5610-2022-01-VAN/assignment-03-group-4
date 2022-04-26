@@ -3,6 +3,7 @@ import Popular from "../components/Popular";
 import TypeSection from "../components/TypeSection";
 import GetRecipesByURL from "../api/RecipeListAPI";
 import { CircularProgress } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const url = process.env.REACT_APP_API_BASE_URL + "/recipes";
 
@@ -14,6 +15,13 @@ const sortRating = (recipes) => {
 
 const Home = () => {
   const { isLoading, error, data: recipes, isFetching } = GetRecipesByURL(url);
+
+  const navigate = useNavigate();
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/search/${e.target.value}`);
+    }
+  };
 
   return (
     <>
@@ -28,6 +36,7 @@ const Home = () => {
                 className="bg-amber-100 w-96 bg-opacity-80 p-3 text-white outline-none"
                 type="text"
                 placeholder="Search recipes"
+                onKeyPress={handleKeyPress}
               ></input>
             </div>
           </div>
