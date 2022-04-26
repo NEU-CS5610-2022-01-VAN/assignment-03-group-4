@@ -16,6 +16,7 @@ import { BsSearch } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { makeStyles } from "@material-ui/styles";
 import { InputAdornment, TextField } from "@mui/material";
+import Navbar from "@material-tailwind/react/Navbar";
 
 const useStyles = makeStyles((theme) => ({
   inputLabel: {
@@ -29,7 +30,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function TopNavbar() {
-  const classes = useStyles();
   const [openNavbar, setOpenNavbar] = useState(false);
 
   return (
@@ -37,9 +37,8 @@ export default function TopNavbar() {
       className={`flex flex-wrap items-center justify-between py-1 border-b`}
       style={{ backgroundColor: "#FFFFFF" }}
     >
-      <NavbarContainer>
+      <NavbarContainer className="bg-white">
         <LeftCategoryDrawer />
-
         <NavbarWrapper>
           <NavbarBrand>
             <div className="text-amber-500 text-xl">🥖 &nbsp;Recipe</div>
@@ -50,6 +49,7 @@ export default function TopNavbar() {
             ripple="dark"
           />
         </NavbarWrapper>
+
         <NavbarCollapse open={openNavbar}>
           <Nav>
             <NavLink href="/" rel="noreferrer" ripple="light">
@@ -58,14 +58,12 @@ export default function TopNavbar() {
                 &nbsp;Home
               </div>
             </NavLink>
-
             <NavLink href="/newrecipe" rel="noreferrer" ripple="light">
               <div className="text-black flex lg:flex-row lg:items-center">
                 <Icon name="add" family="material-icons" size="xl" />
                 &nbsp;New Recipe
               </div>
             </NavLink>
-
             <NavLink href="/profile" rel="noreferrer" ripple="light">
               <div className="text-black flex lg:flex-row lg:items-center">
                 <Icon name="account_circle" size="xl" />
@@ -74,7 +72,6 @@ export default function TopNavbar() {
             </NavLink>
           </Nav>
         </NavbarCollapse>
-        {/* <BsSearch size={20} /> */}
         <TextField
           id="title"
           color="success"
@@ -87,7 +84,6 @@ export default function TopNavbar() {
             endAdornment: (
               <InputAdornment position="end">
                 <FiSearch size={20} />
-                {/* </IconButton> */}
               </InputAdornment>
             ),
           }}
@@ -95,17 +91,9 @@ export default function TopNavbar() {
           // onChange={handleChange}
           // onBlur={handleBlur}
           // value={values.title}
-          // error={Boolean(errors.title) && Boolean(touched.title)}
-          // helperText={
-          //   Boolean(errors.title) && Boolean(touched.title)
-          //     ? errors.title
-          //     : " "
-          // }
         />
-        {/* <FiSearch size={20} /> */}
         <UserNavbarDropdown />
       </NavbarContainer>
-      {/* </Navbar> */}
     </nav>
   );
 }
