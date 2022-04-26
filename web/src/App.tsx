@@ -25,7 +25,13 @@ import SearchPage from "./pages/SearchPage";
 import Category from "./pages/Category";
 import Footer from "./components/Footer";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const requestedScopes = [
   "read:current_user",
