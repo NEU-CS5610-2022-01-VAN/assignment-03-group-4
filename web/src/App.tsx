@@ -15,7 +15,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./assets/styles/tailwind.css";
 
 import TopNavbar from "./components/TopNavbar";
-import { AuthTokenProvider } from "./components/AuthTokenContext";
+import { AuthTokenProvider } from "./hooks/AuthTokenContext";
 import NewRecipe from "./pages/NewRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
 import Home from "./pages/Home";
@@ -24,6 +24,7 @@ import VerifyUser from "./pages/VerifyUser";
 import SearchPage from "./pages/SearchPage";
 import Category from "./pages/Category";
 import Footer from "./components/Footer";
+import { UserContextProvider } from "./hooks/UserContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -80,7 +81,9 @@ function App() {
           scope={requestedScopes.join(" ")}
         >
           <AuthTokenProvider>
-            <AppRouter />
+            <UserContextProvider>
+              <AppRouter />
+            </UserContextProvider>
           </AuthTokenProvider>
         </Auth0Provider>
         <ReactQueryDevtools initialIsOpen={true} />

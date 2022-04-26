@@ -26,7 +26,7 @@ import { IoMdAdd } from "react-icons/io";
 import { BiMinus } from "react-icons/bi";
 import { HiUpload } from "react-icons/hi";
 
-import { useAuthToken } from "../components/AuthTokenContext";
+import { useAuthToken } from "../hooks/AuthTokenContext";
 import AppBackdrop from "../components/AppBackdrop";
 
 const animatedComponents = makeAnimated();
