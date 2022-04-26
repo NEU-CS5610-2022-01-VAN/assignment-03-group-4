@@ -16,6 +16,51 @@ import { FacebookIcon, TwitterIcon } from "react-share";
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
+const Note = ({ recipe }) => {
+  return (
+    <div
+      style={{
+        width: "200px",
+        height: "378px",
+        borderColor: "#D9D9D9",
+        backgroundColor: "#F5F1E7",
+      }}
+      className="flex flex-col mx-auto bg-amber-300 rounded"
+    >
+      <div className="mt-10 font-serif flex flex-col items-center gap-2 py-2">
+        <div className="flex content-center  ">
+          <div className=" text-gray-800 font-bold mr-2">
+            {recipe.rating ? recipe.rating.toFixed(1) : "0.0"}
+          </div>
+          <Rating name="read-only" value={recipe.rating} readOnly />
+        </div>
+
+        <div className="items-center text-sm">
+          {recipe.reviews.length} reviews
+        </div>
+        <div className="flex flex-col gap-2">
+          <div className="flex content-center mt-5 ">
+            Total Minutes
+            <div className="text-gray-800 font-bold ml-2">{3}</div>
+          </div>
+          <div className="flex content-center ">
+            <div>Ingredients </div>
+            <div className="text-gray-800 font-bold ml-2">
+              {recipe.ingredients.length}
+            </div>
+          </div>
+          <div className="flex content-center ">
+            <div>Cooking Steps </div>
+            <div className="text-gray-800 font-bold ml-2">
+              {recipe.instructions.length}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const RecipeDetail = () => {
   const recipeId = useParams().recipeId;
   const url = recipeUrl + recipeId;
@@ -35,7 +80,7 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <>
-          <div className=" bg-indigo-500 fixed ml-30 p-3 ">
+          <div className=" fixed ml-30 p-3 ">
             <FacebookShareButton url={url} quote={recipe.title}>
               <FacebookIcon size={32} round />
             </FacebookShareButton>
@@ -51,13 +96,15 @@ const RecipeDetail = () => {
               </div>
               {recipe.categories &&
                 recipe.categories.map((category: any) => (
-                  <div
-                    className="font-roboto px-1 py-1 text-sm uppercase "
-                    style={{ color: "#03897B", backgroundColor: "#F0F9F8" }}
-                    key={category._id}
-                  >
-                    {category.name}
-                  </div>
+                  <Link to={`/categories/${category._id}`}>
+                    <div
+                      className="mr-2 font-roboto px-1 py-1 text-sm uppercase "
+                      style={{ color: "#03897B", backgroundColor: "#F0F9F8" }}
+                      key={category._id}
+                    >
+                      {category.name}
+                    </div>
+                  </Link>
                 ))}
               {isAuthenticated &&
                 !userIsLoading &&
@@ -87,55 +134,17 @@ const RecipeDetail = () => {
               </div>
             </div>
 
-            <hr />
             {recipe.photos.length || recipe.youtubeVideoId ? (
-              <MyCarousel
-                recipeId={recipeId}
-                photos={recipe.photos}
-                video={recipe.youtubeVideoId}
-              >
-                <div
-                  style={{
-                    width: "200px",
-                    height: "378px",
-                    borderColor: "#D9D9D9",
-                    backgroundColor: "#F5F1E7",
-                  }}
-                  className="flex flex-col mx-auto bg-amber-300 rounded"
+              <>
+                <hr />
+                <MyCarousel
+                  recipeId={recipeId}
+                  photos={recipe.photos}
+                  video={recipe.youtubeVideoId}
                 >
-                  <div className="mt-10 font-serif flex flex-col items-center gap-2 py-2">
-                    <div className="flex content-center  ">
-                      <div className=" text-gray-800 font-bold mr-2">
-                        {recipe.rating ? recipe.rating.toFixed(1) : "0.0"}
-                      </div>
-                      <Rating name="read-only" value={recipe.rating} readOnly />
-                    </div>
-
-                    <div className="items-center text-sm">
-                      {recipe.reviews.length} Ratings {recipe.reviews.length}{" "}
-                      reviews
-                    </div>
-                    <div className="flex flex-col gap-2">
-                      <div className="flex content-center mt-5 ">
-                        Total Minutes
-                        <div className="text-gray-800 font-bold ml-2">{3}</div>
-                      </div>
-                      <div className="flex content-center ">
-                        <div>Ingredients </div>
-                        <div className="text-gray-800 font-bold ml-2">
-                          {recipe.ingredients.length}
-                        </div>
-                      </div>
-                      <div className="flex content-center ">
-                        <div>Cooking Steps </div>
-                        <div className="text-gray-800 font-bold ml-2">
-                          {recipe.instructions.length}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </MyCarousel>
+                  <Note recipe={recipe} />
+                </MyCarousel>
+              </>
             ) : (
               <></>
             )}

@@ -16,6 +16,7 @@ import { BsSearch } from "react-icons/bs";
 import { FiSearch } from "react-icons/fi";
 import { makeStyles } from "@material-ui/styles";
 import { InputAdornment, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import Navbar from "@material-tailwind/react/Navbar";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,6 +32,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function TopNavbar() {
   const [openNavbar, setOpenNavbar] = useState(false);
+  const navigate = useNavigate();
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      navigate(`/search/${e.target.value}`);
+    }
+  };
 
   return (
     <nav
@@ -80,6 +87,7 @@ export default function TopNavbar() {
           type="text"
           name="title"
           size="small"
+          onKeyPress={handleKeyPress}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">

@@ -12,12 +12,12 @@ const Footer = () => (
         flexDirection: "column",
         alignItems: "center",
         padding: 15,
-        color: "#6e6e73",
+        color: "#6e6e73"
         // backgroundColor: "#f5f5f7",
       }}
     >
       <BiFoodMenu size={35} style={{ marginBottom: 10 }} />
-      <div>© 2022 Lazy Daisy Inc. All rights reserved</div>
+      <div>© 2022 Intelligent Yun Inc. All rights reserved</div>
       {/* <div>
         No time to cook? Check out{" "}
         <a href="https://www.ubereats.com/">uber eats</a>

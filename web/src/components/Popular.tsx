@@ -1,29 +1,58 @@
-import Carousel from "react-bootstrap/Carousel";
+import GetImageById from "../api/ImageAPI";
+import { Skeleton } from "@mui/material";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
+import { useNavigate } from "react-router-dom";
 
-const Popular = () => {
+const Item = ({ photoId, recipeId }) => {
+  const { isLoading, error, data: photoUrl } = GetImageById(photoId, recipeId);
+  const navigate = useNavigate();
+  const handleKeyPress = (e) => {
+    navigate(`/recipe/${recipeId}`);
+  };
   return (
-    <Carousel>
-      <Carousel.Item>
+    <div onClick={handleKeyPress}>
+      {error ? (
+        <div>Error: {(error as any).mesasge}</div>
+      ) : isLoading ? (
+        <Skeleton variant="rectangular" animation="wave">
+          <i
+            style={{
+              width: "50rem",
+              height: "22rem",
+              objectPosition: "center",
+              objectFit: "cover",
+            }}
+          />
+        </Skeleton>
+      ) : (
         <img
-          className="d-block w-100"
-          src="https://assets.epicurious.com/photos/6058d90df2b833b1d0cc27fc/9:4/w_2008,h_892,c_limit/GemCakes_HERO_031821_10783.jpg"
-          alt="First slide"
+          style={{
+            width: "50rem",
+            height: "22rem",
+            objectPosition: "center",
+            objectFit: "cover",
+          }}
+          src={photoUrl}
+          alt="recipephoto"
         />
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="https://assets.epicurious.com/photos/6058d90df2b833b1d0cc27fc/9:4/w_2008,h_892,c_limit/GemCakes_HERO_031821_10783.jpg"
-          alt="Second slide"
-        />
-      </Carousel.Item>
-      <Carousel.Item>
-        <img
-          className="d-block w-100"
-          src="https://assets.epicurious.com/photos/6058d90df2b833b1d0cc27fc/9:4/w_2008,h_892,c_limit/GemCakes_HERO_031821_10783.jpg"
-          alt="Third slide"
-        />
-      </Carousel.Item>
+      )}
+    </div>
+  );
+};
+
+const Popular = ({ recipes }) => {
+  return (
+    <Carousel showStatus={false} interval={2000} infiniteLoop={true}>
+      {recipes.map((recipe) => {
+        return (
+          <Item
+            key={recipe.id}
+            photoId={recipe.photos[0]}
+            recipeId={recipe.id}
+          />
+        );
+      })}
     </Carousel>
   );
 };

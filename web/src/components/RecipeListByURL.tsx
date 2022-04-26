@@ -1,16 +1,9 @@
-import axios from "axios";
-import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
-import RecipeCard from "./RecipeCard";
 import RecipeList from "./RecipeList";
+import GetRecipesByURL from "../api/RecipeListAPI";
 
 const RecipeListByURL = ({ url }) => {
-  const {
-    isLoading,
-    error,
-    data: recipes,
-    isFetching,
-  } = useQuery(url, () => axios.get(url).then((res) => res.data));
+  const { isLoading, error, data: recipes, isFetching } = GetRecipesByURL(url);
 
   return (
     <>
@@ -21,7 +14,7 @@ const RecipeListByURL = ({ url }) => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-          <RecipeList recipes={recipes}/>
+        <RecipeList recipes={recipes} />
       )}
     </>
   );
