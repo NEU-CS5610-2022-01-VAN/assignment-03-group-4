@@ -10,9 +10,6 @@ const url = process.env.REACT_APP_API_BASE_URL + "/recipes";
 const Home = () => {
  
   const navigate = useNavigate();
-
-
-
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       navigate(`/search/${e.target.value}`);  
