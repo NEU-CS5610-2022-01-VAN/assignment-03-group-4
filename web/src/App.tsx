@@ -6,7 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 
 // Bootstrap CSS
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -25,7 +25,13 @@ import SearchPage from "./pages/SearchPage";
 import Category from "./pages/Category";
 import Footer from "./components/Footer";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const requestedScopes = [
   "read:current_user",

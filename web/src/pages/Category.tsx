@@ -13,7 +13,6 @@ import {
 // import RecipeList from "../components/RecipeList";
 import Container from "@mui/material/Container";
 
-
 import { ImSpoonKnife } from "react-icons/im";
 import { BiFoodMenu } from "react-icons/bi";
 import { MdOutlineRateReview } from "react-icons/md";
@@ -21,6 +20,10 @@ import { BsPeople, BsThreeDots } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import RecipeListByURL from "../components/RecipeListByURL";
+
+import RecipeList from "../components/RecipeList";
+import { useEffect, useState } from "react";
+import { Skeleton } from "@mui/material";
 
 const buttonRight = true;
 const Category = () => {
@@ -35,11 +38,28 @@ const Category = () => {
     isLoading,
     error,
     data: cat,
-    isFetching,
   } = useQuery(baseUrl, () => axios.get(baseUrl).then((res) => res.data));
 
-  const bgUrl =
-    " https://www.blogenium.com/wp-content/uploads/2019/08/blogenium-fast-food-hd-wallpaper-12.jpg";
+  const {
+    isLoading: isLoadingRecipes,
+    error: errorRecipes,
+    data: recipes,
+  } = useQuery(url, () => axios.get(url).then((res) => res.data));
+
+  const [totalRecipes, setTotalRecipes] = useState();
+  const [totalComments, setTotalComments] = useState();
+
+  useEffect(() => {
+    if (recipes && recipes.length) {
+      setTotalRecipes(recipes.length);
+      const newTotalCommnets = recipes.reduce(
+        (preValue, recipe) => preValue + recipe.reviews.length,
+        0
+      );
+      setTotalComments(newTotalCommnets);
+    }
+  }, [recipes]);
+
   return (
     <>
       <Box
@@ -84,7 +104,7 @@ const Category = () => {
                 style={{ color: "#666" }}
               >
                 <BiFoodMenu size={18} />
-                <Typography sx={{ ml: 0.4 }}>25 recipes</Typography>
+                <Typography sx={{ ml: 0.4 }}>{totalRecipes} recipes</Typography>
               </div>
 
               <div
@@ -92,7 +112,9 @@ const Category = () => {
                 style={{ color: "#666" }}
               >
                 <BsPeople size={18} />
-                <Typography sx={{ ml: 0.5 }}>66 comments</Typography>
+                <Typography sx={{ ml: 0.5 }}>
+                  {totalComments} comments
+                </Typography>
               </div>
               {buttonRight && (
                 <Button
@@ -114,31 +136,12 @@ const Category = () => {
               )}
             </div>
 
-            {!buttonRight && (
-              <Button
-                onClick={() => navigate("/newrecipe")}
-                color="success"
-                variant="contained"
-                size="medium"
-                onMouseDown={(e) => e.preventDefault()}
-                sx={{
-                  display: "flex",
-                  backgroundColor: "#3dc795",
-                  mr: 2,
-                  mt: 1.4,
-                  // marginLeft: "auto",
-                }}
-                startIcon={<IoMdAdd size={20} />}
-              >
-                Add
-              </Button>
-            )}
-
             <Divider sx={{ marginTop: "22px", marginBottom: "6px" }} />
           </div>
         )}
       </Box>
-      <RecipeListByURL url={url} />
+
+      {!isLoadingRecipes && <RecipeList recipes={recipes} />}
     </>
   );
 };
