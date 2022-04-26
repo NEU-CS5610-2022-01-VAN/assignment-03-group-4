@@ -123,6 +123,13 @@ const NewRecipe = () => {
           youtubeVideoId: "",
         }}
         validationSchema={validationSchema}
+        validate={(values) => {
+          const errors = {};
+          if (images.length < 1) {
+            (errors as any).images = "Please add at least 1 image";
+          }
+          return errors;
+        }}
         onSubmit={async (values: any, { setSubmitting }) => {
           setBackdropOpen(true);
 
@@ -460,7 +467,6 @@ const NewRecipe = () => {
                     Add Images
                   </Button>
                 </label>
-
                 <input
                   id="files-upload"
                   type="file"
@@ -469,6 +475,14 @@ const NewRecipe = () => {
                   onChange={onImageChange}
                   style={{ display: "none" }}
                 />
+                {images.length === 0 && (
+                  <Typography
+                    variant="body1"
+                    sx={{ color: "#d32f2f", fontSize: "0.75rem", ml: "5px" }}
+                  >
+                    {(errors as any).images}
+                  </Typography>
+                )}
 
                 {imageUrls.length > 0 && (
                   <ImageList sx={{ width: "100%" }} cols={3} rowHeight={164}>
