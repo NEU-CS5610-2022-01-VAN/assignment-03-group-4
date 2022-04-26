@@ -78,14 +78,13 @@ export const createUser = asyncHandler(async (req: Request, res: Response) => {
 
 export const updateUserById = asyncHandler(
   async (req: Request, res: Response) => {
-    const userId = req.params.userId;
-    const { email, name, password } = req.body;
+    const userId = (req as any).user.sub;
+    const { name, bio } = req.body;
     const user = await User.findByIdAndUpdate(
       userId,
       {
-        email,
-        password,
         name,
+        bio,
       },
       { new: true }
     );
