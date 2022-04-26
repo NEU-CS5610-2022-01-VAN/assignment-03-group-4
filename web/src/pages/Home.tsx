@@ -42,22 +42,24 @@ const Home = () => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        <div className="pt-16 mx-auto m-full md:w-8/12 ">
-          <div className="flex flex-col place-items-center font-serif text-3xl font-bold pt-6 pb-3 mb-4">
-            Most Popular
+        <>
+          <div className="pt-16 mx-auto m-full md:w-9/12 ">
+            <div className="flex flex-col place-items-center font-serif text-3xl font-bold pt-6 pb-3 mb-4">
+              Most Popular
+            </div>
+            <div className=" flex flex-col place-items-center mb-8">
+              <Popular
+                recipes={Array.from(
+                  recipes
+                    .filter((x) => x.photos.length > 0)
+                    .sort((a, b) => b.rating - a.rating)
+                    .slice(0, 3)
+                )}
+              />
+            </div>
+            <TypeSection recipes={recipes} />
           </div>
-          <div className=" flex flex-col place-items-center mb-8">
-            <Popular
-              recipes={Array.from(
-                recipes
-                  .filter((x) => x.photos.length > 0)
-                  .sort((a, b) => b.rating - a.rating)
-                  .slice(0, 3)
-              )}
-            />
-          </div>
-          <TypeSection recipes={recipes} />
-        </div>
+        </>
       )}
     </>
   );

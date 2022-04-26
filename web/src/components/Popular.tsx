@@ -6,7 +6,7 @@ import { Carousel } from "react-responsive-carousel";
 const Item = ({ photoId, recipeId }) => {
   const { isLoading, error, data: photoUrl } = GetImageById(photoId, recipeId);
   return (
-    <>
+    <div>
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
@@ -17,15 +17,15 @@ const Item = ({ photoId, recipeId }) => {
         <img
           style={{
             width: "50rem",
-            height: "26rem",
+            height: "22rem",
             objectPosition: "center",
             objectFit: "cover",
           }}
           src={photoUrl}
-          alt="cnm"
+          alt="recipephoto"
         />
       )}
-    </>
+    </div>
   );
 };
 

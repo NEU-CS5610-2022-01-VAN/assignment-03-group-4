@@ -11,7 +11,7 @@ const url = process.env.REACT_APP_API_BASE_URL + "/categories";
 
 const Section = ({ recipes }) => {
   return (
-    <div className="py-8 w-full justify-evenly flex flex-wrap ">
+    <div className="py-8 justify-evenly flex flex-wrap m-full md:8\/12">
       {/* <RecipeList recipes={recipes}></RecipeList> */}
       {recipes.map((recipe) => (
         <div className="pt-6 pb-8" key={recipe._id}>
