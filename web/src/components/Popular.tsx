@@ -16,7 +16,14 @@ const Item = ({ photoId, recipeId }) => {
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
         <Skeleton variant="rectangular" animation="wave">
-          <div className="d-block w-100" />
+          <i
+            style={{
+              width: "50rem",
+              height: "22rem",
+              objectPosition: "center",
+              objectFit: "cover",
+            }}
+          />
         </Skeleton>
       ) : (
         <img
@@ -36,7 +43,7 @@ const Item = ({ photoId, recipeId }) => {
 
 const Popular = ({ recipes }) => {
   return (
-    <Carousel showStatus={false} interval={2000}>
+    <Carousel showStatus={false} interval={2000} infiniteLoop={true}>
       {recipes.map((recipe) => {
         return (
           <Item
