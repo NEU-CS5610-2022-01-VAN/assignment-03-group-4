@@ -30,10 +30,12 @@ export const getReviewsByRecipeId = asyncHandler(
     const recipeId = req.params.recipeId;
     const reviews = await Review.find({
       recipe: recipeId,
-    }).populate({
-      path: "author",
-      model: User,
-    });
+    })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "author",
+        model: User,
+      });
     res.send(reviews);
   }
 );
