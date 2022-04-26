@@ -43,10 +43,10 @@ const Home = () => {
         </div>
       ) : (
         <div className="pt-16 mx-auto m-full md:w-8/12 ">
-          <div className="flex flex-col place-items-center font-serif text-3xl font-bold pt-6 pb-3">
+          <div className="flex flex-col place-items-center font-serif text-3xl font-bold pt-6 pb-3 mb-4">
             Most Popular
           </div>
-          <div className="flex flex-col place-items-center mb-8">
+          <div className=" flex flex-col place-items-center mb-8">
             <Popular
               recipes={Array.from(
                 recipes

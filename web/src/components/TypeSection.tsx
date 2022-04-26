@@ -1,9 +1,10 @@
 import Carousel from "react-bootstrap/Carousel";
 import GetImageById from "../api/ImageAPI";
 import { CircularProgress, Skeleton } from "@mui/material";
+import { Link } from "react-router-dom";
+
 import axios from "axios";
 import { useQuery } from "react-query";
-import RecipeList from "./RecipeList";
 import RecipeCard from "./RecipeCard";
 
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
@@ -15,6 +16,7 @@ const Section = ({ recipes }) => {
       {recipes.map((recipe) => (
         <div className="pt-6 pb-8" key={recipe._id}>
           <RecipeCard recipe={recipe} key={recipe.id} />
+          {/* <SectionCard recipe={recipe} /> */}
         </div>
       ))}
     </div>
@@ -40,8 +42,10 @@ const TypeSection = ({ recipes }) => {
       ) : (
         categories.map((category) => (
           <div className="flex flex-col font-serif text-xl font-bold pt-2">
-            <hr className="mt-8 mb-2" />
-            Find More on {category.name}
+            <Link to={`/categories/${category._id}`}>
+              Find More on {category.name}
+            </Link>
+            <hr className="mt-2 mb-2" />
             <Section
               recipes={Array.from(
                 recipes

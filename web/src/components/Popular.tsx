@@ -1,6 +1,7 @@
-import Carousel from "react-bootstrap/Carousel";
 import GetImageById from "../api/ImageAPI";
 import { Skeleton } from "@mui/material";
+import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
+import { Carousel } from "react-responsive-carousel";
 
 const Item = ({ photoId, recipeId }) => {
   const { isLoading, error, data: photoUrl } = GetImageById(photoId, recipeId);
@@ -13,16 +14,16 @@ const Item = ({ photoId, recipeId }) => {
           <div className="d-block w-100" />
         </Skeleton>
       ) : (
-        <div
-          className={`d-block `}
+        <img
           style={{
             width: "50rem",
             height: "26rem",
-            backgroundPosition: "center",
-            backgroundImage: `url(${photoUrl})`,
-            backgroundSize: "cover",
+            objectPosition: "center",
+            objectFit: "cover",
           }}
-        ></div>
+          src={photoUrl}
+          alt="cnm"
+        />
       )}
     </>
   );
@@ -30,18 +31,9 @@ const Item = ({ photoId, recipeId }) => {
 
 const Popular = ({ recipes }) => {
   return (
-    <Carousel
-      style={{
-        width: "50rem",
-        height: "26rem",
-      }}
-    >
+    <Carousel showStatus={false}>
       {recipes.map((recipe) => {
-        return (
-          <Carousel.Item key={recipe.id} interval={2000}>
-            <Item photoId={recipe.photos[0]} recipeId={recipe.id} />
-          </Carousel.Item>
-        );
+        return <Item photoId={recipe.photos[0]} recipeId={recipe.id} />;
       })}
     </Carousel>
   );

@@ -35,7 +35,7 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <>
-          <div className=" bg-indigo-500 fixed ml-30 p-3 ">
+          <div className=" fixed ml-30 p-3 ">
             <FacebookShareButton url={url} quote={recipe.title}>
               <FacebookIcon size={32} round />
             </FacebookShareButton>
