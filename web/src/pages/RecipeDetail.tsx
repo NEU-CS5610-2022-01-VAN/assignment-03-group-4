@@ -1,6 +1,8 @@
 import { useRef } from "react";
 import axios from "axios";
 import { Rating } from "@mui/material";
+import React, { useEffect, useState } from "react";
+
 import "./css/RecipeDetail.css";
 import { useQuery } from "react-query";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -180,7 +182,7 @@ const RecipeDetail = () => {
             </div>
             <div className="font-serif flex flex-col gap-2 py-4">
               {recipe.ingredients.map((item) => (
-                <div className="ml-10 flex items-center">
+                <div className="ml-10 flex items-center" key={item}>
                   <BsDot />
                   <div className="ml-2">{item}</div>
                 </div>
@@ -192,10 +194,10 @@ const RecipeDetail = () => {
             </div>
             <div className="py-2 font-serif flex flex-col gap-2 py-4">
               {recipe.instructions.map((step, index) => (
-                <>
+                <div key={index}>
                   <div className="text-xl font-medium">Step {index + 1}</div>
                   <div className="ml-16">{step}</div>
-                </>
+                </div>
               ))}
             </div>
             <hr className="mt-16" />

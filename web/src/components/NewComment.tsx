@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import axios from "axios";
 // import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -26,7 +26,15 @@ const validationSchema = yup.object({
     .required("Plese give a rating score(1-5)"),
 });
 
-const NewComment = ({ recipeId }) => {
+const NewComment = ({ recipeId}) => {
+  const { accessToken } = useAuthToken();
+  const { user, error, isAuthenticated, isLoading } = useAuth0();
+  // const [submitting, setSubmitting] = useState<boolean>(false);
+  const [test, setTest] = useState(0);
+
+
+  const navigate = useNavigate();
+
   const formik = useFormik({
     initialValues: {
       title: "",
@@ -35,7 +43,7 @@ const NewComment = ({ recipeId }) => {
       recipe: recipeId,
     },
     validationSchema: validationSchema,
-    onSubmit: (values: any, { setSubmitting }) => {
+    onSubmit: (values: any, { setSubmitting, resetForm }) => {
       setTimeout(() => {
         axios
           .post(`${process.env.REACT_APP_API_BASE_URL}/reviews/`, values, {
@@ -43,19 +51,19 @@ const NewComment = ({ recipeId }) => {
           })
           .then(() => {
             alert("Success");
+            resetForm();
             setSubmitting(false);
-            navigate("/recipe/" + recipeId);
+            console.log("XXXXX"+recipeId);
+            // setSubmit()
+            window.location.reload();
+            navigate(`/recipe/${recipeId}`);
           })
           .catch((err) => console.log(err));
       }, 200);
     },
   });
 
-  const { accessToken } = useAuthToken();
-  const { user, error, isAuthenticated, isLoading } = useAuth0();
-  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
 
-  const navigate = useNavigate();
 
   if (isLoading) {
     return <div>Loading...</div>;
