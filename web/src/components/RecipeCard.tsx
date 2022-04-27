@@ -40,7 +40,7 @@ const RecipeCard = ({ recipe }) => (
 
           <Rating name="read-only" value={recipe.rating} readOnly />
 
-          <h3 className="">
+          <h3 className="text-sm font-medium">
             By&nbsp;
             <Link to={`/profile/${recipe.author.id}`}>
               {recipe.author.name}

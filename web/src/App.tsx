@@ -1,11 +1,10 @@
-import { Routes, Route, Navigate, Outlet } from "react-router-dom";
+import { Routes, Route, Outlet } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import ScrollToTop from "./hooks/ScrollToTop";
-
 // Bootstrap CSS
 // import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -26,9 +25,6 @@ import SearchPage from "./pages/SearchPage";
 import Category from "./pages/Category";
 import Footer from "./components/Footer";
 import { UserContextProvider } from "./hooks/UserContext";
-
-
-
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -60,10 +56,16 @@ const requestedScopes = [
 ];
 
 function RequireAuth({ children }) {
+<<<<<<< HEAD
   const { isAuthenticated, isLoading,loginWithRedirect } = useAuth0();
 
   if (!isLoading && !isAuthenticated) {
     // return <Navigate to="/profile" replace />;
+=======
+  const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
+
+  if (!isLoading && !isAuthenticated) {
+>>>>>>> main
     return loginWithRedirect();
   }
 
@@ -116,39 +118,39 @@ function LayoutsWithNavbar() {
 function AppRouter() {
   return (
     <BrowserRouter>
-      <ScrollToTop>
-        <Routes>
-          <Route path="/" element={<LayoutsWithNavbar />}>
-            <Route path="/" element={<Home />} />
-            <Route path="/search" element={<SearchPage />}>
-              <Route path="/search/:keyword" element={<SearchPage />} />
-            </Route>
-            <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
-            <Route path="/profile" element={<Profile />}>
-              <Route path=":userId" element={<Profile />} />
-            </Route>
-            <Route path="/categories/:categoryId" element={<Category />} />
-            <Route
-              path="/newrecipe"
-              element={
-                <RequireAuth>
-                  <NewRecipe />
-                </RequireAuth>
-              }
-            />
-            <Route path="/verify-user" element={<VerifyUser />} />
+      <ScrollToTop></ScrollToTop>
 
-            <Route
-              path="*"
-              element={
-                <main style={{ padding: "1rem" }}>
-                  <p>There's nothing here!</p>
-                </main>
-              }
-            />
+      <Routes>
+        <Route path="/" element={<LayoutsWithNavbar />}>
+          <Route path="/" element={<Home />} />
+          <Route path="/search" element={<SearchPage />}>
+            <Route path="/search/:keyword" element={<SearchPage />} />
           </Route>
-        </Routes>
-      </ScrollToTop>
+          <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
+          <Route path="/profile" element={<Profile />}>
+            <Route path=":userId" element={<Profile />} />
+          </Route>
+          <Route path="/categories/:categoryId" element={<Category />} />
+          <Route
+            path="/newrecipe"
+            element={
+              <RequireAuth>
+                <NewRecipe />
+              </RequireAuth>
+            }
+          />
+          <Route path="/verify-user" element={<VerifyUser />} />
+
+          <Route
+            path="*"
+            element={
+              <main style={{ padding: "1rem" }}>
+                <p>There's nothing here!</p>
+              </main>
+            }
+          />
+        </Route>
+      </Routes>
     </BrowserRouter>
   );
 }

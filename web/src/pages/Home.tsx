@@ -7,14 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 const url = process.env.REACT_APP_API_BASE_URL + "/recipes";
 
-// .sort((a, b) => b.rating - a.rating).slice(0, 3)
-const sortRating = (recipes) => {
-  recipes.sort((a, b) => b.rating - a.rating);
-  return recipes.slice(0, 3);
-};
-
 const Home = () => {
-  const { isLoading, error, data: recipes, isFetching } = GetRecipesByURL(url);
+  const { isLoading, error, data: recipes } = GetRecipesByURL(url);
 
   const navigate = useNavigate();
   const handleKeyPress = (e) => {
