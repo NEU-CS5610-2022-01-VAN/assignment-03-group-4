@@ -32,6 +32,8 @@ import { useUserContext } from "../hooks/UserContext";
 import { useQuery } from "react-query";
 
 const validationSchema = yup.object({
+  name: yup.string().required("Name Required"),
+  bio: yup.string().required("Bio Required"),
   title: yup.string().required("Review Title Required"),
   content: yup.string().required("Review Content Required"),
   rating: yup
@@ -74,22 +76,26 @@ const Profile = () => {
       bio: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values: any, { setSubmitting }) => {
-      setTimeout(() => {
-        axios
-          .post(
-            `${process.env.REACT_APP_API_BASE_URL}/users`,
-            { name: values.name, bio: values.bio },
-            {
-              headers: { Authorization: `Bearer ${accessToken}` },
-            }
-          )
-          .then((res) => {
-            console.log(res);
-            alert("Success");
-          })
-          .catch((err) => console.log(err));
-      }, 200);
+    onSubmit: (values: any, { setSubmitting, resetForm }) => {
+      console.log("!!!!!!!!!!!!!!!!");
+      // setTimeout(() => {
+      axios
+        .post(
+          `${process.env.REACT_APP_API_BASE_URL}/users`,
+          { name: values.name, bio: values.bio },
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        )
+        .then((res) => {
+          console.log(res);
+          alert("Success");
+          setSubmitting(false);
+          resetForm();
+          window.location.reload();
+        })
+        .catch((err) => console.log(err));
+      // }, 200);
     },
   });
 
@@ -116,7 +122,7 @@ const Profile = () => {
                       <ListItemIcon>
                         <EmailIcon fontSize="small" />
                       </ListItemIcon>
-                      <ListItemText>{(user as any).email}</ListItemText>
+                      <ListItemText>{dbUser && dbUser.email}</ListItemText>
                     </MenuItem>
                     <Divider />
 

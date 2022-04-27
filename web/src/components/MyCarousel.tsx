@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-
+import "./css/myCarousel.css";
 const Thumbnail = (props) => {
   return (
     <div
@@ -48,32 +48,43 @@ function MyCarousel(props) {
   return (
     <>
       {console.log(props.video)}
-
-      <div className="flex flex-col md:flex-row justify-between w-full">
-        {video ? (
-          <iframe
-            width="672"
-            height="378"
-            src={urlCurrent}
-            title="YouTube video player"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          />
-        ) : (
-          <div
-            style={{
-              backgroundColor: "#ffffff",
-              width: "672px",
-              padding: "10px",
-              height: "378px",
-              backgroundImage: `url(${urlCurrent})`,
-              backgroundSize: "cover",
-              backgroundPosition: "center",
-              backgroundRepeat: "no-repeat",
-            }}
-          />
-        )}
-        {props.children}
+      <div className="responsive-topcard flex md:flex-row flex-col w-full top-container">
+        <div className="box ">
+          {video ? (
+            <iframe
+              className="responsive-iframe"
+              src={urlCurrent}
+              // width="672"
+              // height="378"
+              // title="YouTube video player"
+              // frameBorder="0"
+              // allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            />
+          ) : (
+            <div
+              className="responsive-iframe"
+              style={{
+                backgroundColor: "#ffffff",
+                // width: "672px",
+                // padding: "10px",
+                // height: "378px",
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+                // backgroundRepeat: "no-repeat",
+                backgroundImage: `url(${urlCurrent})`,
+              }}
+            />
+          )}
+        </div>
+        <div
+          className="note flex flex-col mx-auto "
+          style={{
+            borderColor: "#D9D9D9",
+            backgroundColor: "#F5F1E7",
+          }}
+        >
+          {props.children}
+        </div>
       </div>
       <div
         className="flex items-center h-full "

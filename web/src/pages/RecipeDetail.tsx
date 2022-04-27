@@ -25,52 +25,43 @@ const executeScroll = (myRef) => scrollToRef(myRef);
 
 const Note = ({ recipe, myRef, ingredientRef, directionRef }) => {
   return (
-    <div
-      style={{
-        width: "200px",
-        height: "378px",
-        borderColor: "#D9D9D9",
-        backgroundColor: "#F5F1E7",
-      }}
-      className="w-full flex flex-col mx-auto bg-amber-300 rounded"
-    >
-      <div className="mt-10 font-serif flex flex-col items-center gap-2 py-2">
-        <div className="flex content-center  ">
+    <div className=" font-serif flex flex-col items-center gap-8">
+      <div className=" flex flex-col items-center">
+        <div className="inline-flex ">
           <div className=" text-gray-800 font-bold mr-2">
             {recipe.rating ? recipe.rating.toFixed(1) : "0.0"}
           </div>
           <Rating name="read-only" defaultValue={recipe.rating} readOnly />
         </div>
-
         <div
           onClick={() => executeScroll(myRef)}
           className="items-center text-sm hover:text-light-green-700"
         >
           {recipe.reviews.length} reviews
         </div>
-        <div className="flex flex-col gap-2">
-          <div
-            onClick={() => executeScroll(ingredientRef)}
-            className="flex content-center mt-5 hover:text-light-green-700"
-          >
-            <div>Ingredients </div>
-            <div className="text-gray-800 font-bold ml-2 ">
-              {recipe.ingredients.length}
-            </div>
+      </div>
+      <div className="flex flex-col gap-2">
+        <div
+          onClick={() => executeScroll(ingredientRef)}
+          className="flex content-center  hover:text-light-green-700"
+        >
+          <div>Ingredients </div>
+          <div className="text-gray-800 font-bold ml-2 ">
+            {recipe.ingredients.length}
           </div>
-          <div
-            onClick={() => executeScroll(directionRef)}
-            className="flex content-center hover:text-light-green-700"
-          >
-            <div>Cooking Steps </div>
-            <div className="text-gray-800 font-bold ml-2 ">
-              {recipe.instructions.length}
-            </div>
+        </div>
+        <div
+          onClick={() => executeScroll(directionRef)}
+          className="flex content-center hover:text-light-green-700"
+        >
+          <div>Cooking Steps </div>
+          <div className="text-gray-800 font-bold ml-2 ">
+            {recipe.instructions.length}
           </div>
-          <div className="flex content-center ">
-            Total Minutes
-            <div className="text-gray-800 font-bold ml-2">没改</div>
-          </div>
+        </div>
+        <div className="flex content-center ">
+          Total Minutes
+          <div className="text-gray-800 font-bold ml-2">没改</div>
         </div>
       </div>
     </div>

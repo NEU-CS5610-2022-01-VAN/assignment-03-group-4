@@ -111,7 +111,8 @@ function LayoutsWithNavbar() {
 function AppRouter() {
   return (
     <BrowserRouter>
-      <ScrollToTop />
+      <ScrollToTop></ScrollToTop>
+
       <Routes>
         <Route path="/" element={<LayoutsWithNavbar />}>
           <Route path="/" element={<Home />} />

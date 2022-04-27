@@ -89,7 +89,7 @@ const NewComment = ({ rating, recipeId }) => {
 
   return (
     <>
-      {console.log("？" + rating)}
+      {console.log("？" + formik.initialValues.rating)}
       <div className="ml-7 mr-10">
         <form
           className="flex flex-col mt-5 mb-10"
