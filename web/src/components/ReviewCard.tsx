@@ -8,7 +8,6 @@ import { useQuery } from "react-query";
 import "../assets/styles/tailwind.css";
 
 function ReviewCard({ review }) {
-
   const { user, isAuthenticated, isLoading } = useAuth0();
   // const url = `${process.env.REACT_APP_API_BASE_URL}/users/${review.author}`;
   // const {
@@ -23,13 +22,14 @@ function ReviewCard({ review }) {
             <img
               style={{ width: 45, height: 45 }}
               className="rounded-full"
-              src={"https://exp-picture.cdn.bcebos.com/586bfdefe07814310c40edd9dc6699cf0353624c.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fquality%2Cq_80"}
-              alt={review.author.name.slice(0,3)}
+              src={
+                "https://exp-picture.cdn.bcebos.com/586bfdefe07814310c40edd9dc6699cf0353624c.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fquality%2Cq_80"
+              }
+              alt={review.author.name.slice(0, 3)}
             />
           </div>
           <div className="mt-2 ml-2 ">
             <p>
-              {" "}
               <Link
                 style={{ fontSize: 19 }}
                 className="text-black no-underline"
@@ -56,7 +56,7 @@ function ReviewCard({ review }) {
         </div>
         <div style={{ marginLeft: "3.25rem" }}>
           <p style={{ fontSize: 20 }} className="text-blue-400 mt-3">
-            {review.title===null?("An awesome recipe to try"):(review.title)}
+            {review.title === null ? "An awesome recipe to try" : review.title}
           </p>
           <p style={{ fontSize: 18 }} className="mt-3 mb-6">
             {review.content}

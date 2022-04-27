@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
+import ScrollToTop from "./hooks/ScrollToTop";
 
 // Bootstrap CSS
 // import "bootstrap/dist/css/bootstrap.min.css";
@@ -111,37 +112,39 @@ function LayoutsWithNavbar() {
 function AppRouter() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<LayoutsWithNavbar />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/search" element={<SearchPage />}>
-            <Route path="/search/:keyword" element={<SearchPage />} />
-          </Route>
-          <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
-          <Route path="/profile" element={<Profile />}>
-            <Route path=":userId" element={<Profile />} />
-          </Route>
-          <Route path="/categories/:categoryId" element={<Category />} />
-          <Route
-            path="/newrecipe"
-            element={
-              <RequireAuth>
-                <NewRecipe />
-              </RequireAuth>
-            }
-          />
-          <Route path="/verify-user" element={<VerifyUser />} />
+      <ScrollToTop>
+        <Routes>
+          <Route path="/" element={<LayoutsWithNavbar />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/search" element={<SearchPage />}>
+              <Route path="/search/:keyword" element={<SearchPage />} />
+            </Route>
+            <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
+            <Route path="/profile" element={<Profile />}>
+              <Route path=":userId" element={<Profile />} />
+            </Route>
+            <Route path="/categories/:categoryId" element={<Category />} />
+            <Route
+              path="/newrecipe"
+              element={
+                <RequireAuth>
+                  <NewRecipe />
+                </RequireAuth>
+              }
+            />
+            <Route path="/verify-user" element={<VerifyUser />} />
 
-          <Route
-            path="*"
-            element={
-              <main style={{ padding: "1rem" }}>
-                <p>There's nothing here!</p>
-              </main>
-            }
-          />
-        </Route>
-      </Routes>
+            <Route
+              path="*"
+              element={
+                <main style={{ padding: "1rem" }}>
+                  <p>There's nothing here!</p>
+                </main>
+              }
+            />
+          </Route>
+        </Routes>
+      </ScrollToTop>
     </BrowserRouter>
   );
 }
