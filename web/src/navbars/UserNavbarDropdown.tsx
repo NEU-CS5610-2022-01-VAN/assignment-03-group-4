@@ -11,8 +11,8 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 
-import LogoutButton from "./LogoutButton";
-import LoginButton from "./LoginButton";
+import LogoutButton from "../components/LogoutButton";
+import LoginButton from "../components/LoginButton";
 import { MenuList, Skeleton } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import { useUserContext } from "../hooks/UserContext";
