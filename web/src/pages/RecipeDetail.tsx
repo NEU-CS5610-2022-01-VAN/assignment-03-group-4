@@ -61,7 +61,9 @@ const Note = ({ recipe, myRef, ingredientRef, directionRef }) => {
         </div>
         <div className="flex content-center ">
           Total Minutes
-          <div className="text-gray-800 font-bold ml-2">没改</div>
+          <div className="text-gray-800 font-bold ml-2">
+            {recipe.cookingTime}
+          </div>
         </div>
       </div>
     </div>

@@ -3,6 +3,7 @@ import { Types, Schema, model } from "mongoose";
 interface IRecipe {
   title: string;
   body: string;
+  cookingTime: number;
   rating?: number;
   ingredients: String[];
   instructions: String[];
@@ -20,6 +21,10 @@ const recipeSchema = new Schema<IRecipe>(
     },
     body: {
       type: String,
+      required: true,
+    },
+    cookingTime: {
+      type: Number,
       required: true,
     },
     rating: {
