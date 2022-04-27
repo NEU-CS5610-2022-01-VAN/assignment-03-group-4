@@ -8,6 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { FiLogIn } from "react-icons/fi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import LoginButton from "./LoginButton";
@@ -72,17 +73,25 @@ const NewComment = ({ recipeId}) => {
   }
   if (!user) {
     return (
-      <>
-        <LoginButton>Log in</LoginButton> to leave a comment
-      </>
+      <div className="flex flex-col items-center my-16 text-gray-700">
+        <div className="p-1 ">
+          <LoginButton>
+            <div
+              style={{ color: "#2F7D31" }}
+              className="flex items-center gap-2 "
+            >
+              <FiLogIn />
+              Log in
+            </div>
+          </LoginButton>{" "}
+        </div>
+        to leave a comment
+      </div>
     );
   }
 
   return (
     <>
-      <div>
-        <h4 className="font-serif">Leave a Review:</h4>
-      </div>
       <div className="ml-7 mr-10">
         <form
           className="flex flex-col mt-5 mb-10"
