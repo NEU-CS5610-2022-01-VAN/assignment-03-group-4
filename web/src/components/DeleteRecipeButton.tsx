@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Button as BootstrapButton } from "react-bootstrap";
-import { useAuthToken } from "./AuthTokenContext";
+import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useNavigate } from "react-router-dom";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";

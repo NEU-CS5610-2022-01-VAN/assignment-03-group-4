@@ -4,6 +4,7 @@ import { MongoClient, GridFSBucket } from "mongodb";
 import "dotenv/config";
 import { Recipe } from "../models/recipe";
 import { uploadFilesMiddleware } from "../middlewares/upload.middleware";
+import { User } from "../models/user";
 
 const mongoClient = new MongoClient(process.env.MONGO_URL || "");
 
@@ -20,6 +21,24 @@ export const uploadFilesByRecipeId = asyncHandler(
       $push: {
         photos: req.file.id,
       },
+    });
+    return res.send({
+      message: "File has been uploaded.",
+    });
+  }
+);
+
+export const uploadPictureByUserId = asyncHandler(
+  async (req: any, res: any) => {
+    const userId = (req as any).user.sub;
+    await uploadFilesMiddleware(req, res);
+    if (req.file == undefined) {
+      return res.send({
+        message: "You must select a file.",
+      });
+    }
+    await User.findByIdAndUpdate(userId, {
+      picture: req.file.id,
     });
     return res.send({
       message: "File has been uploaded.",

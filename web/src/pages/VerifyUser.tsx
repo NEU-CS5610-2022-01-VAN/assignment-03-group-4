@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useAuthToken } from "../components/AuthTokenContext";
+import { useAuthToken } from "../hooks/AuthTokenContext";
 
 import { useNavigate } from "react-router-dom";
 

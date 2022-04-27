@@ -7,6 +7,7 @@ import { Recipe } from "../models/recipe";
 export const getAllRecipes = asyncHandler(
   async (req: Request, res: Response) => {
     const recipes = await Recipe.find()
+      .sort({ createdAt: -1 })
       .populate("author")
       .populate("reviews")
       .populate("categories");
@@ -29,10 +30,12 @@ export const getReviewsByRecipeId = asyncHandler(
     const recipeId = req.params.recipeId;
     const reviews = await Review.find({
       recipe: recipeId,
-    }).populate({
-      path: "author",
-      model: User,
-    });
+    })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "author",
+        model: User,
+      });
     res.send(reviews);
   }
 );

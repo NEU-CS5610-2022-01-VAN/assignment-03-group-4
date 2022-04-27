@@ -6,7 +6,7 @@ import { Recipe } from "../models/recipe";
 
 export const getAllReviews = asyncHandler(
   async (req: Request, res: Response) => {
-    const reviews = await Review.find().populate({
+    const reviews = await Review.find().sort({ createdAt: -1 }).populate({
       path: "author",
       model: User,
     });

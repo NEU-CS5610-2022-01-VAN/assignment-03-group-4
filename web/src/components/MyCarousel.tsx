@@ -76,7 +76,7 @@ function MyCarousel(props) {
         {props.children}
       </div>
       <div
-        className="flex items-center h-full overflow-y-scroll"
+        className="flex items-center h-full "
         style={{
           display: "flex",
           alignItems: "center",

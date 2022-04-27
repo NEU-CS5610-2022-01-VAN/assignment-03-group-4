@@ -14,8 +14,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 // Tailwind CSS Style Sheet
 import "./assets/styles/tailwind.css";
 
-import TopNavbar from "./components/TopNavbar";
-import { AuthTokenProvider } from "./components/AuthTokenContext";
+import TopNavbar from "./navbars/TopNavbar";
+import { AuthTokenProvider } from "./hooks/AuthTokenContext";
 import NewRecipe from "./pages/NewRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
 import Home from "./pages/Home";
@@ -24,8 +24,15 @@ import VerifyUser from "./pages/VerifyUser";
 import SearchPage from "./pages/SearchPage";
 import Category from "./pages/Category";
 import Footer from "./components/Footer";
+import { UserContextProvider } from "./hooks/UserContext";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 const requestedScopes = [
   "read:current_user",
@@ -74,7 +81,9 @@ function App() {
           scope={requestedScopes.join(" ")}
         >
           <AuthTokenProvider>
-            <AppRouter />
+            <UserContextProvider>
+              <AppRouter />
+            </UserContextProvider>
           </AuthTokenProvider>
         </Auth0Provider>
         <ReactQueryDevtools initialIsOpen={true} />
@@ -105,7 +114,9 @@ function AppRouter() {
       <Routes>
         <Route path="/" element={<LayoutsWithNavbar />}>
           <Route path="/" element={<Home />} />
-          <Route path="/search/:keyword" element={<SearchPage />} />
+          <Route path="/search" element={<SearchPage />}>
+            <Route path="/search/:keyword" element={<SearchPage />} />
+          </Route>
           <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
           <Route path="/profile" element={<Profile />}>
             <Route path=":userId" element={<Profile />} />

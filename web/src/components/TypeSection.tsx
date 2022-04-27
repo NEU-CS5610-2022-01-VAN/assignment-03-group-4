@@ -38,7 +38,10 @@ const TypeSection = ({ recipes }) => {
         </div>
       ) : (
         categories.map((category) => (
-          <div className="flex flex-col font-serif text-xl font-bold pt-2">
+          <div
+            key={category._id}
+            className="flex flex-col font-serif text-xl font-bold pt-2"
+          >
             <Link to={`/categories/${category._id}`}>
               Find More on {category.name}
             </Link>

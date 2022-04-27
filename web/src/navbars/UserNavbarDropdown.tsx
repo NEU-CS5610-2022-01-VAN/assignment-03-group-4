@@ -11,14 +11,16 @@ import MenuItem from "@mui/material/MenuItem";
 import { Link, useNavigate } from "react-router-dom";
 import Divider from "@mui/material/Divider";
 
-import LogoutButton from "./LogoutButton";
-import LoginButton from "./LoginButton";
+import LogoutButton from "../components/LogoutButton";
+import LoginButton from "../components/LoginButton";
 import { MenuList, Skeleton } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import { useUserContext } from "../hooks/UserContext";
 
 const UserNavbarDropdown = () => {
   const { user, isAuthenticated, isLoading, logout, loginWithRedirect } =
     useAuth0();
+  const { user: dbUser } = useUserContext();
 
   const navigate = useNavigate();
 
@@ -63,22 +65,20 @@ const UserNavbarDropdown = () => {
       </Button>
 
       <Menu
-       
         id="basic-menu"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        
         MenuListProps={{
           "aria-labelledby": "basic-button",
         }}
       >
         {isAuthenticated ? (
-          <MenuList  className="outline-none">
+          <MenuList className="outline-none">
             <MenuItem onClick={() => onMenuItemClick("/profile")}>
               <div>
                 <p>Signed in as</p>
-                <b>{(user as any).name}</b>
+                {dbUser && <b>{(dbUser as any).name}</b>}
               </div>
             </MenuItem>
             <Divider sx={{ my: 0.5 }} />

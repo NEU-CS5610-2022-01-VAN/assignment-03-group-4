@@ -5,7 +5,7 @@ import { Review } from "../models/review";
 import { Recipe } from "../models/recipe";
 
 export const getAllUsers = asyncHandler(async (req: Request, res: Response) => {
-  const users = await User.find();
+  const users = await User.find().sort({ createdAt: -1 });
   res.send(users);
 });
 
@@ -22,10 +22,12 @@ export const getReviewsByUserId = asyncHandler(
     const userId = req.params.userId;
     const reviews = await Review.find({
       author: userId,
-    }).populate({
-      path: "author",
-      model: User,
-    });
+    })
+      .sort({ createdAt: -1 })
+      .populate({
+        path: "author",
+        model: User,
+      });
     res.send(reviews);
   }
 );
@@ -36,6 +38,7 @@ export const getRecipesByUserId = asyncHandler(
     const recipes = await Recipe.find({
       author: userId,
     })
+      .sort({ createdAt: -1 })
       .populate("reviews")
       .populate("categories")
       .populate({
@@ -78,14 +81,13 @@ export const createUser = asyncHandler(async (req: Request, res: Response) => {
 
 export const updateUserById = asyncHandler(
   async (req: Request, res: Response) => {
-    const userId = req.params.userId;
-    const { email, name, password } = req.body;
+    const userId = (req as any).user.sub;
+    const { name, bio } = req.body;
     const user = await User.findByIdAndUpdate(
       userId,
       {
-        email,
-        password,
         name,
+        bio,
       },
       { new: true }
     );
