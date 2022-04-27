@@ -30,8 +30,7 @@ import { HiUpload } from "react-icons/hi";
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useUserContext } from "../hooks/UserContext";
 
-import { useQuery } from "react-query";
-
+import AppBackdrop from "../components/AppBackdrop";
 import {
   Avatar,
   ImageList,
@@ -64,6 +63,7 @@ const Profile = () => {
 
   const { accessToken } = useAuthToken();
   const { user: dbUser } = useUserContext();
+  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
 
   const params = useParams();
 
@@ -82,7 +82,9 @@ const Profile = () => {
     validationSchema: validationSchema,
     onSubmit: async (values: any, { setSubmitting, resetForm }) => {
       try {
+        setBackdropOpen(true);
         setSubmitting(true);
+
         const formData = new FormData();
         formData.append("file", image);
         await axios.post(
@@ -272,6 +274,7 @@ const Profile = () => {
           </Container>
         </>
       )}
+      {backdropOpen && <AppBackdrop text={"Updating User Profile"} />}
     </>
   );
 };
