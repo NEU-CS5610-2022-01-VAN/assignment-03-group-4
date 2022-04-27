@@ -4,7 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-
+import ScrollToTop from "./hooks/ScrollToTop";
 // Bootstrap CSS
 // import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -111,6 +111,7 @@ function LayoutsWithNavbar() {
 function AppRouter() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<LayoutsWithNavbar />}>
           <Route path="/" element={<Home />} />

@@ -49,7 +49,7 @@ function MyCarousel(props) {
     <>
       {console.log(props.video)}
 
-      <div className="inline-flex justify-between w-full">
+      <div className="flex flex-col md:flex-row justify-between w-full">
         {video ? (
           <iframe
             width="672"

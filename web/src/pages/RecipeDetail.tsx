@@ -32,14 +32,14 @@ const Note = ({ recipe, myRef, ingredientRef, directionRef }) => {
         borderColor: "#D9D9D9",
         backgroundColor: "#F5F1E7",
       }}
-      className="flex flex-col mx-auto bg-amber-300 rounded"
+      className="w-full flex flex-col mx-auto bg-amber-300 rounded"
     >
       <div className="mt-10 font-serif flex flex-col items-center gap-2 py-2">
         <div className="flex content-center  ">
           <div className=" text-gray-800 font-bold mr-2">
             {recipe.rating ? recipe.rating.toFixed(1) : "0.0"}
           </div>
-          <Rating name="read-only" value={recipe.rating} readOnly />
+          <Rating name="read-only" defaultValue={recipe.rating} readOnly />
         </div>
 
         <div

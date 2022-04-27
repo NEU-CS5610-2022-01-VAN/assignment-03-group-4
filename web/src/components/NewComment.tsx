@@ -89,7 +89,7 @@ const NewComment = ({ rating, recipeId }) => {
 
   return (
     <>
-      {console.log("？" + formik.initialValues.rating)}
+      {console.log("？" + rating)}
       <div className="ml-7 mr-10">
         <form
           className="flex flex-col mt-5 mb-10"
@@ -125,7 +125,7 @@ const NewComment = ({ rating, recipeId }) => {
             color="success"
             name="rating"
             label="Rating"
-            placeholder={rating}
+            defaultValue={rating}
             value={formik.values.rating}
             onChange={formik.handleChange}
             error={formik.touched.rating && Boolean(formik.errors.rating)}
