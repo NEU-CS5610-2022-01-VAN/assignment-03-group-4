@@ -27,6 +27,9 @@ import Category from "./pages/Category";
 import Footer from "./components/Footer";
 import { UserContextProvider } from "./hooks/UserContext";
 
+
+
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
