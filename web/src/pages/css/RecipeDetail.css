@@ -1,0 +1,7 @@
+@media (min-width: 1050px) {
+  .share {
+    margin-left: -5%;
+    position: fixed;
+    flex-direction: column;
+  }
+}

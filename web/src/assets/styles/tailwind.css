@@ -1639,6 +1639,10 @@ video {
   margin-left: 1.25rem;
   margin-right: 1.25rem;
 }
+.mx-16 {
+  margin-left: 4rem;
+  margin-right: 4rem;
+}
 .mb-16 {
   margin-bottom: 4rem;
 }

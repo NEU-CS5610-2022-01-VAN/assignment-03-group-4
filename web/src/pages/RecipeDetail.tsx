@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Rating } from "@mui/material";
-
+import "./css/RecipeDetail.css";
 import { useQuery } from "react-query";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useParams } from "react-router-dom";
@@ -82,40 +82,41 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <>
-          <div className=" fixed ml-30 p-3 ">
-            <FacebookShareButton url={url} quote={recipe.title}>
-              <FacebookIcon size={32} round />
-            </FacebookShareButton>
-            <br />
-            <TwitterShareButton title={recipe.title} url={url}>
-              <TwitterIcon size={32} round />
-            </TwitterShareButton>
-          </div>
           <div className="container max-w-4xl mx-auto px-4">
-            <div className="recipe-category text-sm font-medium flex content-center pb-16">
-              <div className="font-roboto px-1 py-1 text-sm uppercase ">
-                FILED UNDER: &nbsp;
-              </div>
-              {recipe.categories &&
-                recipe.categories.map((category: any) => (
-                  <Link to={`/categories/${category._id}`}>
-                    <div
-                      className="mr-2 font-roboto px-1 py-1 text-sm uppercase "
-                      style={{ color: "#03897B", backgroundColor: "#F0F9F8" }}
-                      key={category._id}
-                    >
-                      {category.name}
-                    </div>
-                  </Link>
-                ))}
-              {isAuthenticated &&
-                !userIsLoading &&
-                (user as any).sub === recipe.author.id && (
-                  <div className="ml-auto font-serif">
-                    <DeleteRecipeButton recipeId={recipe.id} />
-                  </div>
-                )}
+            <div className="share relative flex gap-3 ">
+              <FacebookShareButton url={url} quote={recipe.title}>
+                <FacebookIcon size={32} round />
+              </FacebookShareButton>
+              <TwitterShareButton title={recipe.title} url={url}>
+                <TwitterIcon size={32} round />
+              </TwitterShareButton>
             </div>
+            {recipe.categories.length > 0 && (
+              <div className="recipe-category text-sm font-medium flex content-center pb-16">
+                <div className="font-roboto px-1 py-1 text-sm uppercase ">
+                  FILED UNDER: &nbsp;
+                </div>
+                {recipe.categories &&
+                  recipe.categories.map((category: any) => (
+                    <Link to={`/categories/${category._id}`}>
+                      <div
+                        className="mr-2 font-roboto px-1 py-1 text-sm uppercase "
+                        style={{ color: "#03897B", backgroundColor: "#F0F9F8" }}
+                        key={category._id}
+                      >
+                        {category.name}
+                      </div>
+                    </Link>
+                  ))}
+                {isAuthenticated &&
+                  !userIsLoading &&
+                  (user as any).sub === recipe.author.id && (
+                    <div className="ml-auto font-serif">
+                      <DeleteRecipeButton recipeId={recipe.id} />
+                    </div>
+                  )}
+              </div>
+            )}
             <div className="text-6xl font-serif">{recipe.title}</div>
             <div className="text-gray-800 pt-4 text-xl font-serif">
               {recipe.body}
