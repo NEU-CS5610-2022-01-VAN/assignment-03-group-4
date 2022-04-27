@@ -60,10 +60,11 @@ const requestedScopes = [
 ];
 
 function RequireAuth({ children }) {
-  const { isAuthenticated, isLoading } = useAuth0();
+  const { isAuthenticated, isLoading,loginWithRedirect } = useAuth0();
 
   if (!isLoading && !isAuthenticated) {
-    return <Navigate to="/profile" replace />;
+    // return <Navigate to="/profile" replace />;
+    return loginWithRedirect();
   }
 
   return children;
