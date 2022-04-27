@@ -61,7 +61,6 @@ function MyCarousel(props) {
               className="responsive-iframe"
               style={{
                 backgroundColor: "#ffffff",
-
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 backgroundRepeat: "no-repeat",
