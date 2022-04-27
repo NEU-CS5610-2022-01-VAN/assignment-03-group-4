@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import axios from "axios";
 import { Rating } from "@mui/material";
 import "./css/RecipeDetail.css";
@@ -16,9 +17,13 @@ import DeleteRecipeButton from "../components/DeleteRecipeButton";
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
 
+const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
+
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
 
-const Note = ({ recipe }) => {
+const Note = ({ recipe, myRef, ingredientRef, directionRef }) => {
+  const executeScroll = (myRef) => scrollToRef(myRef);
+
   return (
     <div
       style={{
@@ -37,25 +42,34 @@ const Note = ({ recipe }) => {
           <Rating name="read-only" value={recipe.rating} readOnly />
         </div>
 
-        <div className="items-center text-sm">
+        <div
+          onClick={() => executeScroll(myRef)}
+          className="items-center text-sm"
+        >
           {recipe.reviews.length} reviews
         </div>
         <div className="flex flex-col gap-2">
-          <div className="flex content-center mt-5 ">
-            Total Minutes
-            <div className="text-gray-800 font-bold ml-2">{3}</div>
-          </div>
-          <div className="flex content-center ">
+          <div
+            onClick={() => executeScroll(ingredientRef)}
+            className="flex content-center  mt-5"
+          >
             <div>Ingredients </div>
             <div className="text-gray-800 font-bold ml-2">
               {recipe.ingredients.length}
             </div>
           </div>
-          <div className="flex content-center ">
+          <div
+            onClick={() => executeScroll(directionRef)}
+            className="flex content-center "
+          >
             <div>Cooking Steps </div>
             <div className="text-gray-800 font-bold ml-2">
               {recipe.instructions.length}
             </div>
+          </div>
+          <div className="flex content-center ">
+            Total Minutes
+            <div className="text-gray-800 font-bold ml-2">{3}</div>
           </div>
         </div>
       </div>
@@ -67,12 +81,15 @@ const RecipeDetail = () => {
   const recipeId = useParams().recipeId;
   const url = recipeUrl + recipeId;
   const { user, isAuthenticated, isLoading: userIsLoading } = useAuth0();
-
   const {
     isLoading,
     error,
     data: recipe,
   } = useQuery("recipeDetail", () => axios.get(url).then((res) => res.data));
+
+  const myRef = useRef(null);
+  const ingredientRef = useRef(null);
+  const directionRef = useRef(null);
 
   return (
     <div className="w-full pt-10 pb-48 ">
@@ -92,7 +109,7 @@ const RecipeDetail = () => {
               </TwitterShareButton>
             </div>
             {recipe.categories.length > 0 && (
-              <div className="recipe-category text-sm font-medium flex content-center pb-16">
+              <div className="mt-2 recipe-category text-sm font-medium flex content-center pb-16">
                 <div className="font-roboto px-1 py-1 text-sm uppercase ">
                   FILED UNDER: &nbsp;
                 </div>
@@ -117,7 +134,7 @@ const RecipeDetail = () => {
                   )}
               </div>
             )}
-            <div className="text-6xl font-serif">{recipe.title}</div>
+            <div className="mt-6 text-6xl font-serif">{recipe.title}</div>
             <div className="text-gray-800 pt-4 text-xl font-serif">
               {recipe.body}
             </div>
@@ -145,7 +162,12 @@ const RecipeDetail = () => {
                   photos={recipe.photos}
                   video={recipe.youtubeVideoId}
                 >
-                  <Note recipe={recipe} />
+                  <Note
+                    recipe={recipe}
+                    myRef={myRef}
+                    ingredientRef={ingredientRef}
+                    directionRef={directionRef}
+                  />
                 </MyCarousel>
               </>
             ) : (
@@ -153,7 +175,9 @@ const RecipeDetail = () => {
             )}
 
             <hr className="mt-2" />
-            <div className="text-3xl font-serif pt-3">Ingredients</div>
+            <div ref={ingredientRef} className="text-3xl font-serif pt-3">
+              Ingredients
+            </div>
             <div className="font-serif flex flex-col gap-2 py-4">
               {recipe.ingredients.map((item) => (
                 <div className="ml-10 flex items-center">
@@ -163,7 +187,9 @@ const RecipeDetail = () => {
               ))}
             </div>
             <hr className="mt-2" />
-            <div className="text-3xl font-serif pt-3">Directions</div>
+            <div ref={directionRef} className="text-3xl font-serif pt-3">
+              Directions
+            </div>
             <div className="py-2 font-serif flex flex-col gap-2 py-4">
               {recipe.instructions.map((step, index) => (
                 <>
@@ -184,7 +210,7 @@ const RecipeDetail = () => {
 
             <hr className="mt-16" />
             <h4 className="font-serif font-semibold text-xl flex items-end text-gray-800">
-              <div>Reviews</div>
+              <div ref={myRef}>Reviews</div>
               <div style={{ marginBottom: 3 }} className="ml-1 text-sm ">
                 ({recipe.reviews.length})
               </div>
