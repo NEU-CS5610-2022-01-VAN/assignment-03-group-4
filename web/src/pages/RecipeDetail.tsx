@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Rating } from "@mui/material";
+import React, { useEffect, useState } from "react";
 
 import { useQuery } from "react-query";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -65,6 +66,9 @@ const RecipeDetail = () => {
   const recipeId = useParams().recipeId;
   const url = recipeUrl + recipeId;
   const { user, isAuthenticated, isLoading: userIsLoading } = useAuth0();
+  // const [submitComment, setSubmittingComment] = useState<boolean>(false);
+
+
 
   const {
     isLoading,
@@ -80,6 +84,7 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <>
+          {console.log(recipe)}
           <div className=" fixed ml-30 p-3 ">
             <FacebookShareButton url={url} quote={recipe.title}>
               <FacebookIcon size={32} round />
@@ -172,7 +177,7 @@ const RecipeDetail = () => {
             <div className="text-3xl font-serif pt-3">Ingredients</div>
             <div className="font-serif flex flex-col gap-2 py-4">
               {recipe.ingredients.map((item) => (
-                <div className="ml-10 flex items-center">
+                <div className="ml-10 flex items-center" key={item}>
                   <BsDot />
                   <div className="ml-2">{item}</div>
                 </div>
@@ -182,10 +187,10 @@ const RecipeDetail = () => {
             <div className="text-3xl font-serif pt-3">Directions</div>
             <div className="py-2 font-serif flex flex-col gap-2 py-4">
               {recipe.instructions.map((step, index) => (
-                <>
+                <div key={index}>
                   <div className="text-xl font-medium">Step {index + 1}</div>
                   <div className="ml-16">{step}</div>
-                </>
+                </div>
               ))}
             </div>
 
@@ -202,7 +207,7 @@ const RecipeDetail = () => {
             </h4>
             <ReviewList url={url + "/reviews"} />
             <hr className="mt-10" />
-            <NewComment recipeId={recipeId} />
+            <NewComment recipeId={recipeId}/>
           </div>
         </>
       )}

@@ -27,7 +27,11 @@ import * as yup from 'yup';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import axios from "axios";
-import { useAuthToken } from "../components/AuthTokenContext";
+
+import { useAuthToken } from "../hooks/AuthTokenContext";
+import { useUserContext } from "../hooks/UserContext";
+
+import { useQuery } from "react-query";
 
 const validationSchema = yup.object({
   title: yup
@@ -46,12 +50,21 @@ const validationSchema = yup.object({
 });
 
 const Profile = () => {
-  
+ 
   const { user, isAuthenticated, isLoading } = useAuth0();
+
+  const url = `${process.env.REACT_APP_API_BASE_URL}/users/${(user as any).sub}`;
+  const {
+    data: userTest,
+  } = useQuery(url, () => axios.get(url).then((res) => console.log("GetUser"+res.data)));
+
+
   const [showRecipe, setShowRecipe] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
 
   const { accessToken } = useAuthToken();
+  const { user: dbUser } = useUserContext();
+
   const params = useParams();
 
   const userId = params.userId;
@@ -76,7 +89,8 @@ const Profile = () => {
               headers: { Authorization: `Bearer ${accessToken}` },
             }
           )
-          .then(() => {
+          .then((res) => {
+            console.log(res);
             alert("Success");
           })
           .catch((err) => console.log(err));
