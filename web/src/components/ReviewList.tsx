@@ -22,7 +22,7 @@ const ReviewList = ({ url }) => {
             <div className="flex flex-row flex-wrap ">
               {reviews.length > 0 &&
                 reviews.map((review) => (
-                  <div className="ml-7 border-t h-full w-full" key={review._id}>
+                  <div className="ml-7 h-full w-full" key={review._id}>
                     <ReviewCard review={review} />
                   </div>
                 ))}
