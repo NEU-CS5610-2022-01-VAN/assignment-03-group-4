@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
-import { Col, Container, Row } from "react-bootstrap";
 import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
-import RecipeCard from "../components/RecipeCard";
 import { useParams } from "react-router-dom";
 import H3 from "@material-tailwind/react/Heading3";
 import H6 from "@material-tailwind/react/Heading6";
@@ -15,7 +13,6 @@ const SearchPage = () => {
     isLoading,
     error,
     data: recipes,
-    isFetching,
   } = useQuery(url, () => axios.get(url).then((res) => res.data));
 
   const params = useParams();

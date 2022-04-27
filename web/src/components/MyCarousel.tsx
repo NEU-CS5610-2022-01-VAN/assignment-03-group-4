@@ -52,25 +52,19 @@ function MyCarousel(props) {
         <div className="box ">
           {video ? (
             <iframe
+              title="recipe-video"
               className="responsive-iframe"
               src={urlCurrent}
-              // width="672"
-              // height="378"
-              // title="YouTube video player"
-              // frameBorder="0"
-              // allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             />
           ) : (
             <div
               className="responsive-iframe"
               style={{
                 backgroundColor: "#ffffff",
-                // width: "672px",
-                // padding: "10px",
-                // height: "378px",
+
                 backgroundSize: "cover",
                 backgroundPosition: "center",
-                // backgroundRepeat: "no-repeat",
+                backgroundRepeat: "no-repeat",
                 backgroundImage: `url(${urlCurrent})`,
               }}
             />

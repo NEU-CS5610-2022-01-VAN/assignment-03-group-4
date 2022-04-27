@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Rating } from "@mui/material";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useState, useRef } from "react";
 
 import "./css/RecipeDetail.css";
 import { useQuery } from "react-query";

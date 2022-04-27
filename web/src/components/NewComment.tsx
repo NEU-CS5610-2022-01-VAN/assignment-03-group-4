@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-
 import axios from "axios";
 // import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useFormik } from "formik";
@@ -12,7 +10,6 @@ import { FiLogIn } from "react-icons/fi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import LoginButton from "./LoginButton";
-import AppBackdrop from "./AppBackdrop";
 
 const validationSchema = yup.object({
   title: yup.string().required("Review Title Required"),
@@ -28,9 +25,8 @@ const validationSchema = yup.object({
 
 const NewComment = ({ rating, recipeId }) => {
   const { accessToken } = useAuthToken();
-  const { user, error, isAuthenticated, isLoading } = useAuth0();
+  const { user, error, isLoading } = useAuth0();
   // const [submitting, setSubmitting] = useState<boolean>(false);
-  const [test, setTest] = useState(0);
 
   const navigate = useNavigate();
 

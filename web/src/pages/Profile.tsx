@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 
 import ProfileCard from "../components/ProfileCard";
 import PublicProfile from "../components/PublicProfile";
@@ -29,8 +29,6 @@ import axios from "axios";
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useUserContext } from "../hooks/UserContext";
 
-import { useQuery } from "react-query";
-
 const validationSchema = yup.object({
   name: yup.string().required("Name Required"),
   bio: yup.string().required("Bio Required"),
@@ -48,13 +46,6 @@ const validationSchema = yup.object({
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
 
-  const url = `${process.env.REACT_APP_API_BASE_URL}/users/${
-    (user as any).sub
-  }`;
-  const { data: userTest } = useQuery(url, () =>
-    axios.get(url).then((res) => console.log("GetUser" + res.data))
-  );
-
   const [showRecipe, setShowRecipe] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
 
@@ -66,9 +57,6 @@ const Profile = () => {
   const userId = params.userId;
 
   const inputEl = useRef(null);
-  const onButtonClick = () => {
-    (inputEl as any).current.focus();
-  };
 
   const formik = useFormik({
     initialValues: {
