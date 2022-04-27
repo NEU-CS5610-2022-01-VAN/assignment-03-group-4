@@ -66,3 +66,28 @@ export const download = asyncHandler(async (req: any, res: any) => {
     return res.end();
   });
 });
+
+export const downloadPictureByUserId = asyncHandler(
+  async (req: any, res: any) => {
+    await mongoClient.connect();
+    const database = mongoClient.db("recipeDB");
+    const bucket = new GridFSBucket(database, {
+      bucketName: "photos",
+    });
+    const user = await User.findById(req.params.userId);
+
+    let downloadStream = bucket.openDownloadStream(
+      new mongoose.Types.ObjectId((user as any).picture)
+    );
+
+    downloadStream.on("data", function (data: any) {
+      return res.status(200).write(data);
+    });
+    downloadStream.on("error", function (err: any) {
+      return res.status(404).send({ message: "Cannot download the Image!" });
+    });
+    downloadStream.on("end", () => {
+      return res.end();
+    });
+  }
+);

@@ -16,9 +16,7 @@ router.post("/verify-user", checkJwt, userController.verifyUser);
 router.post("/", checkJwt, userController.updateUserById);
 router.post("/picture", checkJwt, uploadController.uploadPictureByUserId);
 
-// todo!
-router.get("/userId /files/:fileId", uploadController.download);
-
+router.get("/:userId/picture", uploadController.downloadPictureByUserId);
 // router.post("/:userId", checkJwt, userController.updateUserById);
 router.delete("/:userId", checkJwt, userController.DeleteUserById);
 
