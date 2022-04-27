@@ -10,7 +10,6 @@ import { FiLogIn } from "react-icons/fi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import LoginButton from "./LoginButton";
-import { useEffect, useState } from "react";
 
 const validationSchema = yup.object({
   title: yup.string().required("Review Title Required"),
