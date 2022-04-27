@@ -108,7 +108,7 @@ const RecipeDetail = () => {
                 </div>
                 {recipe.categories &&
                   recipe.categories.map((category: any) => (
-                    <Link to={`/categories/${category._id}`}>
+                    <Link key={category._id} to={`/categories/${category._id}`}>
                       <div
                         className="mr-2 font-roboto px-1 py-1 text-sm uppercase "
                         style={{ color: "#03897B", backgroundColor: "#F0F9F8" }}

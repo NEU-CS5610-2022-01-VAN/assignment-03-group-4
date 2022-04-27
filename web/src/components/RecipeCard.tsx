@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 const RecipeCard = ({ recipe }) => {
   const navigate = useNavigate();
   const handleKeyPress = (e) => {
-    navigate(`/recipe/${recipe.Id}`);
+    navigate(`/recipe/${recipe.id}`);
   };
 
   return (
