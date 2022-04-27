@@ -1,7 +1,6 @@
-import { useRef } from "react";
 import axios from "axios";
 import { Rating } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 import "./css/RecipeDetail.css";
 import { useQuery } from "react-query";
@@ -22,10 +21,9 @@ import { FacebookIcon, TwitterIcon } from "react-share";
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes/";
+const executeScroll = (myRef) => scrollToRef(myRef);
 
 const Note = ({ recipe, myRef, ingredientRef, directionRef }) => {
-  const executeScroll = (myRef) => scrollToRef(myRef);
-
   return (
     <div
       style={{
@@ -46,32 +44,32 @@ const Note = ({ recipe, myRef, ingredientRef, directionRef }) => {
 
         <div
           onClick={() => executeScroll(myRef)}
-          className="items-center text-sm"
+          className="items-center text-sm hover:text-light-green-700"
         >
           {recipe.reviews.length} reviews
         </div>
         <div className="flex flex-col gap-2">
           <div
             onClick={() => executeScroll(ingredientRef)}
-            className="flex content-center  mt-5"
+            className="flex content-center mt-5 hover:text-light-green-700"
           >
             <div>Ingredients </div>
-            <div className="text-gray-800 font-bold ml-2">
+            <div className="text-gray-800 font-bold ml-2 ">
               {recipe.ingredients.length}
             </div>
           </div>
           <div
             onClick={() => executeScroll(directionRef)}
-            className="flex content-center "
+            className="flex content-center hover:text-light-green-700"
           >
             <div>Cooking Steps </div>
-            <div className="text-gray-800 font-bold ml-2">
+            <div className="text-gray-800 font-bold ml-2 ">
               {recipe.instructions.length}
             </div>
           </div>
           <div className="flex content-center ">
             Total Minutes
-            <div className="text-gray-800 font-bold ml-2">{3}</div>
+            <div className="text-gray-800 font-bold ml-2">没改</div>
           </div>
         </div>
       </div>
@@ -92,6 +90,8 @@ const RecipeDetail = () => {
   const myRef = useRef(null);
   const ingredientRef = useRef(null);
   const directionRef = useRef(null);
+  const newCommentRef = useRef(null);
+  const [rating, setRating] = useState(0);
 
   return (
     <div className="w-full pt-10 pb-48 ">
@@ -207,7 +207,16 @@ const RecipeDetail = () => {
               style={{ backgroundColor: "#F5F1E7" }}
             >
               ❤️ How would you rate this recipe?
-              <Rating className="pt-2" size="large" name="rate" value={0} />
+              <Rating
+                onChange={(e, value) => {
+                  scrollToRef(newCommentRef);
+                  if (value != null) setRating(value);
+                }}
+                className="pt-2"
+                size="large"
+                name="rate"
+                defaultValue={0}
+              />
             </div>
 
             <hr className="mt-16" />
@@ -230,11 +239,14 @@ const RecipeDetail = () => {
             )}
             <hr className="mt-10" />
             <div>
-              <h4 className="font-serif font-semibold  text-xl text-gray-800">
+              <h4
+                ref={newCommentRef}
+                className="font-serif font-semibold  text-xl text-gray-800"
+              >
                 Leave comment
               </h4>
             </div>
-            <NewComment recipeId={recipeId} />
+            <NewComment rating={rating} recipeId={recipeId} />
           </div>
         </>
       )}

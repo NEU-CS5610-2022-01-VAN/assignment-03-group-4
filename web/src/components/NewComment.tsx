@@ -26,12 +26,11 @@ const validationSchema = yup.object({
     .required("Plese give a rating score(1-5)"),
 });
 
-const NewComment = ({ recipeId}) => {
+const NewComment = ({ rating, recipeId }) => {
   const { accessToken } = useAuthToken();
   const { user, error, isAuthenticated, isLoading } = useAuth0();
   // const [submitting, setSubmitting] = useState<boolean>(false);
   const [test, setTest] = useState(0);
-
 
   const navigate = useNavigate();
 
@@ -39,7 +38,7 @@ const NewComment = ({ recipeId}) => {
     initialValues: {
       title: "",
       content: "",
-      rating: "",
+      rating: rating,
       recipe: recipeId,
     },
     validationSchema: validationSchema,
@@ -53,7 +52,7 @@ const NewComment = ({ recipeId}) => {
             alert("Success");
             resetForm();
             setSubmitting(false);
-            console.log("XXXXX"+recipeId);
+            console.log("XXXXX" + recipeId);
             // setSubmit()
             window.location.reload();
             navigate(`/recipe/${recipeId}`);
@@ -62,8 +61,6 @@ const NewComment = ({ recipeId}) => {
       }, 200);
     },
   });
-
-
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -92,6 +89,7 @@ const NewComment = ({ recipeId}) => {
 
   return (
     <>
+      {console.log("？" + formik.initialValues.rating)}
       <div className="ml-7 mr-10">
         <form
           className="flex flex-col mt-5 mb-10"
@@ -127,6 +125,7 @@ const NewComment = ({ recipeId}) => {
             color="success"
             name="rating"
             label="Rating"
+            placeholder={rating}
             value={formik.values.rating}
             onChange={formik.handleChange}
             error={formik.touched.rating && Boolean(formik.errors.rating)}
