@@ -26,6 +26,9 @@ import Category from "./pages/Category";
 import Footer from "./components/Footer";
 import { UserContextProvider } from "./hooks/UserContext";
 
+
+
+
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
@@ -111,7 +114,7 @@ function LayoutsWithNavbar() {
 function AppRouter() {
   return (
     <BrowserRouter>
-      <Routes>
+      <Routes >
         <Route path="/" element={<LayoutsWithNavbar />}>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<SearchPage />}>

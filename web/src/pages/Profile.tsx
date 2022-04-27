@@ -34,29 +34,22 @@ import { useUserContext } from "../hooks/UserContext";
 import { useQuery } from "react-query";
 
 const validationSchema = yup.object({
-  title: yup
+  name: yup
   .string()
-  .required('Review Title Required'),
-  content: yup
+  .required('Name Required'),
+  bio: yup
     .string()
-    .required('Review Content Required'),
-  rating: yup
-    .number()
-    .positive()
-    .integer()
-    .min(1, 'Plese give a rating score(1-5)')
-    .max(5, 'Plese give a rating score(1-5)')
-    .required('Plese give a rating score(1-5)'),
+    .required('Bio Required'),
 });
 
 const Profile = () => {
  
   const { user, isAuthenticated, isLoading } = useAuth0();
 
-  const url = `${process.env.REACT_APP_API_BASE_URL}/users/${(user as any).sub}`;
-  const {
-    data: userTest,
-  } = useQuery(url, () => axios.get(url).then((res) => console.log("GetUser"+res.data)));
+  // const url = `${process.env.REACT_APP_API_BASE_URL}/users/${(user as any).sub}`;
+  // const {
+  //   data: userTest,
+  // } = useQuery(url, () => axios.get(url).then((res) => console.log("GetUser"+res.data)));
 
 
   const [showRecipe, setShowRecipe] = useState(true);
@@ -80,8 +73,9 @@ const Profile = () => {
       bio: "", 
     },
     validationSchema: validationSchema,
-    onSubmit: (values: any, { setSubmitting }) => {
-      setTimeout(() => {
+    onSubmit: (values: any, { setSubmitting, resetForm }) => {
+      console.log("!!!!!!!!!!!!!!!!");
+      // setTimeout(() => {
         axios.post(
             `${process.env.REACT_APP_API_BASE_URL}/users`,
             { name: values.name, bio: values.bio },
@@ -92,9 +86,12 @@ const Profile = () => {
           .then((res) => {
             console.log(res);
             alert("Success");
+            setSubmitting(false);
+            resetForm()
+            window.location.reload();
           })
           .catch((err) => console.log(err));
-      }, 200);
+      // }, 200);
     }
   });
 
@@ -118,7 +115,7 @@ const Profile = () => {
                       <ListItemIcon>
                         <EmailIcon fontSize="small" />
                       </ListItemIcon>
-                      <ListItemText>{(user as any).email}</ListItemText>
+                      <ListItemText>{dbUser&&dbUser.email}</ListItemText>
                     </MenuItem>
                     <Divider />
                    
