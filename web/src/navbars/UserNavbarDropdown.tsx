@@ -1,26 +1,24 @@
 import "./css/userNavbarDropdown.css";
-
 import React from "react";
+import { To, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Dropdown } from "react-bootstrap";
-import { IoMdArrowDropdown } from "react-icons/io";
-
-import Button from "@mui/material/Button";
-import Menu from "@mui/material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import { Link, useNavigate } from "react-router-dom";
-import Divider from "@mui/material/Divider";
-
-import LogoutButton from "../components/LogoutButton";
-import LoginButton from "../components/LoginButton";
-import { MenuList, Skeleton } from "@mui/material";
-import Avatar from "@mui/material/Avatar";
+import {
+  MenuList,
+  Skeleton,
+  Button,
+  Menu,
+  MenuItem,
+  Avatar,
+  Divider,
+} from "@mui/material";
 import { useUserContext } from "../hooks/UserContext";
 
+const defaultPicture =
+  "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA=";
+
 const UserNavbarDropdown = () => {
-  const { user, isAuthenticated, isLoading, logout, loginWithRedirect } =
-    useAuth0();
-  const { user: dbUser } = useUserContext();
+  const { logout, loginWithRedirect } = useAuth0();
+  const { isLoading, isAuthenticated, user, userPicture } = useUserContext();
 
   const navigate = useNavigate();
 
@@ -33,7 +31,7 @@ const UserNavbarDropdown = () => {
     setAnchorEl(null);
   };
 
-  const onMenuItemClick = (link) => {
+  const onMenuItemClick = (link: To) => {
     navigate(link);
     setAnchorEl(null);
   };
@@ -48,19 +46,21 @@ const UserNavbarDropdown = () => {
         onClick={handleClick}
         onMouseDown={(e) => e.preventDefault()}
       >
-        {isLoading ? (
-          <Skeleton variant="circular">
-            <Avatar alt={"user avatar"} />
-          </Skeleton>
+        {isAuthenticated ? (
+          <>
+            {isLoading ? (
+              <Skeleton variant="circular">
+                <Avatar alt={"user avatar"} />
+              </Skeleton>
+            ) : (
+              <Avatar
+                src={userPicture ? userPicture : defaultPicture}
+                alt={"user avatar"}
+              />
+            )}
+          </>
         ) : (
-          <Avatar
-            src={
-              isAuthenticated
-                ? (user as any).picture
-                : "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA="
-            }
-            alt={"user avatar"}
-          />
+          <Avatar src={defaultPicture} alt={"user avatar"} />
         )}
       </Button>
 
@@ -78,7 +78,7 @@ const UserNavbarDropdown = () => {
             <MenuItem onClick={() => onMenuItemClick("/profile")}>
               <div>
                 <p>Signed in as</p>
-                {dbUser && <b>{(dbUser as any).name}</b>}
+                {user && <b>{(user as any).name}</b>}
               </div>
             </MenuItem>
             <Divider sx={{ my: 0.5 }} />
