@@ -14,7 +14,7 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 // Tailwind CSS Style Sheet
 import "./assets/styles/tailwind.css";
 
-import TopNavbar from "./components/TopNavbar";
+import TopNavbar from "./navbars/TopNavbar";
 import { AuthTokenProvider } from "./hooks/AuthTokenContext";
 import NewRecipe from "./pages/NewRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
@@ -114,7 +114,9 @@ function AppRouter() {
       <Routes>
         <Route path="/" element={<LayoutsWithNavbar />}>
           <Route path="/" element={<Home />} />
-          <Route path="/search/:keyword" element={<SearchPage />} />
+          <Route path="/search" element={<SearchPage />}>
+            <Route path="/search/:keyword" element={<SearchPage />} />
+          </Route>
           <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
           <Route path="/profile" element={<Profile />}>
             <Route path=":userId" element={<Profile />} />

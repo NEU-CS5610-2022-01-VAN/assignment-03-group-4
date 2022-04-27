@@ -52,8 +52,9 @@ export default function LeftCategoryDrawer() {
         <IconButton
           onClick={toggleDrawer(true)}
           onMouseDown={(e) => e.preventDefault()}
+          size="medium"
         >
-          <MenuIcon />
+          <MenuIcon sx={{ fontSize: 32 }} />
         </IconButton>
 
         <Drawer anchor={"left"} open={open} onClose={toggleDrawer(false)}>
@@ -65,11 +66,7 @@ export default function LeftCategoryDrawer() {
           >
             <List>
               {["🥖   Recipe", "Oh I love it"].map((text, index) => (
-                <ListItem
-                  button
-                  key={text}
-                  onClick={() => navigate("/recipes")}
-                >
+                <ListItem button key={text} onClick={() => navigate("/")}>
                   <ListItemText primary={text} />
                 </ListItem>
               ))}
