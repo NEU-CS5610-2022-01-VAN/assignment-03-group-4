@@ -1,6 +1,6 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import ProfileCard from "../components/ProfileCard";
 import PublicProfile from "../components/PublicProfile";
@@ -25,32 +25,45 @@ import * as yup from "yup";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import { HiUpload } from "react-icons/hi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useUserContext } from "../hooks/UserContext";
 
+import AppBackdrop from "../components/AppBackdrop";
+import {
+  Avatar,
+  ImageList,
+  ImageListItem,
+  InputLabel,
+  Typography,
+} from "@mui/material";
+
 const validationSchema = yup.object({
   name: yup.string().required("Name Required"),
   bio: yup.string().required("Bio Required"),
-  title: yup.string().required("Review Title Required"),
-  content: yup.string().required("Review Content Required"),
-  rating: yup
-    .number()
-    .positive()
-    .integer()
-    .min(1, "Plese give a rating score(1-5)")
-    .max(5, "Plese give a rating score(1-5)")
-    .required("Plese give a rating score(1-5)"),
 });
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
+
+  // const url = `${process.env.REACT_APP_API_BASE_URL}/users/${(user as any).sub}`;
+  // const {
+  //   data: userTest,
+  // } = useQuery(url, () => axios.get(url).then((res) => console.log("GetUser"+res.data)));
+
+  const [image, setImage] = useState<any>(null);
+
+  function onImageChange(e) {
+    setImage(e.target.files[0]);
+  }
 
   const [showRecipe, setShowRecipe] = useState(true);
   const [showEdit, setShowEdit] = useState(false);
 
   const { accessToken } = useAuthToken();
   const { user: dbUser } = useUserContext();
+  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
 
   const params = useParams();
 
@@ -64,26 +77,34 @@ const Profile = () => {
       bio: "",
     },
     validationSchema: validationSchema,
-    onSubmit: (values: any, { setSubmitting, resetForm }) => {
-      console.log("!!!!!!!!!!!!!!!!");
-      // setTimeout(() => {
-      axios
-        .post(
+    onSubmit: async (values: any, { setSubmitting, resetForm }) => {
+      try {
+        setBackdropOpen(true);
+        setSubmitting(true);
+
+        const formData = new FormData();
+        formData.append("file", image);
+        await axios.post(
           `${process.env.REACT_APP_API_BASE_URL}/users`,
           { name: values.name, bio: values.bio },
           {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
-        )
-        .then((res) => {
-          console.log(res);
-          alert("Success");
-          setSubmitting(false);
-          resetForm();
-          window.location.reload();
-        })
-        .catch((err) => console.log(err));
-      // }, 200);
+        );
+        await axios.post(
+          `${process.env.REACT_APP_API_BASE_URL}/users/picture`,
+          formData,
+          {
+            headers: { Authorization: `Bearer ${accessToken}` },
+          }
+        );
+        alert("Success");
+        setSubmitting(false);
+        resetForm();
+        window.location.reload();
+      } catch (err) {
+        console.log(err);
+      }
     },
   });
 
@@ -191,7 +212,44 @@ const Profile = () => {
                       helperText={formik.touched.bio && formik.errors.bio}
                     />
                     <br />
-                    <br />
+                    <Box
+                      sx={{
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                      }}
+                    >
+                      {image && (
+                        <Avatar
+                          alt="uploaded avatar"
+                          src={`${URL.createObjectURL(image)}`}
+                          sx={{ width: 80, height: 80 }}
+                        />
+                      )}
+
+                      <label htmlFor="files-upload">
+                        <Button
+                          color="success"
+                          size="small"
+                          component="span"
+                          onMouseDown={(e) => e.preventDefault()}
+                          sx={{
+                            marginBottom: "2px",
+                          }}
+                          startIcon={<HiUpload size={20} />}
+                        >
+                          Upload Avatar
+                        </Button>
+                      </label>
+                      <input
+                        id="files-upload"
+                        type="file"
+                        accept="image/*"
+                        onChange={onImageChange}
+                        style={{ display: "none" }}
+                      />
+                    </Box>
+
                     <Button
                       className="mt-5 "
                       color="success"
@@ -213,6 +271,7 @@ const Profile = () => {
           </Container>
         </>
       )}
+      {backdropOpen && <AppBackdrop text={"Updating User Profile"} />}
     </>
   );
 };
