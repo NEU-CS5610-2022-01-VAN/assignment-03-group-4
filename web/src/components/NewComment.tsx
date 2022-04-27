@@ -10,6 +10,7 @@ import { FiLogIn } from "react-icons/fi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import LoginButton from "./LoginButton";
+import { useEffect, useState } from "react";
 
 const validationSchema = yup.object({
   title: yup.string().required("Review Title Required"),
@@ -26,7 +27,6 @@ const validationSchema = yup.object({
 const NewComment = ({ rating, recipeId }) => {
   const { accessToken } = useAuthToken();
   const { user, error, isLoading } = useAuth0();
-  // const [submitting, setSubmitting] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -34,7 +34,7 @@ const NewComment = ({ rating, recipeId }) => {
     initialValues: {
       title: "",
       content: "",
-      rating: rating,
+      rating: "",
       recipe: recipeId,
     },
     validationSchema: validationSchema,
@@ -85,7 +85,7 @@ const NewComment = ({ rating, recipeId }) => {
 
   return (
     <>
-      {console.log("？" + formik.initialValues.rating)}
+      {console.log("？" + rating)}
       <div className="ml-7 mr-10">
         <form
           className="flex flex-col mt-5 mb-10"
@@ -121,7 +121,6 @@ const NewComment = ({ rating, recipeId }) => {
             color="success"
             name="rating"
             label="Rating"
-            defaultValue={rating}
             value={formik.values.rating}
             onChange={formik.handleChange}
             error={formik.touched.rating && Boolean(formik.errors.rating)}
@@ -142,7 +141,5 @@ const NewComment = ({ rating, recipeId }) => {
   );
 };
 // };
-
-// ReactDOM.render(<WithMaterialUI />, document.getElementById('root'));
 
 export default NewComment;
