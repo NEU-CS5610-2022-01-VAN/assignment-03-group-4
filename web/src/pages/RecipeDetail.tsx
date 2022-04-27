@@ -9,6 +9,8 @@ import NewComment from "../components/NewComment";
 import Avatar from "@mui/material/Avatar";
 import MyCarousel from "../components/MyCarousel";
 import { BsDot } from "react-icons/bs";
+import { BiCommentDots } from "react-icons/bi";
+
 import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
 import { FacebookShareButton, TwitterShareButton } from "react-share";
@@ -148,26 +150,7 @@ const RecipeDetail = () => {
             ) : (
               <></>
             )}
-            {/* {recipe.photos.length ? (
-              <>
-                {recipe.photos.map((img) => (
-                  <ImageCard
-                    photoId={img}
-                    recipeId={recipe.id}
-                    card={false}
-                    key={img}
-                  />
-                ))}
-              </>
-            ) : (
-              <img
-                className="recipe_card_image"
-                src="https://x.yummlystatic.com/web/strawberry-grain.png"
-                alt="recipe"
-              />
-            )} */}
-            {/* <div>How to cook: {recipe.body}</div>
-             */}
+
             <hr className="mt-2" />
             <div className="text-3xl font-serif pt-3">Ingredients</div>
             <div className="font-serif flex flex-col gap-2 py-4">
@@ -188,20 +171,40 @@ const RecipeDetail = () => {
                 </>
               ))}
             </div>
+            <hr className="mt-16" />
 
             <div
-              className="mt-10 flex flex-col place-items-center w-full p-6 text-xl font-serif"
+              className="mt-2 flex flex-col place-items-center w-full p-6 text-xl font-serif"
               style={{ backgroundColor: "#F5F1E7" }}
             >
               ❤️ How would you rate this recipe?
               <Rating className="pt-2" size="large" name="rate" value={0} />
             </div>
-            {/* <hr className="mt-24" /> */}
-            <h4 className="font-serif mt-10">
-              What others say about this recipe?
+
+            <hr className="mt-16" />
+            <h4 className="font-serif font-semibold text-xl flex items-end text-gray-800">
+              <div>Reviews</div>
+              <div style={{ marginBottom: 3 }} className="ml-1 text-sm ">
+                ({recipe.reviews.length})
+              </div>
             </h4>
-            <ReviewList url={url + "/reviews"} />
+            {recipe.reviews.length > 0 ? (
+              <ReviewList url={url + "/reviews"} />
+            ) : (
+              <>
+                <div className="flex flex-col justify-center text-gray-600 my-16 p-2 items-center">
+                  <BiCommentDots size={25} />
+                  <p> There is no review here.</p>
+                  <p>Come and be the first to comment.</p>
+                </div>
+              </>
+            )}
             <hr className="mt-10" />
+            <div>
+              <h4 className="font-serif font-semibold  text-xl text-gray-800">
+                Leave comment
+              </h4>
+            </div>
             <NewComment recipeId={recipeId} />
           </div>
         </>
