@@ -25,7 +25,7 @@ import RecipeList from "../components/RecipeList";
 import { useEffect, useState } from "react";
 import { Skeleton } from "@mui/material";
 
-const buttonRight = true;
+const buttonShown = false;
 const Category = () => {
   const params = useParams();
   const navigate = useNavigate();
@@ -65,7 +65,7 @@ const Category = () => {
       <Box
         sx={{
           mt: 3,
-          mx: 15,
+          mx: "8vw",
         }}
       >
         {error ? (
@@ -84,7 +84,7 @@ const Category = () => {
                 {cat.name}
               </Typography>
               <IconButton
-                aria-label="remove ingredient"
+                aria-label="more options"
                 // onClick={() => arrayHelpers.remove(index)}
                 onMouseDown={(e) => e.preventDefault()}
                 edge="end"
@@ -95,7 +95,7 @@ const Category = () => {
             </div>
 
             <Typography variant="h6" color="#777">
-              Check out our {cat.name.toLowerCase()} recipes here.
+              Check out our {cat.name.toLowerCase()} recipes.
             </Typography>
 
             <div className="flex flex-row">
@@ -116,7 +116,7 @@ const Category = () => {
                   {totalComments} comments
                 </Typography>
               </div>
-              {buttonRight && (
+              {buttonShown && (
                 <Button
                   onClick={() => navigate("/newrecipe")}
                   color="success"

@@ -1,13 +1,3 @@
-.form-container {
-  /* height: 100vh; */
-  display: flex;
-
-  flex-direction: column;
-  align-items: center;
-  padding: 0px 23%;
-}
-
 .input-section {
   width: 100%;
-  /* margin: 0.1vh 0; */
 }
