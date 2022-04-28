@@ -8,7 +8,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useParams } from "react-router-dom";
 import ReviewList from "../components/ReviewList";
 import NewComment from "../components/NewComment";
-import Avatar from "@mui/material/Avatar";
 import MyCarousel from "../components/MyCarousel";
 import { BsDot } from "react-icons/bs";
 import { BiCommentDots } from "react-icons/bi";

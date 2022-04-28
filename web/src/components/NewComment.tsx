@@ -63,6 +63,7 @@ const NewComment = ({ rating, recipeId }) => {
   if (error) {
     return <div>Oops... {(error as any).message}</div>;
   }
+
   if (!user) {
     return (
       <div className="flex flex-col items-center my-16 text-gray-700">

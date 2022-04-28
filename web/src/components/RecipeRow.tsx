@@ -10,8 +10,8 @@ const RecipeRow = ({ recipe }) => (
   <>
     <Link to={`/recipe/${recipe.id}`}>
       <div
-        style={{ width: "100%", height: "13rem" }}
-        className=" flex flex-row rounded-xl overflow-hdden shadow-md "
+        style={{ width: "100%", flexShrink: 0, height: "13rem" }}
+        className="bg-indigo-500 flex flex-row rounded-xl overflow-hdden shadow-md gap-8 "
       >
         {recipe.photos.length ? (
           <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
@@ -28,12 +28,15 @@ const RecipeRow = ({ recipe }) => (
           />
         )}
 
-        <div className="ml-10">
-          <div className="recipe-category flex" style={{ color: "#03897B" }}>
+        <div style={{ flex: 1 }}>
+          <div
+            className="mt-2 recipe-category flex"
+            style={{ color: "#03897B" }}
+          >
             {recipe.categories &&
               recipe.categories.map((category: any) => (
                 <div
-                  className="font-roboto pt-2 pr-1 text-xs font-medium uppercase "
+                  className="font-roboto pr-1 text-xs font-medium uppercase "
                   key={category._id}
                 >
                   {category.name}
@@ -43,14 +46,20 @@ const RecipeRow = ({ recipe }) => (
           <div className="recipe-title font-serif text-xl font-semibold pb-1">
             {recipe.title}
           </div>
-          <div style={{fontSize: 18, fontWeight: 400}} className="recipe-title font-serif text-xl font-semibold pb-1">
+          <div
+            style={{ fontSize: 18, fontWeight: 400 }}
+            className="recipe-title font-serif text-xl font-semibold pb-1"
+          >
             {recipe.body}
           </div>
-          <br />
-          <br />
-          <Rating name="read-only" value={recipe.rating} readOnly />
+          <Rating
+            style={{ marginTop: "5%" }}
+            name="read-only"
+            value={recipe.rating}
+            readOnly
+          />
         </div>
-        <BsThreeDots className="mr-2 ml-auto"/>
+        <BsThreeDots className="mr-2 ml-auto" />
       </div>
     </Link>
   </>

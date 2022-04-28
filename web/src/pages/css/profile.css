@@ -1,9 +1,9 @@
-.profile-left{
-    flex:2 2 ;
+.profile-left {
+  flex: 2 2;
 }
 
-.profile-right{
-    flex:3 3;
-    margin-left: 2%
-
+.profile-right {
+  flex: 3 3;
+  margin-left: 2%;
+  margin-right: 2%;
 }
