@@ -1,12 +1,11 @@
 import { useAuth0 } from "@auth0/auth0-react";
 import { useParams } from "react-router-dom";
-import React, { useEffect, useState } from "react";
+import {  useState } from "react";
 
 import ProfileCard from "../components/ProfileCard";
 import PublicProfile from "../components/PublicProfile";
 import CircularProgress from "@mui/material/CircularProgress";
 import Container from "@mui/material/Container";
-import { useRef } from "react";
 
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
@@ -29,14 +28,10 @@ import { HiUpload } from "react-icons/hi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useUserContext } from "../hooks/UserContext";
-
+import "./css/profile.css"
 import AppBackdrop from "../components/AppBackdrop";
 import {
   Avatar,
-  ImageList,
-  ImageListItem,
-  InputLabel,
-  Typography,
 } from "@mui/material";
 
 const validationSchema = yup.object({
@@ -69,7 +64,6 @@ const Profile = () => {
 
   const userId = params.userId;
 
-  const inputEl = useRef(null);
 
   const formik = useFormik({
     initialValues: {
@@ -118,12 +112,13 @@ const Profile = () => {
         </div>
       ) : (
         <>
-          <Container maxWidth="lg">
-            <div className="flex flex-row mt-10">
-              <div className="flex flex-col">
+          <Container maxWidth="lg" className="mx-auto m-full ">
+            <div className=" flex flex-col md:flex-row mt-10">
+              
+              <div className="profile-left flex flex-col">
                 <ProfileCard />
                 <Box
-                  className="ml-7 mt-10"
+                  className="mt-12 mx-auto"
                   sx={{ width: 320, maxWidth: "100%" }}
                 >
                   <MenuList>
@@ -177,40 +172,46 @@ const Profile = () => {
                   </MenuList>
                 </Box>
               </div>
-
+              <div className="profile-right">
               {isAuthenticated &&
                 (isLoading ? (
                   <div>
                     <CircularProgress color="inherit" />
                   </div>
                 ) : showEdit ? (
+                  <div style={{ height: "100%", width: "80%", marginTop:"8%", marginBottom:"15%" }}>
                   <form
-                    className="flex flex-col mt-5 mb-10"
+                    style={{ width: "100%" }}
+                    className="flex flex-col ml-16 mt-24 mb-10"
                     onSubmit={formik.handleSubmit}
                   >
-                    <TextField
-                      className="mt-4"
-                      id="name"
-                      color="success"
-                      name="name"
-                      label="Name"
-                      value={formik.values.name}
-                      onChange={formik.handleChange}
-                      error={formik.touched.name && Boolean(formik.errors.name)}
-                      helperText={formik.touched.name && formik.errors.name}
-                    />
-                    <br />
-                    <TextField
-                      className="mt-4"
-                      id="bio"
-                      color="success"
-                      name="bio"
-                      label="Bio"
-                      value={formik.values.bio}
-                      onChange={formik.handleChange}
-                      error={formik.touched.bio && Boolean(formik.errors.bio)}
-                      helperText={formik.touched.bio && formik.errors.bio}
-                    />
+                    <div style={{ width: "100%" }} className="flex flex-row">
+                      <TextField
+                        style={{ width: "30%" }}
+                        className="mt-4"
+                        id="name"
+                        color="success"
+                        name="name"
+                        label="Name"
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        error={formik.touched.name && Boolean(formik.errors.name)}
+                        helperText={formik.touched.name && formik.errors.name}
+                      />
+                      <div style={{ width: "5%" }}></div>
+                      <TextField
+                        className="mt-4 ml-10"
+                        style={{ width: "70%" }}
+                        id="bio"
+                        color="success"
+                        name="bio"
+                        label="Bio"
+                        value={formik.values.bio}
+                        onChange={formik.handleChange}
+                        error={formik.touched.bio && Boolean(formik.errors.bio)}
+                        helperText={formik.touched.bio && formik.errors.bio}
+                      />
+                    </div>
                     <br />
                     <Box
                       sx={{
@@ -259,14 +260,16 @@ const Profile = () => {
                       Submit
                     </Button>
                   </form>
+                  </div>
                 ) : (
-                  <div style={{ height: 600 }} className="max-w-4xl ml-16">
+                  <div style={{ height: "100%" }} className="w-full">
                     <PublicProfile
                       showRecipe={showRecipe}
                       userId={(user as any).sub}
                     />
                   </div>
                 ))}
+                </div>
             </div>
           </Container>
         </>

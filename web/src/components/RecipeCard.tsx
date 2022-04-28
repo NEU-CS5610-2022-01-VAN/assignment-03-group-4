@@ -2,10 +2,17 @@ import "./css/recipeCard.css";
 import { Link } from "react-router-dom";
 import { Box, Rating } from "@mui/material";
 import ImageCard from "./ImageCard";
+import { useNavigate } from "react-router-dom";
 
-const RecipeCard = ({ recipe }) => (
-  <Box>
-    <Link to={`/recipe/${recipe.id}`}>
+const RecipeCard = ({ recipe }) => {
+  const navigate = useNavigate();
+  const handleKeyPress = (e) => {
+    navigate(`/recipe/${recipe.id}`);
+  };
+
+  return (
+    <Box onClick={handleKeyPress}>
+      {/* <Link to={`/recipe/${recipe.id}`}> */}
       <div className={`w-72 h-96 rounded-xl overflow-hdden shadow-md p-4`}>
         {recipe.photos.length ? (
           <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
@@ -48,8 +55,9 @@ const RecipeCard = ({ recipe }) => (
           </h3>
         </div>
       </div>
-    </Link>
-  </Box>
-);
+      {/* </Link> */}
+    </Box>
+  );
+};
 
 export default RecipeCard;

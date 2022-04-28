@@ -6,7 +6,7 @@ const GetImageById = (photoId, recipeId) => {
   return useQuery(url, async () => {
     return await axios
       .get(url, { responseType: "blob" })
-      .then((res) => URL.createObjectURL(res.data as any));
+      .then((res) => res.data);
   });
 };
 
