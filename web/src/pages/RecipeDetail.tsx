@@ -72,6 +72,7 @@ const RecipeDetail = () => {
   const recipeId = useParams().recipeId;
   const url = recipeUrl + recipeId;
   const { user, isAuthenticated, isLoading: userIsLoading } = useAuth0();
+
   const {
     isLoading,
     error,
@@ -119,15 +120,16 @@ const RecipeDetail = () => {
                       </div>
                     </Link>
                   ))}
-                {isAuthenticated &&
-                  !userIsLoading &&
-                  (user as any).sub === recipe.author.id && (
-                    <div className="ml-auto font-serif">
-                      <DeleteRecipeButton recipeId={recipe.id} />
-                    </div>
-                  )}
               </div>
             )}
+            {isAuthenticated &&
+              !userIsLoading &&
+              (user as any).sub === recipe.author._id && (
+                <div className="ml-auto w-12 font-serif hover:text-light-green-700">
+                  <DeleteRecipeButton recipeId={recipe.id} />
+                </div>
+              )}
+
             <div className="mt-6 text-6xl font-serif">{recipe.title}</div>
             <div className="text-gray-800 pt-4 text-xl font-serif">
               {recipe.body}
@@ -148,7 +150,7 @@ const RecipeDetail = () => {
               </div>
             </div>
 
-            {recipe.photos.length || recipe.youtubeVideoId ? (
+            {recipe.photos.length || recipe.youtuoId ? (
               <>
                 <hr />
                 <MyCarousel
