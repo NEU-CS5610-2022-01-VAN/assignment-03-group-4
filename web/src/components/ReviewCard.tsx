@@ -3,11 +3,40 @@ import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import GetAvatarById from "../api/UserAvatarAPI";
 import "../assets/styles/tailwind.css";
+import { Button } from "@mui/material";
+import AppBackdrop from "../components/AppBackdrop";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
+import { useAuthToken } from "../hooks/AuthTokenContext";
+import { useState } from "react";
 
-function ReviewCard({ review }) {
+function ReviewCard({ review, showDeleteButton = true }) {
+  const url = `${process.env.REACT_APP_API_BASE_URL}/reviews/${review._id}`;
 
   const { data } = GetAvatarById(review.author._id);
   
+  const { user, isAuthenticated, isLoading } = useAuth0();
+  const { accessToken } = useAuthToken();
+  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
+
+  // const url = `${process.env.REACT_APP_API_BASE_URL}/users/${review.author}`;
+  // const {
+  //   data: userDB,
+  // } = useQuery(url, () => axios.get(url).then((res) => res.data));
+  // const showDeleteButton = true;
+  const handleDeleteReview = async () => {
+    try {
+      setBackdropOpen(true);
+      await axios.delete(url, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      alert("success");
+      window.location.reload();
+      setBackdropOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -56,6 +85,9 @@ function ReviewCard({ review }) {
           </p>
         </div>
       </div>
+
+      {showDeleteButton && <Button onClick={handleDeleteReview}>Delete</Button>}
+      {backdropOpen && <AppBackdrop text={"Deleting Review"} />}
     </>
   );
 }

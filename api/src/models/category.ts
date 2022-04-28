@@ -14,4 +14,4 @@ const categorySchema = new Schema<ICategory>({
 
 const Category = model<ICategory>("Category", categorySchema);
 
-export { Category, categorySchema };
+export { ICategory, categorySchema, Category };

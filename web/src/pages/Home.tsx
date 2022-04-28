@@ -19,7 +19,6 @@ const Home = () => {
 
   return (
     <>
-      {}
       <main>
         <div className="relative flex content-center items-center h-half-screen">
           <div className="bg-landing-background bg-cover bg-center absolute top-0 w-full h-full" />
@@ -37,7 +36,6 @@ const Home = () => {
         </div>
       </main>
 
-      {console.log(recipes)}
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Rating } from "@mui/material";
-import React, { useState, useRef } from "react";
+import { useState, useRef } from "react";
 
 import "./css/RecipeDetail.css";
 import { useQuery } from "react-query";
@@ -61,7 +61,9 @@ const Note = ({ recipe, myRef, ingredientRef, directionRef }) => {
         </div>
         <div className="flex content-center ">
           Total Minutes
-          <div className="text-gray-800 font-bold ml-2">没改</div>
+          <div className="text-gray-800 font-bold ml-2">
+            {recipe.cookingTime}
+          </div>
         </div>
       </div>
     </div>
@@ -108,7 +110,7 @@ const RecipeDetail = () => {
                 </div>
                 {recipe.categories &&
                   recipe.categories.map((category: any) => (
-                    <Link to={`/categories/${category._id}`}>
+                    <Link key={category._id} to={`/categories/${category._id}`}>
                       <div
                         className="mr-2 font-roboto px-1 py-1 text-sm uppercase "
                         style={{ color: "#03897B", backgroundColor: "#F0F9F8" }}
