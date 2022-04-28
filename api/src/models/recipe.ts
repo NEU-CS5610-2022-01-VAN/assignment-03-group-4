@@ -84,4 +84,4 @@ recipeSchema.virtual("reviews", {
 
 const Recipe = model<IRecipe>("Recipe", recipeSchema);
 
-export { Recipe, recipeSchema };
+export { IRecipe, recipeSchema, Recipe };

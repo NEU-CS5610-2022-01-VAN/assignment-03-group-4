@@ -56,4 +56,4 @@ userSchema.pre("find", function () {
 
 const User = model<IUser>("User", userSchema);
 
-export { User };
+export { IUser, User };

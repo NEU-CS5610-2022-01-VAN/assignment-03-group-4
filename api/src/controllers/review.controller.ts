@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import asyncHandler from "express-async-handler";
 import { User } from "../models/user";
-import { Review } from "../models/review";
+import { IReview, Review } from "../models/review";
 import { Recipe } from "../models/recipe";
 
 export const getAllReviews = asyncHandler(
@@ -37,12 +37,14 @@ export const updateReviewById = asyncHandler(
   async (req: Request, res: Response) => {
     const reviewId = req.params.reviewId;
     const { title, content, rating, recipe, author } = req.body;
-    const review = await Review.findByIdAndUpdate(
+    const review: IReview | null = await Review.findByIdAndUpdate(
       reviewId,
       { title, content, rating, recipe, author },
       { new: true }
     );
-    await updateRecipeRating((review as any).recipe);
+    if (review) {
+      await updateRecipeRating(review.recipe);
+    }
     res.send(review);
   }
 );
@@ -50,23 +52,36 @@ export const updateReviewById = asyncHandler(
 export const deleteReviewById = asyncHandler(
   async (req: Request, res: Response) => {
     const reviewId = req.params.reviewId;
-    const review = await Review.findByIdAndDelete(reviewId);
-    await updateRecipeRating((review as any).recipe);
+    const review: IReview | null = await Review.findById(reviewId);
+    if (!review) {
+      res.status(404).send({ message: "Review not found" });
+      return;
+    }
+    if ((req as any).user.sub != review.author) {
+      res
+        .status(401)
+        .send({ message: "You have no permission to delete this review" });
+      return;
+    }
+    await Review.findByIdAndDelete(reviewId);
+    await updateRecipeRating(review.recipe);
     res.send(review);
   }
 );
 
 // update a recipe's rating by its reviews
 const updateRecipeRating = async (recipeId: any) => {
-  const reveiws = await Review.find({ recipe: recipeId });
-  if (!reveiws) {
-    await Recipe.findByIdAndUpdate(recipeId, { rating: 0 });
+  const reveiws: IReview[] = await Review.find({ recipe: recipeId });
+
+  // set recipe's rating to undefined if it has no review
+  if (reveiws.length === 0) {
+    await Recipe.findByIdAndUpdate(recipeId, { $unset: { rating: 1 } });
   } else {
-    const sumRating = reveiws.reduce(
+    const sumRating: number = reveiws.reduce(
       (prev, curReivew) => prev + curReivew.rating,
       0
     );
-    const newRating = sumRating / reveiws.length;
+    const newRating: number = sumRating / reveiws.length;
     await Recipe.findByIdAndUpdate(recipeId, {
       rating: newRating,
     });
