@@ -8,6 +8,6 @@ router.get("/", reviewController.getAllReviews);
 router.get("/:reviewId", reviewController.getReviewById);
 router.post("/", checkJwt, reviewController.createReview);
 router.post("/:reviewId", checkJwt, reviewController.updateReviewById);
-router.delete("/:reviewId", checkJwt);
+router.delete("/:reviewId", checkJwt, reviewController.deleteReviewById);
 
 export default router;
