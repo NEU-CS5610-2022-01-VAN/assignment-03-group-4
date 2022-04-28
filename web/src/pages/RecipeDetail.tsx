@@ -122,7 +122,7 @@ const RecipeDetail = () => {
                   ))}
                 {isAuthenticated &&
                   !userIsLoading &&
-                  (user as any).sub === recipe.author.id && (
+                  (user as any).sub === recipe.author._id && (
                     <div className="ml-auto font-serif">
                       <DeleteRecipeButton recipeId={recipe.id} />
                     </div>

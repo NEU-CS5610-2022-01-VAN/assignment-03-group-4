@@ -10,20 +10,19 @@ import {
   Typography,
 } from "@mui/material";
 
-// import RecipeList from "../components/RecipeList";
-import Container from "@mui/material/Container";
 
-import { ImSpoonKnife } from "react-icons/im";
+
+
 import { BiFoodMenu } from "react-icons/bi";
-import { MdOutlineRateReview } from "react-icons/md";
+
 import { BsPeople, BsThreeDots } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import RecipeListByURL from "../components/RecipeListByURL";
+
 
 import RecipeList from "../components/RecipeList";
 import { useEffect, useState } from "react";
-import { Skeleton } from "@mui/material";
+
 
 const buttonShown = false;
 const Category = () => {
@@ -42,7 +41,6 @@ const Category = () => {
 
   const {
     isLoading: isLoadingRecipes,
-    error: errorRecipes,
     data: recipes,
   } = useQuery(url, () => axios.get(url).then((res) => res.data));
 

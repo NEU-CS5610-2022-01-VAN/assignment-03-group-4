@@ -4,13 +4,14 @@ import ImageCard from "./ImageCard";
 import { Link } from "react-router-dom";
 
 import { Rating } from "@mui/material";
+import { BsThreeDots } from "react-icons/bs";
 
 const RecipeRow = ({ recipe }) => (
   <>
     <Link to={`/recipe/${recipe.id}`}>
       <div
-        style={{ width: "50rem", height: "13rem" }}
-        className="flex flex-row rounded-xl overflow-hdden shadow-md p-4"
+        style={{ width: "100%", height: "13rem" }}
+        className=" flex flex-row rounded-xl overflow-hdden shadow-md "
       >
         {recipe.photos.length ? (
           <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
@@ -42,11 +43,14 @@ const RecipeRow = ({ recipe }) => (
           <div className="recipe-title font-serif text-xl font-semibold pb-1">
             {recipe.title}
           </div>
-
+          <div style={{fontSize: 18, fontWeight: 400}} className="recipe-title font-serif text-xl font-semibold pb-1">
+            {recipe.body}
+          </div>
           <br />
           <br />
           <Rating name="read-only" value={recipe.rating} readOnly />
         </div>
+        <BsThreeDots className="mr-2 ml-auto"/>
       </div>
     </Link>
   </>
