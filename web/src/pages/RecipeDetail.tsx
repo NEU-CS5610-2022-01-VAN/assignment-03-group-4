@@ -12,7 +12,7 @@ import Avatar from "@mui/material/Avatar";
 import MyCarousel from "../components/MyCarousel";
 import { BsDot } from "react-icons/bs";
 import { BiCommentDots } from "react-icons/bi";
-
+import MyAvatar from "../components/MyAvatar";
 import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
 import { FacebookShareButton, TwitterShareButton } from "react-share";
@@ -92,6 +92,7 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <>
+          {/* {console.log(recipe)} */}
           <div className="container max-w-4xl mx-auto px-4">
             <div className="share relative flex gap-3 ">
               <FacebookShareButton url={url} quote={recipe.title}>
@@ -132,8 +133,8 @@ const RecipeDetail = () => {
               {recipe.body}
             </div>
             <div className="py-4 flex">
-              <Avatar alt="avater" src="../assets/img/recipe.png" />
-
+              {/* <Avatar alt="avater" src="../assets/img/recipe.png" /> */}
+              <MyAvatar id={recipe.author._id} />
               <div className="px-2">
                 <h3 className="flex">
                   By&nbsp;
