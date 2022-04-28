@@ -1,3 +1,5 @@
+
+   
 import axios from "axios";
 import { useQuery } from "react-query";
 
@@ -6,7 +8,7 @@ const GetImageById = (photoId, recipeId) => {
   return useQuery(url, async () => {
     return await axios
       .get(url, { responseType: "blob" })
-      .then((res) => res.data);
+      .then((res) => URL.createObjectURL(res.data as any));
   });
 };
 

@@ -6,6 +6,7 @@ const ImageCard = ({ photoId, recipeId }) => {
   const { isLoading, error, data } = GetImageById(photoId, recipeId);
   return (
     <>
+    {console.log(data)}
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
