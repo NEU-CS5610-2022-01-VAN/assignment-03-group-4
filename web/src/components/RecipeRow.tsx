@@ -9,28 +9,29 @@ import { BsThreeDots } from "react-icons/bs";
 const RecipeRow = ({ recipe }) => (
   <>
     <Link to={`/recipe/${recipe.id}`}>
-      <div
-        style={{ width: "100%", flexShrink: 0, height: "13rem" }}
-        className="bg-indigo-500 flex flex-row rounded-xl overflow-hdden shadow-md gap-8 "
-      >
-        {recipe.photos.length ? (
-          <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
-        ) : (
-          <div
-            className={`rounded-lg -mt-9 shadow-lg`}
-            style={{
-              width: "15rem",
-              height: "14rem",
-              backgroundPosition: "center",
-              backgroundImage: `url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F02%2F22%2F16383-basic-crepes-mfs_003.jpg)`,
-              backgroundSize: "cover",
-            }}
-          />
-        )}
+      <div className="flex flex-col md:flex-row rounded-xl overflow-hdden shadow-md gap-8 ">
+        <div style={{ flexShrink: 0 }}>
+          {recipe.photos.length ? (
+            <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
+          ) : (
+            <div
+              className={`rounded-lg -mt-9 shadow-lg`}
+              style={{
+                width: "15rem",
+                height: "14rem",
+                backgroundPosition: "center",
+                backgroundImage: `url(https://imagesvc.meredithcorp.io/v3/mm/image?url=https%3A%2F%2Fstatic.onecms.io%2Fwp-content%2Fuploads%2Fsites%2F43%2F2022%2F02%2F22%2F16383-basic-crepes-mfs_003.jpg)`,
+                backgroundSize: "cover",
+              }}
+            />
+          )}
+        </div>
 
         <div style={{ flex: 1 }}>
+          <BsThreeDots className="mr-2 ml-auto" />
+
           <div
-            className="mt-2 recipe-category flex"
+            className="recipe-category mt-2 recipe-category flex "
             style={{ color: "#03897B" }}
           >
             {recipe.categories &&
@@ -59,7 +60,6 @@ const RecipeRow = ({ recipe }) => (
             readOnly
           />
         </div>
-        <BsThreeDots className="mr-2 ml-auto" />
       </div>
     </Link>
   </>
