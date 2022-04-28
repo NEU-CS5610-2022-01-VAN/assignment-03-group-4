@@ -4,7 +4,7 @@ import { MongoClient, GridFSBucket } from "mongodb";
 import "dotenv/config";
 import { Recipe } from "../models/recipe";
 import { uploadFilesMiddleware } from "../middlewares/upload.middleware";
-import { User } from "../models/user";
+import { IUser, User } from "../models/user";
 
 const mongoClient = new MongoClient(process.env.MONGO_URL || "");
 
@@ -74,10 +74,14 @@ export const downloadPictureByUserId = asyncHandler(
     const bucket = new GridFSBucket(database, {
       bucketName: "photos",
     });
-    const user = await User.findById(req.params.userId);
+    const user: IUser | null = await User.findById(req.params.userId);
+
+    if (!user) {
+      return res.status(404).send({ message: "User Not Found" });
+    }
 
     let downloadStream = bucket.openDownloadStream(
-      new mongoose.Types.ObjectId((user as any).picture)
+      new mongoose.Types.ObjectId(user.picture)
     );
 
     downloadStream.on("data", function (data: any) {
