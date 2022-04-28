@@ -130,7 +130,7 @@ const RecipeDetail = () => {
                 </div>
               )}
 
-            <div className="mt-6 text-6xl font-serif">{recipe.title}</div>
+            <div className=" text-6xl font-serif">{recipe.title}</div>
             <div className="text-gray-800 pt-4 text-xl font-serif">
               {recipe.body}
             </div>
