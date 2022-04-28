@@ -5,7 +5,6 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import RecipeRowList from "../components/RecipeRowList";
 import ReviewList from "../components/ReviewList";
-
 const baseUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
 
 const PublicProfile = ({ showRecipe, userId }) => {
@@ -14,8 +13,6 @@ const PublicProfile = ({ showRecipe, userId }) => {
   const {
     isLoading,
     error,
-    data: user,
-    isFetching,
   } = useQuery(url, () => axios.get(url).then((res) => res.data));
 
   return (
@@ -29,13 +26,11 @@ const PublicProfile = ({ showRecipe, userId }) => {
       ) : showRecipe?(
         <>
           <div>
-            {/* <h2>Your recipes</h2> */}
             <RecipeRowList url={url + "/recipes"} />
           </div>
         </>
       ):(
-          <div>
-            {/* <h2>Your reviews</h2> */}
+          <div >
             <ReviewList url={url + "/reviews"} />
           </div>
       )}

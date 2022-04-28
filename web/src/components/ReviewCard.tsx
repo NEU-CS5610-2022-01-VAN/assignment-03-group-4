@@ -1,18 +1,42 @@
-import axios from "axios";
-import ReactStars from "react-rating-stars-component";
+
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import { useAuth0 } from "@auth0/auth0-react";
-import { useQuery } from "react-query";
-// import "./css/reviewCard.css"
+import GetAvatarById from "../api/UserAvatarAPI";
 import "../assets/styles/tailwind.css";
+import { Button } from "@mui/material";
+import AppBackdrop from "../components/AppBackdrop";
+import { useAuth0 } from "@auth0/auth0-react";
+import axios from "axios";
+import { useAuthToken } from "../hooks/AuthTokenContext";
+import { useState } from "react";
 
-function ReviewCard({ review }) {
+function ReviewCard({ review, showDeleteButton = true }) {
+  const url = `${process.env.REACT_APP_API_BASE_URL}/reviews/${review._id}`;
+
+  const { data } = GetAvatarById(review.author._id);
+  
   const { user, isAuthenticated, isLoading } = useAuth0();
+  const { accessToken } = useAuthToken();
+  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
+
   // const url = `${process.env.REACT_APP_API_BASE_URL}/users/${review.author}`;
   // const {
   //   data: userDB,
   // } = useQuery(url, () => axios.get(url).then((res) => res.data));
+  // const showDeleteButton = true;
+  const handleDeleteReview = async () => {
+    try {
+      setBackdropOpen(true);
+      await axios.delete(url, {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      });
+      alert("success");
+      window.location.reload();
+      setBackdropOpen(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -22,9 +46,7 @@ function ReviewCard({ review }) {
             <img
               style={{ width: 45, height: 45 }}
               className="rounded-full"
-              src={
-                "https://exp-picture.cdn.bcebos.com/586bfdefe07814310c40edd9dc6699cf0353624c.jpg?x-bce-process=image%2Fresize%2Cm_lfit%2Cw_500%2Climit_1%2Fquality%2Cq_80"
-              }
+              src={data}
               alt={review.author.name.slice(0, 3)}
             />
           </div>
@@ -63,6 +85,9 @@ function ReviewCard({ review }) {
           </p>
         </div>
       </div>
+
+      {showDeleteButton && <Button onClick={handleDeleteReview}>Delete</Button>}
+      {backdropOpen && <AppBackdrop text={"Deleting Review"} />}
     </>
   );
 }

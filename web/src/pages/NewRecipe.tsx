@@ -37,6 +37,11 @@ const url = process.env.REACT_APP_API_BASE_URL + "/categories";
 const validationSchema = yup.object({
   title: yup.string().required("Please give this recipe a title"),
   body: yup.string().required("Please add some description"),
+  cookingTime: yup
+    .number()
+    .required("Please enter the cooking time")
+    .min(0, "Cooking time can not be negative")
+    .max(10000, "really?"),
   ingredients: yup
     .array()
     .of(yup.string().required("Ingredient content is required.")),
@@ -57,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold",
     marginBottom: "0.3vh",
   },
-  textField: {},
 }));
 
 const NewRecipe = () => {
@@ -123,6 +127,7 @@ const NewRecipe = () => {
           ingredients: [""],
           instructions: [""],
           youtubeVideoId: "",
+          cookingTime: 1,
         }}
         validationSchema={validationSchema}
         validate={(values) => {
@@ -133,21 +138,23 @@ const NewRecipe = () => {
           return errors;
         }}
         onSubmit={async (values: any, { setSubmitting }) => {
+          setSubmitting(true);
           setBackdropOpen(true);
 
           setTimeout(async () => {
             try {
               values.categories = selectedCategories;
-              const res = await axios.post(
-                `${process.env.REACT_APP_API_BASE_URL}/recipes/`,
-                values,
-                {
-                  headers: { Authorization: `Bearer ${accessToken}` },
-                }
-              );
-              const newRecipe = res.data;
+              const newRecipe = await axios
+                .post(
+                  `${process.env.REACT_APP_API_BASE_URL}/recipes/`,
+                  values,
+                  {
+                    headers: { Authorization: `Bearer ${accessToken}` },
+                  }
+                )
+                .then((res) => res.data);
 
-              images.forEach(async (img) => {
+              images.forEach(async (img: string | Blob) => {
                 const formData = new FormData();
                 formData.append("file", img);
 
@@ -252,6 +259,38 @@ const NewRecipe = () => {
                     helperText={
                       Boolean(errors.body) && Boolean(touched.body)
                         ? errors.body
+                        : " "
+                    }
+                  />
+                </div>
+
+                <div className="input-section">
+                  <InputLabel
+                    htmlFor="cookingTime"
+                    className={classes.inputLabel}
+                  >
+                    Cooking Time
+                  </InputLabel>
+                  <TextField
+                    id="cookingTime"
+                    color="success"
+                    InputLabelProps={{ shrink: true }}
+                    sx={{ width: "100%" }}
+                    type="number"
+                    name="cookingTime"
+                    size="small"
+                    placeholder="Enter its cooking time"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.cookingTime}
+                    error={
+                      Boolean(errors.cookingTime) &&
+                      Boolean(touched.cookingTime)
+                    }
+                    helperText={
+                      Boolean(errors.cookingTime) &&
+                      Boolean(touched.cookingTime)
+                        ? errors.cookingTime
                         : " "
                     }
                   />
@@ -469,7 +508,6 @@ const NewRecipe = () => {
 
                 <div className="input-section">
                   <InputLabel className={classes.inputLabel}>Images</InputLabel>
-
                   <label htmlFor="files-upload">
                     <Button
                       color="success"
@@ -502,21 +540,7 @@ const NewRecipe = () => {
                   )}
 
                   {imageUrls.length > 0 && (
-                    <ImageList
-                      sx={{
-                        width: "100%",
-
-                        columnCount: {
-                          xs: 1,
-                          sm: 2,
-                          md: 3,
-                          lg: 4,
-                          xl: 5,
-                        },
-                      }}
-                      cols={3}
-                      // rowHeight={164}
-                    >
+                    <ImageList cols={3}>
                       {imageUrls.map((url) => (
                         <ImageListItem key={url}>
                           <img
@@ -552,7 +576,6 @@ const NewRecipe = () => {
         autoHideDuration={6000}
         onClose={handleClose}
         message="Note archived"
-        // action={action}
       />
 
       {backdropOpen && <AppBackdrop text={"Creating New Recipe"} />}

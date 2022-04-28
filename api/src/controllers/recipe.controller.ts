@@ -45,6 +45,7 @@ export const createRecipe = asyncHandler(
     const {
       title,
       body,
+      cookingTime,
       categories,
       ingredients,
       instructions,
@@ -54,6 +55,7 @@ export const createRecipe = asyncHandler(
     const newRecipe = new Recipe({
       title,
       body,
+      cookingTime,
       author,
       categories,
       ingredients,
@@ -70,6 +72,7 @@ export const updateRecipeById = asyncHandler(
     const {
       title,
       body,
+      cookingTime,
       author,
       categories,
       ingredients,

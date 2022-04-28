@@ -39,4 +39,4 @@ const reviewSchema = new Schema<IReview>(
 
 const Review = model<IReview>("Review", reviewSchema);
 
-export { Review };
+export { IReview, Review };

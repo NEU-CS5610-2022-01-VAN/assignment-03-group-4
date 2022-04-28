@@ -1841,6 +1841,7 @@ video {
 .h-screen {
   height: 100vh;
 }
+
 .h-half-screen {
   height: 60vh;
 }

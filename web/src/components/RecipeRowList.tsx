@@ -20,10 +20,10 @@ const RecipeRowList = ({ url }) => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        <section className=" pt-10 pb-48">
-          <div className="flex flex-wrap container max-w-7xl mx-auto px-4">
+        <section className="">
+          <div className="flex flex-wrap container mt-16 mx-auto gap-6">
             {recipes.map((recipe) => (
-              <div className="px-3 pt-6 pb-8" key={recipe._id}>
+              <div className="w-full my-6" key={recipe._id}>
                 <RecipeRow recipe={recipe} key={recipe.id} />
               </div>
             ))}
