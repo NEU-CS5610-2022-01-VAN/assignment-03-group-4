@@ -9,7 +9,7 @@ import { BsThreeDots } from "react-icons/bs";
 const RecipeRow = ({ recipe }) => (
   <>
     <Link to={`/recipe/${recipe.id}`}>
-      <div className="flex flex-col md:flex-row rounded-xl overflow-hdden shadow-md gap-8 ">
+      <div className="bg-indigo-500 flex flex-row overflow-hidden gap-8 w-full ">
         <div style={{ flexShrink: 0 }}>
           {recipe.photos.length ? (
             <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
@@ -27,7 +27,7 @@ const RecipeRow = ({ recipe }) => (
           )}
         </div>
 
-        <div style={{ flex: 1 }}>
+        <div style={{ width: "100%" }}>
           <BsThreeDots className="mr-2 ml-auto" />
 
           <div
