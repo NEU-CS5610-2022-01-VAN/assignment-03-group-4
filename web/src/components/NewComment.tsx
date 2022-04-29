@@ -119,6 +119,7 @@ const NewComment = ({ rating, recipeId }) => {
             id="rating"
             color="success"
             name="rating"
+            type="number"
             label="Rating"
             value={formik.values.rating}
             onChange={formik.handleChange}

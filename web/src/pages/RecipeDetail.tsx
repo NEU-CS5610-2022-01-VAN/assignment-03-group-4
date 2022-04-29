@@ -72,6 +72,7 @@ const Note = ({ recipe, myRef, ingredientRef, directionRef }) => {
 const RecipeDetail = () => {
   const recipeId = useParams().recipeId;
   const url = recipeUrl + recipeId;
+
   const { user, isAuthenticated, isLoading: userIsLoading } = useAuth0();
 
   const {
@@ -222,7 +223,11 @@ const RecipeDetail = () => {
               </div>
             </h4>
             {recipe.reviews.length > 0 ? (
-              <ReviewList url={url + "/reviews"} />
+              <ReviewList
+                url={url + "/reviews"}
+                showDeleteButton={false}
+                showRecipe={false}
+              />
             ) : (
               <>
                 <div className="flex flex-col justify-center text-gray-600 my-16 p-2 items-center">

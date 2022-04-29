@@ -8,6 +8,8 @@ const GetAvatarById =  (userId) => {
         return await axios.get(pictureUrl, { responseType: "blob" }).then((res) => URL.createObjectURL(res.data as any));
     });
 
+    
+
 };
 
 export default GetAvatarById;
