@@ -115,7 +115,6 @@ function MyCarousel(props) {
                     setUrlCurrent(img);
                     setVideo(false);
                   }}
-                  style={{ outline: "none" }}
                   aria-label={`carousel image ${index}`}
                 >
                   <Thumbnail url={img} />
