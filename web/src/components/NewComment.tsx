@@ -47,8 +47,6 @@ const NewComment = ({ rating, recipeId }) => {
             alert("Success");
             resetForm();
             setSubmitting(false);
-            console.log("XXXXX" + recipeId);
-            // setSubmit()
             window.location.reload();
             navigate(`/recipe/${recipeId}`);
           })
