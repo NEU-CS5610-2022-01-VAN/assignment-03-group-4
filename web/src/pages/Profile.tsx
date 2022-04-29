@@ -38,12 +38,6 @@ const validationSchema = yup.object({
 
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
-
-  // const url = `${process.env.REACT_APP_API_BASE_URL}/users/${(user as any).sub}`;
-  // const {
-  //   data: userTest,
-  // } = useQuery(url, () => axios.get(url).then((res) => console.log("GetUser"+res.data)));
-
   const [image, setImage] = useState<any>(null);
 
   function onImageChange(e) {
