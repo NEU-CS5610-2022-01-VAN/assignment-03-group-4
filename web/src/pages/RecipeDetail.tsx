@@ -12,7 +12,6 @@ import Avatar from "@mui/material/Avatar";
 import MyCarousel from "../components/MyCarousel";
 import { BsDot } from "react-icons/bs";
 import { BiCommentDots } from "react-icons/bi";
-
 import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
 import { FacebookShareButton, TwitterShareButton } from "react-share";
@@ -73,6 +72,7 @@ const Note = ({ recipe, myRef, ingredientRef, directionRef }) => {
 const RecipeDetail = () => {
   const recipeId = useParams().recipeId;
   const url = recipeUrl + recipeId;
+
   const { user, isAuthenticated, isLoading: userIsLoading } = useAuth0();
   const {
     isLoading,
@@ -119,16 +119,16 @@ const RecipeDetail = () => {
                         {category.name}
                       </div>
                     </Link>
-                  ))}
-                {isAuthenticated &&
-                  !userIsLoading &&
-                  (user as any).sub === recipe.author._id && (
-                    <div className="ml-auto font-serif">
-                      <DeleteRecipeButton recipeId={recipe.id} />
-                    </div>
-                  )}
+                  ))}  
               </div>
             )}
+            {isAuthenticated &&
+              !userIsLoading &&
+              (user as any).sub === recipe.author._id && (
+                <div className="ml-auto w-12 font-serif">
+                  <DeleteRecipeButton recipeId={recipe.id} />
+                </div>
+              )}
             <div className="mt-6 text-6xl font-serif">{recipe.title}</div>
             <div className="text-gray-800 pt-4 text-xl font-serif">
               {recipe.body}
@@ -220,7 +220,7 @@ const RecipeDetail = () => {
               </div>
             </h4>
             {recipe.reviews.length > 0 ? (
-              <ReviewList url={url + "/reviews"} />
+              <ReviewList url={url + "/reviews"} showDeleteButton={false} showRecipe={false}/>
             ) : (
               <>
                 <div className="flex flex-col justify-center text-gray-600 my-16 p-2 items-center">

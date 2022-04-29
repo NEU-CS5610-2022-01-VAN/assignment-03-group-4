@@ -31,7 +31,7 @@ const PublicProfile = ({ showRecipe, userId }) => {
         </>
       ):(
           <div >
-            <ReviewList url={url + "/reviews"} />
+            <ReviewList url={url + "/reviews"} showDeleteButton={true} showRecipe={true}/>
           </div>
       )}
     </>

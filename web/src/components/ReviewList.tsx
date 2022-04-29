@@ -3,7 +3,8 @@ import axios from "axios";
 
 import ReviewCard from "./ReviewCard";
 
-const ReviewList = ({ url }) => {
+
+const ReviewList = ({ url, showDeleteButton, showRecipe }) => {
   const {
     isLoading,
     error,
@@ -23,7 +24,7 @@ const ReviewList = ({ url }) => {
               {reviews.length > 0 &&
                 reviews.map((review) => (
                   <div className="ml-7 h-full w-full" key={review._id}>
-                    <ReviewCard review={review} />
+                    <ReviewCard review={review} showDeleteButton={showDeleteButton} showRecipe={showRecipe}/>
                   </div>
                 ))}
             </div>
