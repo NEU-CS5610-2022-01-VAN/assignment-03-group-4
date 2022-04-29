@@ -8,10 +8,10 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { Link, useParams } from "react-router-dom";
 import ReviewList from "../components/ReviewList";
 import NewComment from "../components/NewComment";
-import Avatar from "@mui/material/Avatar";
 import MyCarousel from "../components/MyCarousel";
 import { BsDot } from "react-icons/bs";
 import { BiCommentDots } from "react-icons/bi";
+import MyAvatar from "../components/MyAvatar";
 import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
 import { FacebookShareButton, TwitterShareButton } from "react-share";
@@ -74,6 +74,7 @@ const RecipeDetail = () => {
   const url = recipeUrl + recipeId;
 
   const { user, isAuthenticated, isLoading: userIsLoading } = useAuth0();
+
   const {
     isLoading,
     error,
@@ -94,6 +95,7 @@ const RecipeDetail = () => {
         <div>Loading...</div>
       ) : (
         <>
+          {/* {console.log(recipe)} */}
           <div className="container max-w-4xl mx-auto px-4">
             <div className="share relative flex gap-3 ">
               <FacebookShareButton url={url} quote={recipe.title}>
@@ -119,23 +121,24 @@ const RecipeDetail = () => {
                         {category.name}
                       </div>
                     </Link>
-                  ))}  
+                  ))}
               </div>
             )}
             {isAuthenticated &&
               !userIsLoading &&
               (user as any).sub === recipe.author._id && (
-                <div className="ml-auto w-12 font-serif">
+                <div className="ml-auto w-12 font-serif hover:text-light-green-700">
                   <DeleteRecipeButton recipeId={recipe.id} />
                 </div>
               )}
-            <div className="mt-6 text-6xl font-serif">{recipe.title}</div>
+
+            <div className=" text-6xl font-serif">{recipe.title}</div>
             <div className="text-gray-800 pt-4 text-xl font-serif">
               {recipe.body}
             </div>
             <div className="py-4 flex">
-              <Avatar alt="avater" src="../assets/img/recipe.png" />
-
+              {/* <Avatar alt="avater" src="../assets/img/recipe.png" /> */}
+              <MyAvatar id={recipe.author._id} />
               <div className="px-2">
                 <h3 className="flex">
                   By&nbsp;
@@ -149,7 +152,7 @@ const RecipeDetail = () => {
               </div>
             </div>
 
-            {recipe.photos.length || recipe.youtubeVideoId ? (
+            {recipe.photos.length || recipe.youtuoId ? (
               <>
                 <hr />
                 <MyCarousel
@@ -220,7 +223,11 @@ const RecipeDetail = () => {
               </div>
             </h4>
             {recipe.reviews.length > 0 ? (
-              <ReviewList url={url + "/reviews"} showDeleteButton={false} showRecipe={false}/>
+              <ReviewList
+                url={url + "/reviews"}
+                showDeleteButton={false}
+                showRecipe={false}
+              />
             ) : (
               <>
                 <div className="flex flex-col justify-center text-gray-600 my-16 p-2 items-center">
