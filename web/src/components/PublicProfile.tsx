@@ -1,4 +1,3 @@
-
 import axios from "axios";
 import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -10,10 +9,9 @@ const baseUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
 const PublicProfile = ({ showRecipe, userId }) => {
   const url = baseUrl + userId;
 
-  const {
-    isLoading,
-    error,
-  } = useQuery(url, () => axios.get(url).then((res) => res.data));
+  const { isLoading, error } = useQuery(url, () =>
+    axios.get(url).then((res) => res.data)
+  );
 
   return (
     <>
@@ -23,16 +21,20 @@ const PublicProfile = ({ showRecipe, userId }) => {
         <div>
           <CircularProgress color="inherit" />
         </div>
-      ) : showRecipe?(
+      ) : showRecipe ? (
         <>
           <div>
             <RecipeRowList url={url + "/recipes"} />
           </div>
         </>
-      ):(
-          <div >
-            <ReviewList url={url + "/reviews"} showDeleteButton={true} showRecipe={true}/>
-          </div>
+      ) : (
+        <div>
+          <ReviewList
+            url={url + "/reviews"}
+            showDeleteButton={true}
+            showRecipe={true}
+          />
+        </div>
       )}
     </>
   );

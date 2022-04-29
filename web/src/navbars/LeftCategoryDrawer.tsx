@@ -53,6 +53,7 @@ export default function LeftCategoryDrawer() {
           onClick={toggleDrawer(true)}
           onMouseDown={(e) => e.preventDefault()}
           size="medium"
+          aria-label="LeftDrawer"
         >
           <MenuIcon sx={{ fontSize: 32 }} />
         </IconButton>

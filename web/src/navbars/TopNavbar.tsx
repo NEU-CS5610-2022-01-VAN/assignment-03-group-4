@@ -88,6 +88,7 @@ export default function TopNavbar() {
           className="outline-none"
           size="large"
           sx={{ display: { xs: "block", md: "none" }, alignItems: "center" }}
+          aria-label="new recipe page"
         >
           <FiSearch size={20} style={{ color: "#444" }} />
         </IconButton>
@@ -123,6 +124,7 @@ export default function TopNavbar() {
           className="outline-none"
           size="large"
           sx={{ display: { xs: "block", md: "none" }, alignItems: "center" }}
+          aria-label="search page"
         >
           <IoMdAdd size={20} style={{ color: "#444" }} />
         </IconButton>

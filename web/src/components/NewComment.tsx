@@ -92,7 +92,7 @@ const NewComment = ({ rating, recipeId }) => {
         >
           <TextField
             className="mt-4"
-            id="title"
+            id="comment-title"
             color="success"
             name="title"
             label="Title"

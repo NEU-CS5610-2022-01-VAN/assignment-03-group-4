@@ -127,7 +127,7 @@ const NewRecipe = () => {
           ingredients: [""],
           instructions: [""],
           youtubeVideoId: "",
-          cookingTime: 1,
+          cookingTime: "",
         }}
         validationSchema={validationSchema}
         validate={(values) => {
@@ -207,7 +207,11 @@ const NewRecipe = () => {
                   >
                     New Recipe
                   </Typography>
-                  <Typography variant="h6" color="#777">
+                  <Typography
+                    variant="h5"
+                    color="#777"
+                    sx={{ fontSize: "1.25rem" }}
+                  >
                     Share your recipe with the community
                   </Typography>
                   <Divider sx={{ marginTop: "12px", marginBottom: "6px" }} />
@@ -217,7 +221,7 @@ const NewRecipe = () => {
                     Title
                   </InputLabel>
                   <TextField
-                    id="title"
+                    // id="title"
                     color="success"
                     InputLabelProps={{ shrink: true }}
                     sx={{ width: "100%" }}
@@ -457,6 +461,7 @@ const NewRecipe = () => {
                       isMulti
                       options={catLabels}
                       onChange={onLabelChange}
+                      aria-label="tags select"
                     />
                     <br />
                   </div>
