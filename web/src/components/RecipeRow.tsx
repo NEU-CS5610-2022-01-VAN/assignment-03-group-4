@@ -9,7 +9,7 @@ import { BsThreeDots } from "react-icons/bs";
 const RecipeRow = ({ recipe }) => (
   <>
     <Link to={`/recipe/${recipe.id}`}>
-      <div className="flex flex-row overflow-hidden gap-8 w-full ">
+      <div className="flex flex-row  gap-8 w-full ">
         <div style={{ flexShrink: 0 }}>
           {recipe.photos.length ? (
             <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />

@@ -3,6 +3,7 @@ import { useQuery } from "react-query";
 import CircularProgress from "@mui/material/CircularProgress";
 import RecipeRow from "./RecipeRow";
 import RecipeCard from "./RecipeCard";
+import { Box } from "@mui/material";
 
 const RecipeRowList = ({ url }) => {
   const {
@@ -21,16 +22,38 @@ const RecipeRowList = ({ url }) => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        <section className="">
-          <div className="flex flex-wrap flex-row container mt-16 mx-auto gap-2 w-full">
+        <>
+          <div className="flex flex-col container mt-6 mx-auto gap-2 w-full">
             {recipes.map((recipe) => (
               <div className="my-6" key={recipe._id}>
-                <RecipeRow recipe={recipe} key={recipe.id} />
-                {/* <RecipeCard recipe={recipe} /> */}
+                <Box
+                  sx={{
+                    display: { xs: "block", md: "none" },
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <RecipeCard recipe={recipe} />
+                  </Box>
+                </Box>
+
+                <Box
+                  sx={{
+                    display: { xs: "none", md: "block" },
+                  }}
+                >
+                  <Box>
+                    <RecipeRow recipe={recipe} key={recipe.id} />
+                  </Box>
+                </Box>
               </div>
             ))}
           </div>
-        </section>
+        </>
       )}
     </>
   );
