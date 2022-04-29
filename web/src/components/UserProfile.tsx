@@ -35,8 +35,6 @@ const validationSchema = yup.object({
 });
 
 const UserProfile = ({ userId, isCurrentUser }) => {
-  console.log(userId);
-
   const [image, setImage] = useState<any>(null);
 
   function onImageChange(e) {

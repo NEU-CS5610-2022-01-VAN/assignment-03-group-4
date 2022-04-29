@@ -39,7 +39,6 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
 
   return (
     <>
-      {console.log(review)}
       <div className="font-serif mt-2">
         <div className="flex flex-row">
           <div className="mt-1">

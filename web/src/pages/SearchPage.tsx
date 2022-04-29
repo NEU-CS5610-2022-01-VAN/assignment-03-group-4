@@ -34,7 +34,8 @@ const SearchPage = () => {
               <H3 color="black">Find Your Recipe</H3>
             </div>
             <input
-              className="bg-gray-200 border-gray-200 w-96 bg-opacity-80 p-4 text-black outline-none"
+              style={{ width: "21rem" }}
+              className="bg-gray-200 border-gray-200 bg-opacity-80 p-4 text-black outline-none"
               type="text"
               placeholder="Search Recipes"
               defaultValue={params.keyword === null ? "" : params.keyword}
