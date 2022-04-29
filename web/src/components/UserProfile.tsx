@@ -261,7 +261,7 @@ const UserProfile = ({ userId, isCurrentUser }) => {
           </div>
         </>
       )}
-      {backdropOpen && <AppBackdrop text={"Updating User Profile"} />}
+      {/* {backdropOpen && <AppBackdrop text={"Updating User Profile"} />} */}
     </>
   );
 };
