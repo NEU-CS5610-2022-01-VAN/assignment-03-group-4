@@ -25,6 +25,10 @@ import SearchPage from "./pages/SearchPage";
 import Category from "./pages/Category";
 import Footer from "./components/Footer";
 import { UserContextProvider } from "./hooks/UserContext";
+import NotificationSnackbar from "./components/NotificationSnackbar";
+import { NotificationContextProvider } from "./hooks/NotificationContext";
+import AppBackdrop from "./components/AppBackdrop";
+import { BackdropContextProvider } from "./hooks/BackdropContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -82,7 +86,11 @@ function App() {
         >
           <AuthTokenProvider>
             <UserContextProvider>
-              <AppRouter />
+              <BackdropContextProvider>
+                <NotificationContextProvider>
+                  <AppRouter />
+                </NotificationContextProvider>
+              </BackdropContextProvider>
             </UserContextProvider>
           </AuthTokenProvider>
         </Auth0Provider>
@@ -99,9 +107,9 @@ function App() {
 function LayoutsWithNavbar() {
   return (
     <>
-      <div className="w-full z-20">
-        <TopNavbar />
-      </div>
+      <NotificationSnackbar />
+      <AppBackdrop />
+      <TopNavbar />
       <Outlet />
       <Footer />
     </>
@@ -111,8 +119,7 @@ function LayoutsWithNavbar() {
 function AppRouter() {
   return (
     <BrowserRouter>
-      <ScrollToTop></ScrollToTop>
-
+      <ScrollToTop />
       <Routes>
         <Route path="/" element={<LayoutsWithNavbar />}>
           <Route path="/" element={<Home />} />
@@ -133,7 +140,6 @@ function AppRouter() {
             }
           />
           <Route path="/verify-user" element={<VerifyUser />} />
-
           <Route
             path="*"
             element={

@@ -73,7 +73,7 @@ const DeleteRecipeButton = ({ recipeId }) => {
         </DialogActions>
       </Dialog>
 
-      {backdropOpen && <AppBackdrop text={"Deleting Recipe"} />}
+      {/* {backdropOpen && <AppBackdrop text={"Deleting Recipe"} />} */}
     </>
   );
 };

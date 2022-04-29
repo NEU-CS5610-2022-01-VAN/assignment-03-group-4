@@ -94,7 +94,7 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
         </div>
       </div>
 
-      {backdropOpen && <AppBackdrop text={"Deleting Review"} />}
+      {/* {backdropOpen && <AppBackdrop text={"Deleting Review"} />} */}
     </>
   );
 }
