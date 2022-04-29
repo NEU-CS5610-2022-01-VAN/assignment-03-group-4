@@ -10,19 +10,14 @@ import {
   Typography,
 } from "@mui/material";
 
-
-
-
 import { BiFoodMenu } from "react-icons/bi";
 
 import { BsPeople, BsThreeDots } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 
-
 import RecipeList from "../components/RecipeList";
 import { useEffect, useState } from "react";
-
 
 const buttonShown = false;
 const Category = () => {
@@ -39,10 +34,9 @@ const Category = () => {
     data: cat,
   } = useQuery(baseUrl, () => axios.get(baseUrl).then((res) => res.data));
 
-  const {
-    isLoading: isLoadingRecipes,
-    data: recipes,
-  } = useQuery(url, () => axios.get(url).then((res) => res.data));
+  const { isLoading: isLoadingRecipes, data: recipes } = useQuery(url, () =>
+    axios.get(url).then((res) => res.data)
+  );
 
   const [totalRecipes, setTotalRecipes] = useState();
   const [totalComments, setTotalComments] = useState();
@@ -83,7 +77,6 @@ const Category = () => {
               </Typography>
               <IconButton
                 aria-label="more options"
-                // onClick={() => arrayHelpers.remove(index)}
                 onMouseDown={(e) => e.preventDefault()}
                 edge="end"
                 sx={{ height: "100%", ml: "auto", mr: 2 }}
@@ -92,7 +85,7 @@ const Category = () => {
               </IconButton>
             </div>
 
-            <Typography variant="h6" color="#777">
+            <Typography variant="h5" color="#777" sx={{ fontSize: "1.4rem" }}>
               Check out our {cat.name.toLowerCase()} recipes.
             </Typography>
 
