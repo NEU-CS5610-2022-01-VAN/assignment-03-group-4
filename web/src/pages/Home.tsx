@@ -60,6 +60,10 @@ const Home = () => {
                 />
               </div>
             </div>
+            {/* <div className="text-center font-serif text-3xl font-bold pt-6 pb-3 mb-4">
+              Latest Comments
+            </div> */}
+
             <TypeSection recipes={recipes} />
           </div>
         </>
