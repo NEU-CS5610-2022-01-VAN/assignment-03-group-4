@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
 import GetAvatarById from "../api/UserAvatarAPI";
@@ -14,7 +13,7 @@ function ReviewCard({ review, showDeleteButton = true }) {
   const url = `${process.env.REACT_APP_API_BASE_URL}/reviews/${review._id}`;
 
   const { data } = GetAvatarById(review.author._id);
-  
+
   const { user, isAuthenticated, isLoading } = useAuth0();
   const { accessToken } = useAuthToken();
   const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
@@ -87,7 +86,7 @@ function ReviewCard({ review, showDeleteButton = true }) {
       </div>
 
       {showDeleteButton && <Button onClick={handleDeleteReview}>Delete</Button>}
-      {backdropOpen && <AppBackdrop text={"Deleting Review"} />}
+      {/* {backdropOpen && <AppBackdrop text={"Deleting Review"} />} */}
     </>
   );
 }

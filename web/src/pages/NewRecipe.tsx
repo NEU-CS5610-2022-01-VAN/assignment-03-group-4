@@ -578,7 +578,7 @@ const NewRecipe = () => {
         message="Note archived"
       />
 
-      {backdropOpen && <AppBackdrop text={"Creating New Recipe"} />}
+      {/* {backdropOpen && <AppBackdrop text={"Creating New Recipe"} />} */}
     </>
   );
 };
