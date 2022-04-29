@@ -43,7 +43,7 @@ function MyCarousel(props) {
         setUrlCurrent(res[0]);
       }
     });
-  }, [props.photos, props.recipeId]);
+  }, [props.photos, props.recipeId, props.video]);
 
   return (
     <>
@@ -107,7 +107,7 @@ function MyCarousel(props) {
         </>
         <>
           {images.length !== 0 &&
-            images.map((img) => {
+            images.map((img, index) => {
               return (
                 <button
                   key={img}
@@ -115,6 +115,8 @@ function MyCarousel(props) {
                     setUrlCurrent(img);
                     setVideo(false);
                   }}
+                  style={{ outline: "none" }}
+                  aria-label={`carousel image ${index}`}
                 >
                   <Thumbnail url={img} />
                 </button>

@@ -12,7 +12,6 @@ const RecipeCard = ({ recipe }) => {
 
   return (
     <Box onClick={handleKeyPress}>
-      {/* <Link to={`/recipe/${recipe.id}`}> */}
       <div className={`w-72 h-96 rounded-xl overflow-hdden shadow-md p-4`}>
         {recipe.photos.length ? (
           <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
@@ -47,15 +46,14 @@ const RecipeCard = ({ recipe }) => {
 
           <Rating name="read-only" value={recipe.rating} readOnly />
 
-          <h3 className="text-sm font-medium">
+          <div className="text-sm font-medium">
             By&nbsp;
             <Link to={`/profile/${recipe.author.id}`}>
               {recipe.author.name}
             </Link>
-          </h3>
+          </div>
         </div>
       </div>
-      {/* </Link> */}
     </Box>
   );
 };
