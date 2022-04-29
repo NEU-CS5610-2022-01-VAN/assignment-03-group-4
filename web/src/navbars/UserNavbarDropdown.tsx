@@ -10,8 +10,11 @@ import {
   MenuItem,
   Avatar,
   Divider,
+  Box,
 } from "@mui/material";
 import { useUserContext } from "../hooks/UserContext";
+import { CgProfile } from "react-icons/cg";
+import { FiLogOut, FiLogIn } from "react-icons/fi";
 
 const defaultPicture =
   "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA=";
@@ -84,16 +87,21 @@ const UserNavbarDropdown = () => {
             <Divider sx={{ my: 0.5 }} />
 
             <MenuItem onClick={() => onMenuItemClick("/profile")}>
+              <CgProfile size={18} style={{ marginRight: "6px" }} />
               Profile
             </MenuItem>
             <MenuItem
               onClick={() => logout({ returnTo: window.location.origin })}
             >
+              <FiLogOut size={18} style={{ marginRight: "6px" }} />
               Log out
             </MenuItem>
           </MenuList>
         ) : (
-          <MenuItem onClick={() => loginWithRedirect()}>Sign in</MenuItem>
+          <MenuItem onClick={() => loginWithRedirect()}>
+            <FiLogIn size={18} style={{ marginRight: "6px" }} />
+            Sign in
+          </MenuItem>
         )}
       </Menu>
     </div>
