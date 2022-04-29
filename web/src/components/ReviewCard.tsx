@@ -1,24 +1,22 @@
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-import GetAvatarById from "../api/UserAvatarAPI";
+
 import "../assets/styles/tailwind.css";
 import { Button } from "@mui/material";
 import AppBackdrop from "../components/AppBackdrop";
-import { useAuth0 } from "@auth0/auth0-react";
+
 import axios from "axios";
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
 import MyAvatar from "./MyAvatar";
 function ReviewCard({ review, showDeleteButton, showRecipe }) {
   const url = `${process.env.REACT_APP_API_BASE_URL}/reviews/${review._id}`;
 
   // const { data } = GetAvatarById(review.author._id);
 
-  const { user, isAuthenticated, isLoading } = useAuth0();
   const { accessToken } = useAuthToken();
   const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
-  const navigate = useNavigate();
 
   // const url = `${process.env.REACT_APP_API_BASE_URL}/users/${review.author}`;
   // const {
@@ -41,7 +39,6 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
 
   return (
     <>
-      {console.log(review)}
       <div className="font-serif mt-2">
         <div className="flex flex-row">
           <div className="mt-1">
