@@ -1,6 +1,4 @@
-import { useAuth0 } from "@auth0/auth0-react";
-import { useParams } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import ProfileCard from "./ProfileCard";
 import PublicProfile from "./PublicProfile";
@@ -26,7 +24,7 @@ import axios from "axios";
 import { HiUpload } from "react-icons/hi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
-import { useUserContext } from "../hooks/UserContext";
+
 import "./css/profile.css";
 import AppBackdrop from "./AppBackdrop";
 import { Avatar } from "@mui/material";

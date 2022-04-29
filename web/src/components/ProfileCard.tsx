@@ -2,7 +2,6 @@ import React from "react";
 import CircularProgress from "@mui/material/CircularProgress";
 import { BiFoodMenu } from "react-icons/bi";
 import { BsPeople } from "react-icons/bs";
-import { useUserContext } from "../hooks/UserContext";
 import { IoBookmarksOutline } from "react-icons/io5";
 import { Avatar, Box, Typography } from "@mui/material";
 import GetAvatarById from "../api/UserAvatarAPI";

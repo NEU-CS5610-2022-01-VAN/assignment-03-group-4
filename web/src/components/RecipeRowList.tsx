@@ -11,7 +11,6 @@ const RecipeRowList = ({ url }) => {
     isLoading,
     error,
     data: recipes,
-    isFetching,
   } = useQuery(url, () => axios.get(url).then((res) => res.data));
 
   return (
@@ -22,7 +21,7 @@ const RecipeRowList = ({ url }) => {
         <div>
           <CircularProgress color="inherit" />
         </div>
-      ) : recipes.length != 0 ? (
+      ) : recipes.length !== 0 ? (
         <>
           <div className="flex flex-col container mt-6 mx-auto gap-2 w-full">
             {recipes.map((recipe) => (
