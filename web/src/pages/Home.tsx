@@ -26,7 +26,8 @@ const Home = () => {
             <div className="w-full lg:w-6/12 px-4 mx-auto text-center">
               <H2 color="white">Find Your Recipe.</H2>
               <input
-                className="bg-amber-100 w-96 bg-opacity-80 p-3 text-white outline-none"
+                style={{ width: "21rem" }}
+                className="bg-amber-100 bg-opacity-80 p-3 text-white outline-none"
                 type="text"
                 placeholder="Search recipes"
                 onKeyPress={handleKeyPress}

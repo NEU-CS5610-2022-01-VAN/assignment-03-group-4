@@ -5,13 +5,14 @@ import { BsPeople } from "react-icons/bs";
 import { useUserContext } from "../hooks/UserContext";
 import { IoBookmarksOutline } from "react-icons/io5";
 import { Avatar, Box, Typography } from "@mui/material";
+import GetAvatarById from "../api/UserAvatarAPI";
 
 const defaultPicture =
   "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA=";
 
-const ProfileCard = () => {
-  const { isLoading, user, userPicture } = useUserContext();
-
+const ProfileCard = ({ user }) => {
+  // const { isLoading, user, userPicture } = useUserContext();
+  const { data } = GetAvatarById(user._id);
   if (!user) {
     return <CircularProgress />;
   }
@@ -21,12 +22,14 @@ const ProfileCard = () => {
       <div className="flex flex-row " style={{ marginRight: "2%" }}>
         <Avatar
           sx={{ width: 120, height: 120, marginRight: "2vw" }}
-          src={userPicture ? userPicture : defaultPicture}
+          src={data ? data : defaultPicture}
           alt={"user avatar"}
         />
 
         <div className="flex flex-col text-lg ">
-          <div className="mt-3">{user.name}</div>
+          <div className="mt-3" style={{ fontWeight: "500" }}>
+            {user.name}
+          </div>
           <div className="flex w-full flex-wrap mt-3 gap-2 ">
             <div className="flex flex-row">
               <div className="mt-1">
