@@ -1,18 +1,16 @@
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import H2 from "@material-tailwind/react/Heading2";
+import { FiLogIn } from "react-icons/fi";
+import { IoFastFoodOutline } from "react-icons/io5";
+import GetRecipesByURL from "../apis/RecipeListAPI";
+import LoadingIcon from "../components/LoadingIcon";
 import Popular from "../components/Popular";
 import TypeSection from "../components/TypeSection";
-import GetRecipesByURL from "../apis/RecipeListAPI";
-import { Link, useNavigate } from "react-router-dom";
-import ReviewList from "../components/ReviewList";
 import LoginButton from "../components/LoginButton";
-import { FiLogIn } from "react-icons/fi";
-import { text } from "stream/consumers";
 import Section from "../components/Section";
-import { useAuth0 } from "@auth0/auth0-react";
-import { IoFastFoodOutline } from "react-icons/io5";
-import LoadingIcon from "../components/LoadingIcon";
 
-const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes";
+const recipeUrl = `${process.env.REACT_APP_API_BASE_URL}/recipes`;
 
 const Home = () => {
   const { isLoading, error, data: recipes } = GetRecipesByURL(recipeUrl);
@@ -84,18 +82,16 @@ const Home = () => {
                     ).slice(0, 3)}
                   />
                 ) : (
-                  <>
-                    <div className="flex flex-col justify-center text-base font-normal text-gray-600 my-16 p-2 items-center">
-                      <IoFastFoodOutline size={25} />
-                      <p>You have no recipe yet. </p>
-                      <p>
-                        Create your first recipe{" "}
-                        <Link style={{ color: "#2F7D31" }} to="./NewRecipe">
-                          here.
-                        </Link>
-                      </p>
-                    </div>
-                  </>
+                  <div className="flex flex-col justify-center text-base font-normal text-gray-600 my-16 p-2 items-center">
+                    <IoFastFoodOutline size={25} />
+                    <p>You have no recipe yet. </p>
+                    <p>
+                      Create your first recipe{" "}
+                      <Link style={{ color: "#2F7D31" }} to="./NewRecipe">
+                        here.
+                      </Link>
+                    </p>
+                  </div>
                 )}
               </div>
             )}
@@ -105,7 +101,7 @@ const Home = () => {
               className="font-serif flex flex-wrap text-semibold w-full justify-center gap-2"
               style={{ backgroundColor: "#F5F1E7", padding: "2%" }}
             >
-              <div className="">
+              <div>
                 Get our latest recipes and expert tips starting from here.
               </div>
               <div className="w-40">

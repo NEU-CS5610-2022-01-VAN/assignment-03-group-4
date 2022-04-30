@@ -1,22 +1,24 @@
-import axios from "axios";
-import { Rating } from "@mui/material";
-import { useRef } from "react";
-
 import "./css/RecipeDetail.css";
+import axios from "axios";
+import { useRef } from "react";
+import { Link, useParams } from "react-router-dom";
+import { Rating } from "@mui/material";
 import { useQuery } from "react-query";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Link, useParams } from "react-router-dom";
+import { BsDot } from "react-icons/bs";
+import { BiCommentDots } from "react-icons/bi";
+import {
+  FacebookShareButton,
+  TwitterShareButton,
+  TwitterIcon,
+  FacebookIcon,
+} from "react-share";
+import MyAvatar from "../components/MyAvatar";
 import ReviewList from "../components/ReviewList";
 import NewComment from "../components/NewComment";
 import MyCarousel from "../components/MyCarousel";
-import { BsDot } from "react-icons/bs";
-import { BiCommentDots } from "react-icons/bi";
-import MyAvatar from "../components/MyAvatar";
-import DeleteRecipeButton from "../components/DeleteRecipeButton";
-
-import { FacebookShareButton, TwitterShareButton } from "react-share";
-import { FacebookIcon, TwitterIcon } from "react-share";
 import LoadingIcon from "../components/LoadingIcon";
+import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 
@@ -95,7 +97,6 @@ const RecipeDetail = () => {
         <LoadingIcon />
       ) : (
         <>
-          {/* {console.log(recipe)} */}
           <div className="container max-w-4xl mx-auto px-4">
             <div className="share relative flex gap-3 ">
               <FacebookShareButton url={url} quote={recipe.title}>
@@ -137,7 +138,6 @@ const RecipeDetail = () => {
               {recipe.body}
             </div>
             <div className="py-4 flex">
-              {/* <Avatar alt="avater" src="../assets/img/recipe.png" /> */}
               <MyAvatar id={recipe.author._id} />
               <div className="px-2">
                 <h3 className="flex">

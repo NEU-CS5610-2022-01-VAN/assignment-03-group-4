@@ -1,13 +1,14 @@
-import React, { useState } from "react";
 import axios from "axios";
-import { useQuery } from "react-query";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 import H3 from "@material-tailwind/react/Heading3";
 import H6 from "@material-tailwind/react/Heading6";
 import RecipeList from "../components/RecipeList";
 import LoadingIcon from "../components/LoadingIcon";
 
-const url = process.env.REACT_APP_API_BASE_URL + "/recipes";
+const url = `${process.env.REACT_APP_API_BASE_URL}/recipes`;
+
 const SearchPage = () => {
   const {
     isLoading,

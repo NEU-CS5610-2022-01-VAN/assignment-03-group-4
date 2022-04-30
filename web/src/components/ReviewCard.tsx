@@ -1,14 +1,11 @@
-import { Link } from "react-router-dom";
-import Rating from "@mui/material/Rating";
-import "../assets/styles/tailwind.css";
-import { Button } from "@mui/material";
-
 import axios from "axios";
-import { useAuthToken } from "../hooks/AuthTokenContext";
-
+import { Link } from "react-router-dom";
+import { Button, Rating } from "@mui/material";
 import MyAvatar from "./MyAvatar";
+import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useNotificationContext } from "../hooks/NotificationContext";
 import { useBackdropContext } from "../hooks/BackdropContext";
+
 function ReviewCard({ review, showDeleteButton, showRecipe }) {
   const url = `${process.env.REACT_APP_API_BASE_URL}/reviews/${review._id}`;
   const { addNotification } = useNotificationContext();
@@ -32,12 +29,12 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
 
   return (
     <>
-      <div className=" font-serif mt-2">
+      <div className="font-serif mt-2">
         <div className="flex flex-row">
           <div className="mt-1">
             <MyAvatar id={review.author._id}></MyAvatar>
           </div>
-          <div className="mt-2 ml-2 ">
+          <div className="mt-2 ml-2">
             <p style={{ fontSize: 19 }} className="text-black no-underline">
               {showRecipe ? (
                 <Link to={`/recipes/${review.recipe}`}>

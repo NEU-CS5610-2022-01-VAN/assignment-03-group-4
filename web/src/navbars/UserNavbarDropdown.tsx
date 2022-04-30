@@ -1,5 +1,5 @@
 import "./css/userNavbarDropdown.css";
-import React from "react";
+import { useState, MouseEvent } from "react";
 import { To, useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import {
@@ -11,9 +11,9 @@ import {
   Avatar,
   Divider,
 } from "@mui/material";
-import { useUserContext } from "../hooks/UserContext";
 import { CgProfile } from "react-icons/cg";
 import { FiLogOut, FiLogIn } from "react-icons/fi";
+import { useUserContext } from "../hooks/UserContext";
 
 const defaultPicture =
   "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA=";
@@ -24,9 +24,9 @@ const UserNavbarDropdown = () => {
 
   const navigate = useNavigate();
 
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
   const handleClose = () => {
@@ -39,7 +39,7 @@ const UserNavbarDropdown = () => {
   };
 
   return (
-    <div>
+    <>
       <Button
         id="basic-button"
         aria-controls={open ? "basic-menu" : undefined}
@@ -80,7 +80,7 @@ const UserNavbarDropdown = () => {
             <MenuItem onClick={() => onMenuItemClick("/profile")}>
               <div>
                 <p>Signed in as</p>
-                {user && <b>{(user as any).name}</b>}
+                {user && <b>{user.name}</b>}
               </div>
             </MenuItem>
             <Divider sx={{ my: 0.5 }} />
@@ -103,7 +103,7 @@ const UserNavbarDropdown = () => {
           </MenuItem>
         )}
       </Menu>
-    </div>
+    </>
   );
 };
 

@@ -2,7 +2,6 @@ import "./css/recipeCard.css";
 import ImageCard from "./ImageCard";
 
 import { Link } from "react-router-dom";
-
 import { Rating } from "@mui/material";
 import { BsThreeDots } from "react-icons/bs";
 

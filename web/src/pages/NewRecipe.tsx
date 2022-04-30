@@ -1,11 +1,11 @@
 import "./css/newRecipe.css";
+import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, FieldArray, getIn } from "formik";
 import Select from "react-select";
 import makeAnimated from "react-select/animated";
-import axios from "axios";
-import { useQuery } from "react-query";
 import * as yup from "yup";
 import {
   InputAdornment,
@@ -21,18 +21,16 @@ import {
   Box,
 } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
-// icons
 import { IoMdAdd } from "react-icons/io";
 import { BiMinus } from "react-icons/bi";
 import { HiUpload } from "react-icons/hi";
-
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useNotificationContext } from "../hooks/NotificationContext";
 import { useBackdropContext } from "../hooks/BackdropContext";
 import LoadingIcon from "../components/LoadingIcon";
 
 const animatedComponents = makeAnimated();
-const url = process.env.REACT_APP_API_BASE_URL + "/categories";
+const url = `${process.env.REACT_APP_API_BASE_URL}/categories`;
 
 const validationSchema = yup.object({
   title: yup.string().required("Please give this recipe a title"),

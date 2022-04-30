@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { useQuery } from "react-query";
 import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { BiFoodMenu } from "react-icons/bi";
@@ -12,19 +12,20 @@ const Category = () => {
   const params = useParams();
   const categoryId = params.categoryId;
 
-  const navigate = useNavigate();
-
-  const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/categories/${categoryId}`;
-  const url = baseUrl + "/recipes";
+  const categoryUrl = `${process.env.REACT_APP_API_BASE_URL}/categories/${categoryId}`;
+  const recipesByCategoryIdUrl = `${categoryUrl}/recipes`;
 
   const {
     isLoading,
     error,
     data: cat,
-  } = useQuery(baseUrl, () => axios.get(baseUrl).then((res) => res.data));
+  } = useQuery(categoryUrl, () =>
+    axios.get(categoryUrl).then((res) => res.data)
+  );
 
-  const { isLoading: isLoadingRecipes, data: recipes } = useQuery(url, () =>
-    axios.get(url).then((res) => res.data)
+  const { isLoading: isLoadingRecipes, data: recipes } = useQuery(
+    recipesByCategoryIdUrl,
+    () => axios.get(recipesByCategoryIdUrl).then((res) => res.data)
   );
 
   const [totalRecipes, setTotalRecipes] = useState();

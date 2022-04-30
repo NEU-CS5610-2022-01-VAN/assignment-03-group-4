@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-import RecipeRow from "./RecipeRow";
-import RecipeCard from "./RecipeCard";
 import { Box } from "@mui/material";
 import { IoFastFoodOutline } from "react-icons/io5";
 import LoadingIcon from "./LoadingIcon";
+import RecipeRow from "./RecipeRow";
+import RecipeCard from "./RecipeCard";
 
 const RecipeRowList = ({ url }) => {
   const {

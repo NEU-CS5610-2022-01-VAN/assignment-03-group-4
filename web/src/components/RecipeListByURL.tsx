@@ -3,7 +3,7 @@ import GetRecipesByURL from "../apis/RecipeListAPI";
 import LoadingIcon from "./LoadingIcon";
 
 const RecipeListByURL = ({ url }) => {
-  const { isLoading, error, data: recipes, isFetching } = GetRecipesByURL(url);
+  const { isLoading, error, data: recipes } = GetRecipesByURL(url);
 
   return (
     <>

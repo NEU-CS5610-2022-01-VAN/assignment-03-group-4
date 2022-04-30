@@ -1,12 +1,11 @@
-import { Link } from "react-router-dom";
-
 import axios from "axios";
 import { useQuery } from "react-query";
-// import RecipeCard from "./RecipeCard";
+import { Link } from "react-router-dom";
+
 import Section from "./Section";
 import LoadingIcon from "./LoadingIcon";
 
-const url = process.env.REACT_APP_API_BASE_URL + "/categories";
+const url = `${process.env.REACT_APP_API_BASE_URL}/categories`;
 
 const TypeSection = ({ recipes }) => {
   const {

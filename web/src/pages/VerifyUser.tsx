@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuthToken } from "../hooks/AuthTokenContext";
+import LoadingIcon from "../components/LoadingIcon";
 
 export default function VerifyUser() {
   const navigate = useNavigate();
@@ -28,5 +29,5 @@ export default function VerifyUser() {
     }
   }, [accessToken, navigate]);
 
-  return <div className="loading">Loading...</div>;
+  return <LoadingIcon />;
 }
