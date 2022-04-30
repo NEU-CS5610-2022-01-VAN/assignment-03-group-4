@@ -130,7 +130,7 @@ const NewComment = ({ recipeId }) => {
               name="rating"
               className="pt-2"
               size="large"
-              value={formik.values.rating}
+              value={parseInt(formik.values.rating)}
             />
           </div>
           <p
