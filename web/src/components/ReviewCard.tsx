@@ -39,7 +39,7 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
 
   return (
     <>
-      <div className="font-serif mt-2">
+      <div className=" font-serif mt-2">
         <div className="flex flex-row">
           <div className="mt-1">
             <MyAvatar id={review.author._id}></MyAvatar>
