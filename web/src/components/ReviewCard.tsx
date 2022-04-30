@@ -1,37 +1,30 @@
 import { Link } from "react-router-dom";
 import Rating from "@mui/material/Rating";
-
 import "../assets/styles/tailwind.css";
 import { Button } from "@mui/material";
-import AppBackdrop from "../components/AppBackdrop";
 
 import axios from "axios";
 import { useAuthToken } from "../hooks/AuthTokenContext";
-import { useState } from "react";
 
 import MyAvatar from "./MyAvatar";
+import { useNotificationContext } from "../hooks/NotificationContext";
+import { useBackdropContext } from "../hooks/BackdropContext";
 function ReviewCard({ review, showDeleteButton, showRecipe }) {
   const url = `${process.env.REACT_APP_API_BASE_URL}/reviews/${review._id}`;
-
-  // const { data } = GetAvatarById(review.author._id);
+  const { addNotification } = useNotificationContext();
+  const { addBackdrop, setBackdropOpen } = useBackdropContext();
 
   const { accessToken } = useAuthToken();
-  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
 
-  // const url = `${process.env.REACT_APP_API_BASE_URL}/users/${review.author}`;
-  // const {
-  //   data: userDB,
-  // } = useQuery(url, () => axios.get(url).then((res) => res.data));
-  // const showDeleteButton = true;
   const handleDeleteReview = async () => {
     try {
-      setBackdropOpen(true);
+      addBackdrop("Deleting Review");
       await axios.delete(url, {
         headers: { Authorization: `Bearer ${accessToken}` },
       });
-      alert("success");
-      window.location.reload();
       setBackdropOpen(false);
+      addNotification("Review Deleted");
+      setTimeout(() => window.location.reload(), 800);
     } catch (error) {
       console.log(error);
     }
@@ -60,7 +53,6 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
           <div className="text-gray-700 mt-3 ml-4">
             <p className="">{review.createdAt.slice(0, 10)}</p>
           </div>
-          {/* <div className="ml-auto w-12 mt-1">{showRecipe && <Button color="success" onClick={()=>navigate(`/recipe/${review.recipe}`)}>View&nbsp;Recipe</Button>}</div> */}
           <div className="ml-auto w-12 mr-10 mt-1">
             {showDeleteButton && (
               <Button color="success" onClick={handleDeleteReview}>
@@ -93,8 +85,6 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
           </div>
         </div>
       </div>
-
-      {backdropOpen && <AppBackdrop text={"Deleting Review"} />}
     </>
   );
 }

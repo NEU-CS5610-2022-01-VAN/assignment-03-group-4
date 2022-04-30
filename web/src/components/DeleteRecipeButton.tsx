@@ -1,49 +1,49 @@
 import axios from "axios";
 import React, { useState } from "react";
 import { Button as BootstrapButton } from "react-bootstrap";
-import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useNavigate } from "react-router-dom";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Button from "@mui/material/Button";
-import AppBackdrop from "./AppBackdrop";
+import {
+  Button,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions,
+  Dialog,
+} from "@mui/material";
+
+import { useAuthToken } from "../hooks/AuthTokenContext";
+import { useNotificationContext } from "../hooks/NotificationContext";
+import { useBackdropContext } from "../hooks/BackdropContext";
 
 const DeleteRecipeButton = ({ recipeId }) => {
-  const url = process.env.REACT_APP_API_BASE_URL + "/recipes/" + recipeId;
+  const url = `${process.env.REACT_APP_API_BASE_URL}/recipes/${recipeId}`;
 
+  const { addNotification } = useNotificationContext();
+  const { addBackdrop, setBackdropOpen } = useBackdropContext();
   const { accessToken } = useAuthToken();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
 
-  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
-
   const onDeleteButtonClick = () => {
     setOpen(false);
-    setBackdropOpen(true);
+    addBackdrop("Deleting Recipe");
+
     setTimeout(() => {
       axios
         .delete(url, {
           headers: { Authorization: `Bearer ${accessToken}` },
         })
         .then(() => {
-          alert("Success");
           setBackdropOpen(false);
-          navigate(-1);
+          addNotification("Recipe Deleted");
+          setTimeout(() => navigate(-1), 400);
         })
         .catch((err) => console.log(err));
     }, 200);
   };
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClickOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   return (
     <>
@@ -72,8 +72,6 @@ const DeleteRecipeButton = ({ recipeId }) => {
           </Button>
         </DialogActions>
       </Dialog>
-
-      {backdropOpen && <AppBackdrop text={"Deleting Recipe"} />}
     </>
   );
 };

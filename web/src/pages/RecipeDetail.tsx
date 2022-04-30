@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Rating } from "@mui/material";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 
 import "./css/RecipeDetail.css";
 import { useQuery } from "react-query";
@@ -85,7 +85,6 @@ const RecipeDetail = () => {
   const ingredientRef = useRef(null);
   const directionRef = useRef(null);
   const newCommentRef = useRef(null);
-  const [rating, setRating] = useState(0);
 
   return (
     <div className="w-full pt-10 pb-48 ">
@@ -201,17 +200,18 @@ const RecipeDetail = () => {
             <div
               className="mt-2 flex flex-col place-items-center w-full p-6 text-xl font-serif"
               style={{ backgroundColor: "#F5F1E7" }}
+              onClick={() => {
+                scrollToRef(newCommentRef);
+              }}
             >
               ❤️ How would you rate this recipe?
               <Rating
-                onChange={(e, value) => {
-                  scrollToRef(newCommentRef);
-                  if (value != null) setRating(value);
-                }}
+                onChange={(e) => {}}
+                id="rating"
+                name="rating"
                 className="pt-2"
                 size="large"
-                name="rate"
-                defaultValue={0}
+                value={0}
               />
             </div>
 
@@ -246,7 +246,7 @@ const RecipeDetail = () => {
                 Leave comment
               </h4>
             </div>
-            <NewComment rating={rating} recipeId={recipeId} />
+            <NewComment recipeId={recipeId} />
           </div>
         </>
       )}

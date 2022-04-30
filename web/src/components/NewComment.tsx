@@ -1,7 +1,5 @@
 import axios from "axios";
-// import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
@@ -10,6 +8,9 @@ import { FiLogIn } from "react-icons/fi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import LoginButton from "./LoginButton";
+import { useNotificationContext } from "../hooks/NotificationContext";
+import { useBackdropContext } from "../hooks/BackdropContext";
+import Rating from "@mui/material/Rating";
 
 const validationSchema = yup.object({
   title: yup.string().required("Review Title Required"),
@@ -23,34 +24,41 @@ const validationSchema = yup.object({
     .required("Plese give a rating score(1-5)"),
 });
 
-const NewComment = ({ rating, recipeId }) => {
+const NewComment = ({ recipeId }) => {
+  const { addNotification } = useNotificationContext();
+  const { addBackdrop, setBackdropOpen } = useBackdropContext();
   const { accessToken } = useAuthToken();
   const { user, error, isLoading } = useAuth0();
-
-  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
       title: "",
       content: "",
-      rating: "",
+      rating: 0,
       recipe: recipeId,
     },
     validationSchema: validationSchema,
     onSubmit: (values: any, { setSubmitting, resetForm }) => {
-      setTimeout(() => {
-        axios
-          .post(`${process.env.REACT_APP_API_BASE_URL}/reviews/`, values, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          })
-          .then(() => {
-            alert("Success");
-            resetForm();
-            setSubmitting(false);
-            window.location.reload();
-            navigate(`/recipe/${recipeId}`);
-          })
-          .catch((err) => console.log(err));
+      setSubmitting(true);
+      addBackdrop("Uploading Comment");
+      setTimeout(async () => {
+        try {
+          await axios.post(
+            `${process.env.REACT_APP_API_BASE_URL}/reviews/`,
+            values,
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          );
+          setBackdropOpen(false);
+          addNotification("Comment Uploaded");
+          resetForm();
+          setTimeout(() => window.location.reload(), 400);
+
+          setSubmitting(false);
+        } catch (err) {
+          console.log(err);
+        }
       }, 200);
     },
   });
@@ -112,21 +120,41 @@ const NewComment = ({ rating, recipeId }) => {
             helperText={formik.touched.content && formik.errors.content}
           />
           <br />
-          <TextField
+          {/* <TextField
             className="mt-5"
             id="rating"
             color="success"
             name="rating"
             type="number"
             label="Rating"
+            defaultValue={rating}
             value={formik.values.rating}
             onChange={formik.handleChange}
             error={formik.touched.rating && Boolean(formik.errors.rating)}
             helperText={formik.touched.rating && formik.errors.rating}
-          />
+          /> */}
+          <div className="flex flex-row">
+            <h4 className="font-serif mt-2 mr-2 text-lg text-gray-800">
+              Rating
+            </h4>
+            <Rating
+              onChange={formik.handleChange}
+              id="rating"
+              name="rating"
+              className="pt-2"
+              size="large"
+              value={formik.values.rating}
+            />
+          </div>
+          <p
+            className="ml-16"
+            style={{ fontSize: "0.85rem", color: "#D32F2F" }}
+          >
+            {formik.touched.rating && formik.errors.rating}
+          </p>
           <br />
           <Button
-            className="mt-5 "
+            className="mt-5"
             color="success"
             variant="outlined"
             type="submit"
@@ -138,6 +166,5 @@ const NewComment = ({ rating, recipeId }) => {
     </>
   );
 };
-// };
 
 export default NewComment;
