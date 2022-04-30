@@ -127,7 +127,7 @@ const RecipeDetail = () => {
             )}
             {isAuthenticated &&
               !userIsLoading &&
-              (user as any).sub === recipe.author._id && (
+              user?.sub === recipe.author._id && (
                 <div className="ml-auto w-12 font-serif hover:text-light-green-700">
                   <DeleteRecipeButton recipeId={recipe.id} />
                 </div>

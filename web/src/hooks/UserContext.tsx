@@ -2,9 +2,12 @@ import axios from "axios";
 import React from "react";
 import { useContext, createContext, useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { IUseAuth0, IUser } from "../types/types";
+import { IUseAuth0, IUser } from "../types/Data";
 
-const UserContext = createContext({} as any);
+const UserContext = createContext<IUserContext>({
+  isAuthenticated: false,
+  isLoading: false,
+});
 
 type Props = { children: React.ReactNode };
 

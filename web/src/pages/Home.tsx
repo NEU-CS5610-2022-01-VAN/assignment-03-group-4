@@ -74,11 +74,11 @@ const Home = () => {
               <div className=" font-serif text-xl font-bold pt-6 pb-3 mb-4">
                 Your Latest Recipe
                 <hr className="mt-2 mb-2" />
-                {recipes.filter((x) => x.author._id === (user as any).sub)
-                  .length > 0 ? (
+                {recipes.filter((x) => x.author._id === user?.sub).length >
+                0 ? (
                   <Section
                     recipes={Array.from(
-                      recipes.filter((x) => x.author._id === (user as any).sub)
+                      recipes.filter((x) => x.author._id === user?.sub)
                     ).slice(0, 3)}
                   />
                 ) : (

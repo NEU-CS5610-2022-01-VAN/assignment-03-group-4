@@ -9,11 +9,11 @@ const Profile = () => {
   return (
     <>
       {!isLoading &&
-        (userId && isAuthenticated && userId !== (user as any).sub ? (
+        (userId && isAuthenticated && userId !== user?.sub ? (
           <UserProfile userId={userId} isCurrentUser={false} />
         ) : (
           <>
-            <UserProfile userId={(user as any).sub} isCurrentUser={true} />
+            <UserProfile userId={user?.sub} isCurrentUser={true} />
           </>
         ))}
     </>
