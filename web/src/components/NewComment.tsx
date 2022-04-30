@@ -10,6 +10,7 @@ import { useAuthToken } from "../hooks/AuthTokenContext";
 import LoginButton from "./LoginButton";
 import { useNotificationContext } from "../hooks/NotificationContext";
 import { useBackdropContext } from "../hooks/BackdropContext";
+import Rating from "@mui/material/Rating";
 
 const validationSchema = yup.object({
   title: yup.string().required("Review Title Required"),
@@ -23,7 +24,7 @@ const validationSchema = yup.object({
     .required("Plese give a rating score(1-5)"),
 });
 
-const NewComment = ({ rating, recipeId }) => {
+const NewComment = ({ recipeId }) => {
   const { addNotification } = useNotificationContext();
   const { addBackdrop, setBackdropOpen } = useBackdropContext();
   const { accessToken } = useAuthToken();
@@ -33,7 +34,7 @@ const NewComment = ({ rating, recipeId }) => {
     initialValues: {
       title: "",
       content: "",
-      rating: "",
+      rating: 0,
       recipe: recipeId,
     },
     validationSchema: validationSchema,
@@ -119,21 +120,41 @@ const NewComment = ({ rating, recipeId }) => {
             helperText={formik.touched.content && formik.errors.content}
           />
           <br />
-          <TextField
+          {/* <TextField
             className="mt-5"
             id="rating"
             color="success"
             name="rating"
             type="number"
             label="Rating"
+            defaultValue={rating}
             value={formik.values.rating}
             onChange={formik.handleChange}
             error={formik.touched.rating && Boolean(formik.errors.rating)}
             helperText={formik.touched.rating && formik.errors.rating}
-          />
+          /> */}
+          <div className="flex flex-row">
+            <h4 className="font-serif mt-2 mr-2 text-lg text-gray-800">
+              Rating
+            </h4>
+            <Rating
+              onChange={formik.handleChange}
+              id="rating"
+              name="rating"
+              className="pt-2"
+              size="large"
+              value={formik.values.rating}
+            />
+          </div>
+          <p
+            className="ml-16"
+            style={{ fontSize: "0.85rem", color: "#D32F2F" }}
+          >
+            {formik.touched.rating && formik.errors.rating}
+          </p>
           <br />
           <Button
-            className="mt-5 "
+            className="mt-5"
             color="success"
             variant="outlined"
             type="submit"

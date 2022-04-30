@@ -77,11 +77,7 @@ const NewRecipe = () => {
   const [catLabels, setCatLabels] = useState<any>([]);
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
 
-  const {
-    isLoading,
-    error,
-    data: categories,
-  } = useQuery("categories", () =>
+  const { isLoading, error } = useQuery("categories", () =>
     axios.get(url).then((res) => {
       setCatLabels(
         res.data.map((category) => {
