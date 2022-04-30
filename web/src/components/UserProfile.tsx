@@ -15,7 +15,7 @@ import ContentPaste from "@mui/icons-material/ContentPaste";
 import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 import EmailIcon from "@mui/icons-material/Email";
 import EditIcon from "@mui/icons-material/Edit";
-import GetUserById from "../api/UserAPI";
+import GetUserById from "../apis/UserAPI";
 import EditProfile from "./EditProfile";
 import LoadingIcon from "./LoadingIcon";
 import "./css/profile.css";

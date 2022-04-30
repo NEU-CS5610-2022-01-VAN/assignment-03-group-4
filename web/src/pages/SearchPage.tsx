@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useQuery } from "react-query";
-import CircularProgress from "@mui/material/CircularProgress";
 import { useParams } from "react-router-dom";
 import H3 from "@material-tailwind/react/Heading3";
 import H6 from "@material-tailwind/react/Heading6";

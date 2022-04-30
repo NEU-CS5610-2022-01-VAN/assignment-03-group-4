@@ -13,7 +13,6 @@ import {
   Button,
   IconButton,
   TextField,
-  CircularProgress,
   InputLabel,
   ImageListItem,
   Typography,
@@ -30,6 +29,7 @@ import { HiUpload } from "react-icons/hi";
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useNotificationContext } from "../hooks/NotificationContext";
 import { useBackdropContext } from "../hooks/BackdropContext";
+import LoadingIcon from "../components/LoadingIcon";
 
 const animatedComponents = makeAnimated();
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
@@ -154,7 +154,7 @@ const NewRecipe = () => {
               addNotification("New Recipe Created");
               setBackdropOpen(false);
               setSubmitting(false);
-              setTimeout(() => navigate(`/recipe/${newRecipe.id}`), 800);
+              setTimeout(() => navigate(`/recipes/${newRecipe.id}`), 800);
             } catch (err) {
               console.log(err);
             }
@@ -432,9 +432,7 @@ const NewRecipe = () => {
                 {error ? (
                   <div>Error: {(error as any).mesasge}</div>
                 ) : isLoading ? (
-                  <div>
-                    <CircularProgress color="inherit" />
-                  </div>
+                  <LoadingIcon />
                 ) : (
                   <div className="input-section">
                     <InputLabel className={classes.inputLabel}>Tags</InputLabel>

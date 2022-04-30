@@ -16,6 +16,7 @@ import DeleteRecipeButton from "../components/DeleteRecipeButton";
 
 import { FacebookShareButton, TwitterShareButton } from "react-share";
 import { FacebookIcon, TwitterIcon } from "react-share";
+import LoadingIcon from "../components/LoadingIcon";
 
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop);
 
@@ -91,7 +92,7 @@ const RecipeDetail = () => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>Loading...</div>
+        <LoadingIcon />
       ) : (
         <>
           {/* {console.log(recipe)} */}

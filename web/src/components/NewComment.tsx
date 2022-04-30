@@ -11,6 +11,7 @@ import LoginButton from "./LoginButton";
 import { useNotificationContext } from "../hooks/NotificationContext";
 import { useBackdropContext } from "../hooks/BackdropContext";
 import Rating from "@mui/material/Rating";
+import LoadingIcon from "./LoadingIcon";
 
 const validationSchema = yup.object({
   title: yup.string().required("Review Title Required"),
@@ -64,7 +65,7 @@ const NewComment = ({ recipeId }) => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingIcon />;
   }
   if (error) {
     return <div>Oops... {(error as any).message}</div>;

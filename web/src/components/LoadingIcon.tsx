@@ -1,5 +1,18 @@
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 
-const LoadingIcon = () => <CircularProgress color="inherit" />;
+const LoadingIcon = () => (
+  <Box
+    sx={{
+      ml: "3vw",
+      mt: "3.5vh",
+      mb: "2vh",
+      width: "100%",
+      display: "flex",
+      alignItems: "center",
+    }}
+  >
+    <CircularProgress sx={{ color: "#444" }} />
+  </Box>
+);
 
 export default LoadingIcon;

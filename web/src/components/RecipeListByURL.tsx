@@ -1,5 +1,5 @@
 import RecipeList from "./RecipeList";
-import GetRecipesByURL from "../api/RecipeListAPI";
+import GetRecipesByURL from "../apis/RecipeListAPI";
 import LoadingIcon from "./LoadingIcon";
 
 const RecipeListByURL = ({ url }) => {

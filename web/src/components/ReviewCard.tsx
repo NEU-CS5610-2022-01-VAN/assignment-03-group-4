@@ -40,7 +40,7 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
           <div className="mt-2 ml-2 ">
             <p style={{ fontSize: 19 }} className="text-black no-underline">
               {showRecipe ? (
-                <Link to={`/recipe/${review.recipe}`}>
+                <Link to={`/recipes/${review.recipe}`}>
                   {review.author.name}
                 </Link>
               ) : (

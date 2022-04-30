@@ -18,7 +18,6 @@ const validationSchema = yup.object({
 });
 
 const EditProfile = ({ userName }) => {
-  //   const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
   const { accessToken } = useAuthToken();
   const { addNotification } = useNotificationContext();
   const { addBackdrop, setBackdropOpen } = useBackdropContext();

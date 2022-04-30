@@ -9,7 +9,6 @@ import ListItemText from "@mui/material/ListItemText";
 import MenuIcon from "@mui/icons-material/Menu";
 import { IconButton } from "@mui/material";
 import { useQuery } from "react-query";
-import CircularProgress from "@mui/material/CircularProgress";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { IoFastFoodOutline, IoFastFood } from "react-icons/io5";
@@ -20,6 +19,7 @@ import {
 } from "react-icons/ai";
 
 import { BiHelpCircle } from "react-icons/bi";
+import LoadingIcon from "../components/LoadingIcon";
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
 
 export default function LeftCategoryDrawer() {
@@ -77,9 +77,7 @@ export default function LeftCategoryDrawer() {
             {error ? (
               <div>Error: {(error as any).mesasge}</div>
             ) : isLoading ? (
-              <div>
-                <CircularProgress color="inherit" />
-              </div>
+              <LoadingIcon />
             ) : (
               <>
                 <List>

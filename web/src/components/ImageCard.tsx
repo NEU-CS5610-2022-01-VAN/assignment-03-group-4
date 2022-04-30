@@ -1,6 +1,5 @@
 import { Skeleton } from "@mui/material";
-import GetImageById from "../api/ImageAPI";
-import "./css/recipeCard.css";
+import GetImageById from "../apis/ImageAPI";
 
 const ImageCard = ({ photoId, recipeId }) => {
   const { isLoading, error, data } = GetImageById(photoId, recipeId);
@@ -21,7 +20,6 @@ const ImageCard = ({ photoId, recipeId }) => {
           />
         </Skeleton>
       ) : (
-        // <img className="recipe_card_image" src={data} alt="recipe" />
         <div
           className={`rounded-lg -mt-9 shadow-lg`}
           style={{

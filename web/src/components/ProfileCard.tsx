@@ -1,10 +1,10 @@
 import React from "react";
-import CircularProgress from "@mui/material/CircularProgress";
 import { BiFoodMenu } from "react-icons/bi";
 import { BsPeople } from "react-icons/bs";
 import { IoBookmarksOutline } from "react-icons/io5";
 import { Avatar, Box, Typography } from "@mui/material";
-import GetAvatarById from "../api/UserAvatarAPI";
+import GetAvatarById from "../apis/UserAvatarAPI";
+import LoadingIcon from "./LoadingIcon";
 
 const defaultPicture =
   "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA=";
@@ -12,7 +12,7 @@ const defaultPicture =
 const ProfileCard = ({ user }) => {
   const { data } = GetAvatarById(user._id);
   if (!user) {
-    return <CircularProgress />;
+    return <LoadingIcon />;
   }
 
   return (

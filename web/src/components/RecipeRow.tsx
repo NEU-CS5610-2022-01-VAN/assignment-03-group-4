@@ -8,7 +8,7 @@ import { BsThreeDots } from "react-icons/bs";
 
 const RecipeRow = ({ recipe }) => (
   <>
-    <Link to={`/recipe/${recipe.id}`}>
+    <Link to={`/recipes/${recipe.id}`}>
       <div className="flex flex-row  gap-8 w-full ">
         <div style={{ flexShrink: 0 }}>
           {recipe.photos.length ? (

@@ -1,5 +1,5 @@
 import Avatar from "@mui/material/Avatar";
-import GetAvatarById from "../api/AvaterAPI";
+import GetAvatarById from "../apis/AvaterAPI";
 
 const MyAvatar = (userId) => {
   const { isLoading, error, data: url } = GetAvatarById(userId);

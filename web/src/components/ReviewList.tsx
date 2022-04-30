@@ -1,8 +1,8 @@
 import { useQuery } from "react-query";
 import axios from "axios";
-
 import ReviewCard from "./ReviewCard";
 import { BiCommentDots } from "react-icons/bi";
+import LoadingIcon from "./LoadingIcon";
 
 const ReviewList = ({ url, showDeleteButton, showRecipe }) => {
   const {
@@ -16,7 +16,7 @@ const ReviewList = ({ url, showDeleteButton, showRecipe }) => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>Loading...</div>
+        <LoadingIcon />
       ) : reviews.length !== 0 ? (
         <section className="py-8">
           <div className=" container max-w-7xl mx-auto px-4">

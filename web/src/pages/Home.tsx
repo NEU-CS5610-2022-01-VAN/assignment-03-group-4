@@ -1,8 +1,7 @@
 import H2 from "@material-tailwind/react/Heading2";
 import Popular from "../components/Popular";
 import TypeSection from "../components/TypeSection";
-import GetRecipesByURL from "../api/RecipeListAPI";
-import { CircularProgress } from "@mui/material";
+import GetRecipesByURL from "../apis/RecipeListAPI";
 import { Link, useNavigate } from "react-router-dom";
 import ReviewList from "../components/ReviewList";
 import LoginButton from "../components/LoginButton";
@@ -11,6 +10,7 @@ import { text } from "stream/consumers";
 import Section from "../components/Section";
 import { useAuth0 } from "@auth0/auth0-react";
 import { IoFastFoodOutline } from "react-icons/io5";
+import LoadingIcon from "../components/LoadingIcon";
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes";
 
@@ -48,9 +48,7 @@ const Home = () => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : (
         <>
           <div className="pt-16 mx-auto m-full md:w-9/12 ">

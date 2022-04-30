@@ -1,4 +1,4 @@
-import GetImageById from "../api/ImageAPI";
+import GetImageById from "../apis/ImageAPI";
 import { Skeleton } from "@mui/material";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
@@ -8,7 +8,7 @@ const Item = ({ photoId, recipeId }) => {
   const { isLoading, error, data: photoUrl } = GetImageById(photoId, recipeId);
   const navigate = useNavigate();
   const handleKeyPress = (e) => {
-    navigate(`/recipe/${recipeId}`);
+    navigate(`/recipes/${recipeId}`);
   };
   return (
     <div onClick={handleKeyPress}>
