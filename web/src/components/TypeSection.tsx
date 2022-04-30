@@ -23,7 +23,7 @@ const TypeSection = ({ recipes }) => {
           <CircularProgress color="inherit" />
         </div>
       ) : (
-        categories.map((category) => (
+        categories.slice(0, 5).map((category) => (
           <div
             key={category._id}
             className="flex flex-col font-serif text-xl font-bold pt-2"
