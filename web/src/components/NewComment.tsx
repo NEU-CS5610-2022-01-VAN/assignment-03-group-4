@@ -82,7 +82,7 @@ const NewComment = ({ recipeId }) => {
               <FiLogIn />
               Log in
             </div>
-          </LoginButton>{" "}
+          </LoginButton>
         </div>
         to leave a comment
       </div>

@@ -1,9 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import ReviewCard from "../components/ReviewCard";
 import { MemoryRouter } from "react-router-dom";
-import userEvent from "@testing-library/user-event";
-
-const mockUseNavigate = jest.fn();
+import "@testing-library/jest-dom";
 
 jest.mock("react-query", () => ({
   ...jest.requireActual("react-query"),
@@ -17,14 +15,7 @@ jest.mock("react-query", () => ({
   },
 }));
 
-jest.mock("react-router-dom", () => ({
-  ...jest.requireActual("react-router-dom"),
-  useNavigate: () => {
-    return mockUseNavigate;
-  },
-}));
-
-test("enter App button navigates to /app", () => {
+test("enter App button navigates to /app", async () => {
   render(
     <MemoryRouter initialEntries={["/"]}>
       <ReviewCard
@@ -37,13 +28,11 @@ test("enter App button navigates to /app", () => {
           rating: 5,
         }}
         showDeleteButton={false}
-        showRecipe={true}
+        showRecipe={false}
       />
     </MemoryRouter>
   );
-
-  const enterAppButton = screen.getByText("jack");
-  console.log(enterAppButton);
-  userEvent.click(enterAppButton);
-  expect(mockUseNavigate).toHaveBeenCalledWith("/recipe/");
+  expect(screen.getByText("jack")).toBeInTheDocument();
+  expect(screen.getByText('"title"')).toBeInTheDocument();
+  expect(screen.getByText("content")).toBeInTheDocument();
 });
