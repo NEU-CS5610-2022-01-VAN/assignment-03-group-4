@@ -58,7 +58,6 @@ test("renders Enter App button when user is authenticated", () => {
       <Home />
     </MemoryRouter>
   );
-
   expect(screen.getByText("Enter App")).toBeInTheDocument();
 });
 
