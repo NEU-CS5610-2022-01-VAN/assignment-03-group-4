@@ -26,7 +26,6 @@ const validationSchema = yup.object({
 const NewComment = ({ rating, recipeId }) => {
   const { addNotification } = useNotificationContext();
   const { addBackdrop, setBackdropOpen } = useBackdropContext();
-
   const { accessToken } = useAuthToken();
   const { user, error, isLoading } = useAuth0();
 
@@ -39,6 +38,7 @@ const NewComment = ({ rating, recipeId }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values: any, { setSubmitting, resetForm }) => {
+      setSubmitting(true);
       addBackdrop("Uploading Comment");
       setTimeout(async () => {
         try {
@@ -52,7 +52,8 @@ const NewComment = ({ rating, recipeId }) => {
           setBackdropOpen(false);
           addNotification("Comment Uploaded");
           resetForm();
-          setTimeout(() => window.location.reload(), 800);
+          setTimeout(() => window.location.reload(), 400);
+
           setSubmitting(false);
         } catch (err) {
           console.log(err);

@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { Box, CircularProgress, Typography } from "@mui/material";
 import Backdrop from "@mui/material/Backdrop";
 import { useBackdropContext } from "../hooks/BackdropContext";
 
@@ -12,16 +12,21 @@ const AppBackdrop = () => {
       open={backdropOpen}
       onClick={() => setBackdropOpen(false)}
     >
-      <div
-        style={{
+      <Box
+        sx={{
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
         }}
       >
-        <h3>{backdropMessage}</h3>
-        <CircularProgress color="inherit" />
-      </div>
+        <Typography variant="h6">{backdropMessage}</Typography>
+        <CircularProgress
+          color="inherit"
+          sx={{ marginTop: 3 }}
+          size={40}
+          thickness={4}
+        />
+      </Box>
     </Backdrop>
   );
 };

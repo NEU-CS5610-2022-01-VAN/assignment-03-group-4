@@ -26,9 +26,11 @@ import { HiUpload } from "react-icons/hi";
 import { useAuthToken } from "../hooks/AuthTokenContext";
 
 import "./css/profile.css";
-import AppBackdrop from "./AppBackdrop";
 import { Avatar } from "@mui/material";
 import GetUserById from "../api/UserAPI";
+import { useNotificationContext } from "../hooks/NotificationContext";
+import { useBackdropContext } from "../hooks/BackdropContext";
+
 const validationSchema = yup.object({
   name: yup.string().required("Name Required"),
   bio: yup.string().required("Bio Required"),
@@ -36,6 +38,8 @@ const validationSchema = yup.object({
 
 const UserProfile = ({ userId, isCurrentUser }) => {
   const [image, setImage] = useState<any>(null);
+  const { addNotification } = useNotificationContext();
+  const { addBackdrop, setBackdropOpen } = useBackdropContext();
 
   function onImageChange(e) {
     setImage(e.target.files[0]);
@@ -46,7 +50,7 @@ const UserProfile = ({ userId, isCurrentUser }) => {
 
   const { accessToken } = useAuthToken();
 
-  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
+  const { data: user, isLoading } = GetUserById(userId);
 
   const formik = useFormik({
     initialValues: {
@@ -56,8 +60,8 @@ const UserProfile = ({ userId, isCurrentUser }) => {
     validationSchema: validationSchema,
     onSubmit: async (values: any, { setSubmitting, resetForm }) => {
       try {
-        setBackdropOpen(true);
         setSubmitting(true);
+        addBackdrop("Updating Profile");
 
         const formData = new FormData();
         formData.append("file", image);
@@ -75,17 +79,16 @@ const UserProfile = ({ userId, isCurrentUser }) => {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
-        alert("Success");
+        setBackdropOpen(false);
+        addNotification("Profile Updated");
         setSubmitting(false);
         resetForm();
-        window.location.reload();
+        setTimeout(() => window.location.reload(), 400);
       } catch (err) {
         console.log(err);
       }
     },
   });
-
-  const { data: user, isLoading } = GetUserById(userId);
 
   return (
     <>
@@ -101,7 +104,7 @@ const UserProfile = ({ userId, isCurrentUser }) => {
           >
             <div className="mx-auto profile-left flex flex-col">
               <ProfileCard user={user} />
-              <Box className="mt-12 mx-auto" sx={{ width: 320 }}>
+              <Box className="mt-10 ml-4" sx={{ width: 400 }}>
                 <MenuList>
                   <MenuItem>
                     <ListItemIcon>

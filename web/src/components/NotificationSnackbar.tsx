@@ -25,8 +25,10 @@ const Notificationsnackbar = () => {
   };
 
   return (
-    <Snackbar open={snackbarOpen} autoHideDuration={3000} onClose={handleClose}>
-      <Alert severity="success">{snackbarMessage}</Alert>
+    <Snackbar open={snackbarOpen} autoHideDuration={2000} onClose={handleClose}>
+      <Alert severity="success" onClose={handleClose}>
+        {snackbarMessage}
+      </Alert>
     </Snackbar>
   );
 };

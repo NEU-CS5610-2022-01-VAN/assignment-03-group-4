@@ -12,7 +12,6 @@ import {
   ImageList,
   Button,
   IconButton,
-  Snackbar,
   TextField,
   CircularProgress,
   InputLabel,
@@ -29,7 +28,8 @@ import { BiMinus } from "react-icons/bi";
 import { HiUpload } from "react-icons/hi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
-import AppBackdrop from "../components/AppBackdrop";
+import { useNotificationContext } from "../hooks/NotificationContext";
+import { useBackdropContext } from "../hooks/BackdropContext";
 
 const animatedComponents = makeAnimated();
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
@@ -65,18 +65,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const NewRecipe = () => {
+  const { addNotification } = useNotificationContext();
+  const { addBackdrop, setBackdropOpen } = useBackdropContext();
+
   const classes = useStyles();
   const { accessToken } = useAuthToken();
   const navigate = useNavigate();
 
   const [images, setImages] = useState<any>([]);
   const [imageUrls, setImageUrls] = useState<any>([]);
-  const [open, setOpen] = useState(false);
-
   const [catLabels, setCatLabels] = useState<any>([]);
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
-
-  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
 
   const {
     isLoading,
@@ -108,16 +107,6 @@ const NewRecipe = () => {
     setSelectedCategories(newSelectedCategories);
   }
 
-  const handleClose = (
-    event: React.SyntheticEvent | Event,
-    reason?: string
-  ) => {
-    if (reason === "clickaway") {
-      return;
-    }
-    setBackdropOpen(false);
-  };
-
   return (
     <>
       <Formik
@@ -139,7 +128,7 @@ const NewRecipe = () => {
         }}
         onSubmit={async (values: any, { setSubmitting }) => {
           setSubmitting(true);
-          setBackdropOpen(true);
+          addBackdrop("Uploading New Recipe");
 
           setTimeout(async () => {
             try {
@@ -166,11 +155,10 @@ const NewRecipe = () => {
                   }
                 );
               });
-
-              alert("Success");
-              // setOpen(true);
+              addNotification("New Recipe Created");
+              setBackdropOpen(false);
               setSubmitting(false);
-              navigate("/recipe/" + newRecipe.id);
+              setTimeout(() => navigate(`/recipe/${newRecipe.id}`), 800);
             } catch (err) {
               console.log(err);
             }
@@ -221,7 +209,6 @@ const NewRecipe = () => {
                     Title
                   </InputLabel>
                   <TextField
-                    // id="title"
                     color="success"
                     InputLabelProps={{ shrink: true }}
                     sx={{ width: "100%" }}
@@ -575,15 +562,6 @@ const NewRecipe = () => {
           </Form>
         )}
       </Formik>
-
-      <Snackbar
-        open={open}
-        autoHideDuration={6000}
-        onClose={handleClose}
-        message="Note archived"
-      />
-
-      {/* {backdropOpen && <AppBackdrop text={"Creating New Recipe"} />} */}
     </>
   );
 };
