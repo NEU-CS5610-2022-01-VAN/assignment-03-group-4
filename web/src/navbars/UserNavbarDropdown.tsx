@@ -10,7 +10,6 @@ import {
   MenuItem,
   Avatar,
   Divider,
-  Box,
 } from "@mui/material";
 import { useUserContext } from "../hooks/UserContext";
 import { CgProfile } from "react-icons/cg";

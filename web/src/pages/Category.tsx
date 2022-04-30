@@ -1,30 +1,19 @@
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  IconButton,
-  Typography,
-} from "@mui/material";
-
+import { Box, Divider, IconButton, Typography } from "@mui/material";
 import { BiFoodMenu } from "react-icons/bi";
-
 import { BsPeople, BsThreeDots } from "react-icons/bs";
-import { IoMdAdd } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-
 import RecipeList from "../components/RecipeList";
-import { useEffect, useState } from "react";
+import LoadingIcon from "../components/LoadingIcon";
 
-const buttonShown = false;
 const Category = () => {
   const params = useParams();
+  const categoryId = params.categoryId;
+
   const navigate = useNavigate();
 
-  const categoryId = params.categoryId;
   const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/categories/${categoryId}`;
   const url = baseUrl + "/recipes";
 
@@ -63,9 +52,7 @@ const Category = () => {
         {error ? (
           <div>Error: {(error as any).mesasge}</div>
         ) : isLoading ? (
-          <div>
-            <CircularProgress color="inherit" />
-          </div>
+          <LoadingIcon />
         ) : (
           <div>
             <div className="flex flex-row">
@@ -107,24 +94,6 @@ const Category = () => {
                   {totalComments} comments
                 </Typography>
               </div>
-              {buttonShown && (
-                <Button
-                  onClick={() => navigate("/newrecipe")}
-                  color="success"
-                  variant="contained"
-                  size="medium"
-                  onMouseDown={(e) => e.preventDefault()}
-                  sx={{
-                    display: "flex",
-                    backgroundColor: "#3dc795",
-                    mr: 2,
-                    marginLeft: "auto",
-                  }}
-                  startIcon={<IoMdAdd size={20} />}
-                >
-                  Add
-                </Button>
-              )}
             </div>
 
             <Divider sx={{ marginTop: "22px", marginBottom: "6px" }} />

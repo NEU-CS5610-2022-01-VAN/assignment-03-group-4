@@ -4,6 +4,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 
 import RecipeRowList from "../components/RecipeRowList";
 import ReviewList from "../components/ReviewList";
+import LoadingIcon from "./LoadingIcon";
 const baseUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
 
 const PublicProfile = ({ showRecipe, userId }) => {
@@ -18,9 +19,7 @@ const PublicProfile = ({ showRecipe, userId }) => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : showRecipe ? (
         <>
           <div>

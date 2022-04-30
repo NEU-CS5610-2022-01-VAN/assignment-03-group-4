@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useQuery } from "react-query";
-import CircularProgress from "@mui/material/CircularProgress";
 import RecipeRow from "./RecipeRow";
 import RecipeCard from "./RecipeCard";
 import { Box } from "@mui/material";
 import { IoFastFoodOutline } from "react-icons/io5";
+import LoadingIcon from "./LoadingIcon";
 
 const RecipeRowList = ({ url }) => {
   const {
@@ -18,9 +18,7 @@ const RecipeRowList = ({ url }) => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : recipes.length !== 0 ? (
         <>
           <div className="flex flex-col container mt-6 mx-auto gap-2 w-full">

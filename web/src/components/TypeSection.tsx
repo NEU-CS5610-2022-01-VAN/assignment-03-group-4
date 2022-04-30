@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useQuery } from "react-query";
 import RecipeCard from "./RecipeCard";
+import LoadingIcon from "./LoadingIcon";
 
 const url = process.env.REACT_APP_API_BASE_URL + "/categories";
 
@@ -30,9 +31,7 @@ const TypeSection = ({ recipes }) => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : (
         categories.map((category) => (
           <div

@@ -2,7 +2,6 @@ import { useState } from "react";
 
 import ProfileCard from "./ProfileCard";
 import PublicProfile from "./PublicProfile";
-import CircularProgress from "@mui/material/CircularProgress";
 
 import Divider from "@mui/material/Divider";
 import Box from "@mui/material/Box";
@@ -18,6 +17,7 @@ import EmailIcon from "@mui/icons-material/Email";
 import EditIcon from "@mui/icons-material/Edit";
 import GetUserById from "../api/UserAPI";
 import EditProfile from "./EditProfile";
+import LoadingIcon from "./LoadingIcon";
 import "./css/profile.css";
 
 const UserProfile = ({ userId, isCurrentUser }) => {
@@ -29,9 +29,7 @@ const UserProfile = ({ userId, isCurrentUser }) => {
   return (
     <>
       {isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : (
         <>
           <div
@@ -96,9 +94,7 @@ const UserProfile = ({ userId, isCurrentUser }) => {
             </div>
             <div className="ma-auto profile-right">
               {isLoading ? (
-                <div>
-                  <CircularProgress color="inherit" />
-                </div>
+                <LoadingIcon />
               ) : isCurrentUser && showEdit ? (
                 <EditProfile userName={user.name} />
               ) : (

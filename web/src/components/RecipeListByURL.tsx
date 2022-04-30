@@ -1,6 +1,6 @@
-import CircularProgress from "@mui/material/CircularProgress";
 import RecipeList from "./RecipeList";
 import GetRecipesByURL from "../api/RecipeListAPI";
+import LoadingIcon from "./LoadingIcon";
 
 const RecipeListByURL = ({ url }) => {
   const { isLoading, error, data: recipes, isFetching } = GetRecipesByURL(url);
@@ -10,9 +10,7 @@ const RecipeListByURL = ({ url }) => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : (
         <RecipeList recipes={recipes} />
       )}

@@ -6,6 +6,7 @@ import { useParams } from "react-router-dom";
 import H3 from "@material-tailwind/react/Heading3";
 import H6 from "@material-tailwind/react/Heading6";
 import RecipeList from "../components/RecipeList";
+import LoadingIcon from "../components/LoadingIcon";
 
 const url = process.env.REACT_APP_API_BASE_URL + "/recipes";
 const SearchPage = () => {
@@ -52,15 +53,13 @@ const SearchPage = () => {
       {error ? (
         <div>Error: {(error as any).mesasge}</div>
       ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : (
         <RecipeList
           recipes={recipes.filter((recipe) =>
             recipe.title.toLowerCase().includes(keyword.toLowerCase())
           )}
-        ></RecipeList>
+        />
       )}
     </>
   );
