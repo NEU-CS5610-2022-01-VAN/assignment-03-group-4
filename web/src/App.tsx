@@ -5,8 +5,6 @@ import { Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import ScrollToTop from "./hooks/ScrollToTop";
-// Bootstrap CSS
-// import "bootstrap/dist/css/bootstrap.min.css";
 
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -61,11 +59,9 @@ const requestedScopes = [
 
 function RequireAuth({ children }) {
   const { loginWithRedirect, isAuthenticated, isLoading } = useAuth0();
-
   if (!isLoading && !isAuthenticated) {
     return loginWithRedirect();
   }
-
   return children;
 }
 
@@ -80,7 +76,7 @@ function App() {
         <Auth0Provider
           domain={process.env.REACT_APP_AUTH0_DOMAIN || ""}
           clientId={process.env.REACT_APP_AUTH0_CLIENT_ID || ""}
-          redirectUri={`${window.location.origin}/verify-user`}
+          redirectUri={`${window.location.origin}/login`}
           audience={process.env.REACT_APP_AUTH0_API_AUDIENCE || ""}
           scope={requestedScopes.join(" ")}
         >
@@ -139,7 +135,7 @@ function AppRouter() {
               </RequireAuth>
             }
           />
-          <Route path="/verify-user" element={<VerifyUser />} />
+          <Route path="/login" element={<VerifyUser />} />
           <Route
             path="*"
             element={
