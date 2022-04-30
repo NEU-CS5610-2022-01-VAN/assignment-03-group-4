@@ -75,16 +75,20 @@ const NewRecipe = () => {
   const [catLabels, setCatLabels] = useState<any>([]);
   const [selectedCategories, setSelectedCategories] = useState<any>([]);
 
-  const { isLoading, error } = useQuery("categories", () =>
-    axios.get(url).then((res) => {
-      setCatLabels(
-        res.data.map((category) => {
-          return { value: category._id, label: category.name };
-        })
-      );
-      return res.data;
-    })
+  const {
+    data: categories,
+    isLoading,
+    error,
+  } = useQuery<ICategory[], Error>("categories", () =>
+    axios.get(url).then((res) => res.data)
   );
+
+  useEffect(() => {
+    const newCatLabels = categories?.map((category) => {
+      return { value: category._id, label: category.name };
+    });
+    setCatLabels(newCatLabels);
+  }, [categories]);
 
   useEffect(() => {
     if (images.length < 1) return;

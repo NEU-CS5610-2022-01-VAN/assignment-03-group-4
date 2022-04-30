@@ -14,7 +14,9 @@ const SearchPage = () => {
     isLoading,
     error,
     data: recipes,
-  } = useQuery(url, () => axios.get(url).then((res) => res.data));
+  } = useQuery<IRecipe[], Error>(url, () =>
+    axios.get(url).then((res) => res.data)
+  );
 
   const params = useParams();
 
@@ -51,12 +53,12 @@ const SearchPage = () => {
       </div>
 
       {error ? (
-        <div>Error: {(error as any).mesasge}</div>
+        <div>Error: {error.message}</div>
       ) : isLoading ? (
         <LoadingIcon />
       ) : (
         <RecipeList
-          recipes={recipes.filter((recipe) =>
+          recipes={recipes?.filter((recipe) =>
             recipe.title.toLowerCase().includes(keyword.toLowerCase())
           )}
         />

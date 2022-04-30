@@ -1,21 +1,45 @@
-export interface IUser {
-  id: string;
+interface IAUth0User {
+  sub: string;
+}
+
+interface IUser {
+  _id: string;
   email: string;
   name: string;
   picture?: string;
   createdAt: string;
   upatedAt: string;
-  recipes: any[];
+  recipes: IRecipe[];
   reviews: any[];
 }
 
-export interface IAUth0User {
-  sub: string;
+interface ICategory {
+  _id: string;
+  name: string;
 }
 
-export interface IUseAuth0 {
-  user?: IAUth0User;
-  isAuthenticated: boolean;
-  isLoading: boolean;
-  error?: Error | undefined;
+interface IRecipe {
+  _id: string;
+  title: string;
+  body: string;
+  cookingTime: number;
+  ingredients: string[];
+  youtubeId: string;
+  author: IUser;
+  categories: ICategory[];
+  photos: string[];
+  createdAt: string;
+  updatedAt: string;
+  rating: number;
+  reviews: any[];
+}
+
+interface IReview {
+  _id: string;
+  title: string;
+  content: string;
+  recipe: string;
+  author: IUser;
+  createdAt: string;
+  updatedAt: string;
 }

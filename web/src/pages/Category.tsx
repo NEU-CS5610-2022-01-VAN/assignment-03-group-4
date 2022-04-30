@@ -19,7 +19,7 @@ const Category = () => {
     isLoading,
     error,
     data: cat,
-  } = useQuery(categoryUrl, () =>
+  } = useQuery<ICategory, Error>(categoryUrl, () =>
     axios.get(categoryUrl).then((res) => res.data)
   );
 
@@ -51,7 +51,7 @@ const Category = () => {
         }}
       >
         {error ? (
-          <div>Error: {(error as any).mesasge}</div>
+          <div>Error: {error.message}</div>
         ) : isLoading ? (
           <LoadingIcon />
         ) : (
@@ -61,7 +61,7 @@ const Category = () => {
                 variant="h4"
                 sx={{ fontSize: 40, marginBottom: "6px", width: "60%" }}
               >
-                {cat.name}
+                {cat?.name}
               </Typography>
               <IconButton
                 aria-label="more options"
@@ -74,7 +74,7 @@ const Category = () => {
             </div>
 
             <Typography variant="h5" color="#777" sx={{ fontSize: "1.4rem" }}>
-              Check out our {cat.name.toLowerCase()} recipes.
+              Check out our {cat?.name.toLowerCase()} recipes.
             </Typography>
 
             <div className="flex flex-row">

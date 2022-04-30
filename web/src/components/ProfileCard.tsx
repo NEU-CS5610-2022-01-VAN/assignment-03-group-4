@@ -10,7 +10,10 @@ const defaultPicture =
   "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA=";
 
 const ProfileCard = ({ user }) => {
-  const { data } = GetAvatarById(user._id);
+  const { data: pictureUrl } = user.picture
+    ? GetAvatarById(user._id)
+    : { data: defaultPicture };
+
   if (!user) {
     return <LoadingIcon />;
   }
@@ -32,7 +35,7 @@ const ProfileCard = ({ user }) => {
             marginRight: "3.5vw",
             marginLeft: "3vw",
           }}
-          src={data ? data : defaultPicture}
+          src={pictureUrl}
           alt={"user avatar"}
         />
 

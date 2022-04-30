@@ -1,13 +1,5 @@
 import { useContext, createContext, useState } from "react";
 
-interface IBackdropContext {
-  backdropOpen: boolean;
-  setBackdropOpen: Function;
-  backdropMessage: string;
-  setBackdropMessage: Function;
-  addBackdrop: Function;
-}
-
 const BackdropContext = createContext<IBackdropContext>({
   backdropOpen: false,
   setBackdropOpen: () => {},
@@ -16,7 +8,9 @@ const BackdropContext = createContext<IBackdropContext>({
   addBackdrop: () => {},
 });
 
-function BackdropContextProvider({ children }) {
+type Props = { children: React.ReactNode };
+
+const BackdropContextProvider = ({ children }: Props): JSX.Element => {
   const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
   const [backdropMessage, setBackdropMessage] = useState<string>("");
 
@@ -39,8 +33,8 @@ function BackdropContextProvider({ children }) {
       {children}
     </BackdropContext.Provider>
   );
-}
+};
 
 const useBackdropContext = () => useContext(BackdropContext);
 
-export { IBackdropContext, useBackdropContext, BackdropContextProvider };
+export { useBackdropContext, BackdropContextProvider };

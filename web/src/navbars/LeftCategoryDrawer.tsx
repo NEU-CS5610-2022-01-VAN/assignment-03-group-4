@@ -19,7 +19,6 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import { IoFastFoodOutline } from "react-icons/io5";
 import { BiHelpCircle } from "react-icons/bi";
-
 import LoadingIcon from "../components/LoadingIcon";
 
 const url = `${process.env.REACT_APP_API_BASE_URL}/categories`;
@@ -29,7 +28,9 @@ export default function LeftCategoryDrawer() {
     isLoading,
     error,
     data: categories,
-  } = useQuery(url, () => axios.get(url).then((res) => res.data));
+  } = useQuery<ICategory[], Error>(url, () =>
+    axios.get(url).then((res) => res.data)
+  );
 
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
@@ -74,20 +75,19 @@ export default function LeftCategoryDrawer() {
           <Divider />
 
           {error ? (
-            <div>Error: {(error as any).mesasge}</div>
+            <div>Error: {error.message}</div>
           ) : isLoading ? (
             <LoadingIcon />
           ) : (
             <>
               <List>
-                {categories.map((category, index) => (
+                {categories?.map((category, index) => (
                   <ListItem
                     button
                     key={category._id}
                     onClick={() => navigate(`/categories/${category._id}`)}
                   >
-                    <IoFastFoodOutline />
-                    &nbsp; &nbsp;
+                    <IoFastFoodOutline className="mr-3" />
                     <ListItemText primary={category.name} />
                   </ListItem>
                 ))}
@@ -98,26 +98,22 @@ export default function LeftCategoryDrawer() {
 
           <List>
             <ListItem button>
-              <AiOutlineBell />
-              &nbsp; &nbsp;
+              <AiOutlineBell className="mr-3" />
               <ListItemText primary={"Subscribe"} />
             </ListItem>
 
             <ListItem button>
-              <AiOutlineSetting />
-              &nbsp; &nbsp;
+              <AiOutlineSetting className="mr-3" />
               <ListItemText primary={"Settings"} />
             </ListItem>
 
             <ListItem button>
-              <BiHelpCircle />
-              &nbsp; &nbsp;
+              <BiHelpCircle className="mr-3" />
               <ListItemText primary={"Help"} />
             </ListItem>
 
             <ListItem button>
-              <AiOutlineShareAlt />
-              &nbsp; &nbsp;
+              <AiOutlineShareAlt className="mr-3" />
               <ListItemText primary={"Share"} />
             </ListItem>
           </List>
