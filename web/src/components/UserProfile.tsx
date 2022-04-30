@@ -100,7 +100,7 @@ const UserProfile = ({ userId, isCurrentUser }) => {
                   <CircularProgress color="inherit" />
                 </div>
               ) : isCurrentUser && showEdit ? (
-                <EditProfile userName={user.name} />
+                <EditProfile userName={user.name} userBio={user.bio} />
               ) : (
                 <div style={{ height: "100%" }} className="w-full">
                   <PublicProfile showRecipe={showRecipe} userId={user._id} />

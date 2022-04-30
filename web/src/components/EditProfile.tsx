@@ -17,7 +17,7 @@ const validationSchema = yup.object({
   bio: yup.string().required("Bio Required"),
 });
 
-const EditProfile = ({ userName }) => {
+const EditProfile = ({ userName, userBio }) => {
   //   const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
   const { accessToken } = useAuthToken();
   const { addNotification } = useNotificationContext();
@@ -26,7 +26,7 @@ const EditProfile = ({ userName }) => {
   const formik = useFormik({
     initialValues: {
       name: userName,
-      bio: "",
+      bio: userBio,
     },
     validationSchema: validationSchema,
     onSubmit: async (values: any, { setSubmitting, resetForm }) => {
