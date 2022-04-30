@@ -16,11 +16,9 @@ import ContentPaste from "@mui/icons-material/ContentPaste";
 import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 import EmailIcon from "@mui/icons-material/Email";
 import EditIcon from "@mui/icons-material/Edit";
-
-import "./css/profile.css";
-
 import GetUserById from "../api/UserAPI";
 import EditProfile from "./EditProfile";
+import "./css/profile.css";
 
 const UserProfile = ({ userId, isCurrentUser }) => {
   const [showRecipe, setShowRecipe] = useState(true);
@@ -42,7 +40,7 @@ const UserProfile = ({ userId, isCurrentUser }) => {
           >
             <div className="mx-auto profile-left flex flex-col">
               <ProfileCard user={user} />
-              <Box className="mt-12 mx-auto" sx={{ width: 320 }}>
+              <Box className="mt-10 ml-4" sx={{ width: 400 }}>
                 <MenuList>
                   <MenuItem>
                     <ListItemIcon>

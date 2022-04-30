@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Rating } from "@mui/material";
-import { useState, useRef } from "react";
+import { useRef } from "react";
 
 import "./css/RecipeDetail.css";
 import { useQuery } from "react-query";
@@ -85,7 +85,6 @@ const RecipeDetail = () => {
   const ingredientRef = useRef(null);
   const directionRef = useRef(null);
   const newCommentRef = useRef(null);
-  const [rating, setRating] = useState(0);
 
   return (
     <div className="w-full pt-10 pb-48 ">

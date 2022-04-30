@@ -54,8 +54,11 @@ const Home = () => {
                 <Popular
                   recipes={Array.from(
                     recipes
-                      .sort((a, b) => a.rating - b.rating)
                       .filter((x) => x.photos.length > 0)
+                      .sort(function (a, b) {
+                        return a.rating > b.rating ? 1 : -1;
+                      })
+                      .reverse()
                       .slice(0, 3)
                   )}
                 />

@@ -9,6 +9,8 @@ import * as yup from "yup";
 import axios from "axios";
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import AppBackdrop from "./AppBackdrop";
+import { useNotificationContext } from "../hooks/NotificationContext";
+import { useBackdropContext } from "../hooks/BackdropContext";
 
 const validationSchema = yup.object({
   name: yup.string().required("Name Required"),
@@ -16,8 +18,11 @@ const validationSchema = yup.object({
 });
 
 const EditProfile = ({ userName }) => {
-  const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
+  //   const [backdropOpen, setBackdropOpen] = useState<boolean>(false);
   const { accessToken } = useAuthToken();
+  const { addNotification } = useNotificationContext();
+  const { addBackdrop, setBackdropOpen } = useBackdropContext();
+
   const formik = useFormik({
     initialValues: {
       name: userName,
@@ -26,7 +31,7 @@ const EditProfile = ({ userName }) => {
     validationSchema: validationSchema,
     onSubmit: async (values: any, { setSubmitting, resetForm }) => {
       try {
-        setBackdropOpen(true);
+        addBackdrop("Updating Profile");
         setSubmitting(true);
 
         const formData = new FormData();
@@ -45,10 +50,11 @@ const EditProfile = ({ userName }) => {
             headers: { Authorization: `Bearer ${accessToken}` },
           }
         );
-        alert("Success");
         setSubmitting(false);
+        setBackdropOpen(false);
+        addNotification("Profile Updated");
         resetForm();
-        window.location.reload();
+        setTimeout(() => window.location.reload(), 400);
       } catch (err) {
         console.log(err);
       }
@@ -149,7 +155,7 @@ const EditProfile = ({ userName }) => {
           </Button>
         </form>
       </div>
-      {backdropOpen && <AppBackdrop text={"Updating User Profile"} />}
+      {addBackdrop && <AppBackdrop />}
     </>
   );
 };

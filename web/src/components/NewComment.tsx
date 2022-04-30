@@ -1,7 +1,5 @@
 import axios from "axios";
-// import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useFormik } from "formik";
-import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import * as yup from "yup";
 import Button from "@mui/material/Button";
@@ -10,6 +8,8 @@ import { FiLogIn } from "react-icons/fi";
 
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import LoginButton from "./LoginButton";
+import { useNotificationContext } from "../hooks/NotificationContext";
+import { useBackdropContext } from "../hooks/BackdropContext";
 import Rating from "@mui/material/Rating";
 
 const validationSchema = yup.object({
@@ -25,10 +25,10 @@ const validationSchema = yup.object({
 });
 
 const NewComment = ({ recipeId }) => {
+  const { addNotification } = useNotificationContext();
+  const { addBackdrop, setBackdropOpen } = useBackdropContext();
   const { accessToken } = useAuthToken();
   const { user, error, isLoading } = useAuth0();
-
-  const navigate = useNavigate();
 
   const formik = useFormik({
     initialValues: {
@@ -39,19 +39,26 @@ const NewComment = ({ recipeId }) => {
     },
     validationSchema: validationSchema,
     onSubmit: (values: any, { setSubmitting, resetForm }) => {
-      setTimeout(() => {
-        axios
-          .post(`${process.env.REACT_APP_API_BASE_URL}/reviews/`, values, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          })
-          .then(() => {
-            alert("Success");
-            resetForm();
-            setSubmitting(false);
-            window.location.reload();
-            navigate(`/recipe/${recipeId}`);
-          })
-          .catch((err) => console.log(err));
+      setSubmitting(true);
+      addBackdrop("Uploading Comment");
+      setTimeout(async () => {
+        try {
+          await axios.post(
+            `${process.env.REACT_APP_API_BASE_URL}/reviews/`,
+            values,
+            {
+              headers: { Authorization: `Bearer ${accessToken}` },
+            }
+          );
+          setBackdropOpen(false);
+          addNotification("Comment Uploaded");
+          resetForm();
+          setTimeout(() => window.location.reload(), 400);
+
+          setSubmitting(false);
+        } catch (err) {
+          console.log(err);
+        }
       }, 200);
     },
   });
@@ -159,6 +166,5 @@ const NewComment = ({ recipeId }) => {
     </>
   );
 };
-// };
 
 export default NewComment;
