@@ -3,13 +3,14 @@ import Popular from "../components/Popular";
 import TypeSection from "../components/TypeSection";
 import GetRecipesByURL from "../api/RecipeListAPI";
 import { CircularProgress } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import ReviewList from "../components/ReviewList";
 import LoginButton from "../components/LoginButton";
 import { FiLogIn } from "react-icons/fi";
 import { text } from "stream/consumers";
 import Section from "../components/Section";
 import { useAuth0 } from "@auth0/auth0-react";
+import { IoFastFoodOutline } from "react-icons/io5";
 
 const recipeUrl = process.env.REACT_APP_API_BASE_URL + "/recipes";
 
@@ -77,11 +78,27 @@ const Home = () => {
               <div className=" font-serif text-xl font-bold pt-6 pb-3 mb-4">
                 Your Latest Recipe
                 <hr className="mt-2 mb-2" />
-                <Section
-                  recipes={Array.from(
-                    recipes.filter((x) => x.author._id === (user as any).sub)
-                  ).slice(0, 3)}
-                />
+                {recipes.filter((x) => x.author._id === (user as any).sub)
+                  .length > 0 ? (
+                  <Section
+                    recipes={Array.from(
+                      recipes.filter((x) => x.author._id === (user as any).sub)
+                    ).slice(0, 3)}
+                  />
+                ) : (
+                  <>
+                    <div className="flex flex-col justify-center text-base font-normal text-gray-600 my-16 p-2 items-center">
+                      <IoFastFoodOutline size={25} />
+                      <p>You have no recipe yet. </p>
+                      <p>
+                        Create your first recipe{" "}
+                        <Link style={{ color: "#2F7D31" }} to="./NewRecipe">
+                          here.
+                        </Link>
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             )}
           </div>
