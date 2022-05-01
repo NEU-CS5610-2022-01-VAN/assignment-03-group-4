@@ -1,5 +1,5 @@
 import { Skeleton } from "@mui/material";
-import GetImageById from "../apis/ImageAPI";
+import GetImageById from "../apis/GetPhotoByRecipeAndPhotoId";
 
 type Props = {
   photoId: string;

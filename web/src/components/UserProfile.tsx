@@ -13,7 +13,7 @@ import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 import EmailIcon from "@mui/icons-material/Email";
 import EditIcon from "@mui/icons-material/Edit";
 import PublicProfile from "./PublicProfile";
-import GetUserById from "../apis/UserAPI";
+import GetUserById from "../apis/GetUserById";
 import EditProfile from "./EditProfile";
 import LoadingIcon from "./LoadingIcon";
 import ProfileCard from "./ProfileCard";

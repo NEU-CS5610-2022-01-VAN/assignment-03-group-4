@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import H2 from "@material-tailwind/react/Heading2";
 import { FiLogIn } from "react-icons/fi";
 import { IoFastFoodOutline } from "react-icons/io5";
-import GetRecipesByURL from "../apis/RecipeListAPI";
+import GetRecipesByURL from "../apis/GetRecipesByUrl";
 import LoadingIcon from "../components/LoadingIcon";
 import Popular from "../components/Popular";
 import TypeSection from "../components/TypeSection";

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import GetImageById from "../apis/ImageAPI";
+import GetImageById from "../apis/GetPhotoByRecipeAndPhotoId";
 import { Skeleton } from "@mui/material";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
