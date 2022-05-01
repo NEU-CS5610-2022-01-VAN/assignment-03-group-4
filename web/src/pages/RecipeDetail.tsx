@@ -2,7 +2,7 @@ import "./css/RecipeDetail.css";
 import axios from "axios";
 import { useRef } from "react";
 import { Link, useParams } from "react-router-dom";
-import { Rating } from "@mui/material";
+import { Rating, Avatar } from "@mui/material";
 import { useQuery } from "react-query";
 import { useAuth0 } from "@auth0/auth0-react";
 import { BsDot } from "react-icons/bs";
@@ -41,6 +41,9 @@ const RecipeDetail = (): JSX.Element => {
   const ingredientRef = useRef(null);
   const directionRef = useRef(null);
   const newCommentRef = useRef(null);
+
+  const defaultPicture =
+    "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA=";
 
   return (
     <div className="w-full pt-10 pb-48">
@@ -90,7 +93,11 @@ const RecipeDetail = (): JSX.Element => {
             {recipe!.body}
           </div>
           <div className="py-4 flex">
-            <MyAvatar userId={recipe!.author._id} />
+            {recipe?.author.picture ? (
+              <MyAvatar userId={recipe.author._id} />
+            ) : (
+              <Avatar src={defaultPicture} />
+            )}
             <div className="px-2">
               <h3 className="flex">
                 By&nbsp;

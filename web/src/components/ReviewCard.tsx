@@ -1,6 +1,6 @@
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { Button, Rating } from "@mui/material";
+import { Button, Rating, Avatar } from "@mui/material";
 import MyAvatar from "./MyAvatar";
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useNotificationContext } from "../hooks/NotificationContext";
@@ -11,6 +11,9 @@ type Props = {
   showDeleteButton: boolean;
   showRecipe: boolean;
 };
+
+const defaultPicture =
+  "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA=";
 
 const ReviewCard = ({
   review,
@@ -40,7 +43,11 @@ const ReviewCard = ({
     <div className="font-serif mt-2">
       <div className="flex flex-row">
         <div className="mt-1">
-          <MyAvatar userId={review.author._id} />
+          {review.author.picture ? (
+            <MyAvatar userId={review.author._id} />
+          ) : (
+            <Avatar src={defaultPicture} />
+          )}
         </div>
         <div className="mt-2 ml-2">
           <p style={{ fontSize: 19 }} className="text-black no-underline">
