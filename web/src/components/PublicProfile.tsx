@@ -1,40 +1,24 @@
-import axios from "axios";
-import { useQuery } from "react-query";
-import CircularProgress from "@mui/material/CircularProgress";
-
 import RecipeRowList from "../components/RecipeRowList";
 import ReviewList from "../components/ReviewList";
-const baseUrl = process.env.REACT_APP_API_BASE_URL + "/users/";
 
-const PublicProfile = ({ showRecipe, userId }) => {
-  const url = baseUrl + userId;
+type Props = {
+  showRecipe: boolean;
+  userId: string;
+};
 
-  const { isLoading, error } = useQuery(url, () =>
-    axios.get(url).then((res) => res.data)
-  );
+const PublicProfile = ({ showRecipe, userId }: Props): JSX.Element => {
+  const url = `${process.env.REACT_APP_API_BASE_URL}/users/${userId}`;
 
   return (
     <>
-      {error ? (
-        <div>Error: {(error as any).mesasge}</div>
-      ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
-      ) : showRecipe ? (
-        <>
-          <div>
-            <RecipeRowList url={url + "/recipes"} />
-          </div>
-        </>
+      {showRecipe ? (
+        <RecipeRowList url={url + "/recipes"} />
       ) : (
-        <div>
-          <ReviewList
-            url={url + "/reviews"}
-            showDeleteButton={true}
-            showRecipe={true}
-          />
-        </div>
+        <ReviewList
+          url={url + "/reviews"}
+          showDeleteButton={true}
+          showRecipe={true}
+        />
       )}
     </>
   );

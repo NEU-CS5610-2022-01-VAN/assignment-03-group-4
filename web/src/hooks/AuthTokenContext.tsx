@@ -1,15 +1,16 @@
-import React, {
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const AuthTokenContext = React.createContext({} as any);
+const AuthTokenContext = React.createContext<IAuth0TokenContext>({
+  accessToken: "",
+  setAccessToken: () => {},
+});
 
-function AuthTokenProvider({ children }) {
+type Props = { children: React.ReactNode };
+
+const AuthTokenProvider = ({ children }: Props): JSX.Element => {
   const { getAccessTokenSilently, isAuthenticated } = useAuth0();
-  const [accessToken, setAccessToken] = useState();
+  const [accessToken, setAccessToken] = useState<string>();
   const value = { accessToken, setAccessToken };
 
   useEffect(() => {
@@ -32,7 +33,7 @@ function AuthTokenProvider({ children }) {
       {children}
     </AuthTokenContext.Provider>
   );
-}
+};
 
 const useAuthToken = () => useContext(AuthTokenContext);
 

@@ -1,13 +1,5 @@
 import { useContext, createContext, useState } from "react";
 
-interface INotificationContext {
-  snackbarOpen: boolean;
-  setSnackbarOpen: Function;
-  snackbarMessage: string;
-  setSnackbarMessage: Function;
-  addNotification: Function;
-}
-
 const NotificationContext = createContext<INotificationContext>({
   snackbarOpen: false,
   setSnackbarOpen: () => {},
@@ -16,7 +8,9 @@ const NotificationContext = createContext<INotificationContext>({
   addNotification: () => {},
 });
 
-function NotificationContextProvider({ children }) {
+type Props = { children: React.ReactNode };
+
+const NotificationContextProvider = ({ children }: Props): JSX.Element => {
   const [snackbarOpen, setSnackbarOpen] = useState<boolean>(false);
   const [snackbarMessage, setSnackbarMessage] = useState<string>("");
 
@@ -37,12 +31,8 @@ function NotificationContextProvider({ children }) {
       {children}
     </NotificationContext.Provider>
   );
-}
+};
 
 const useNotificationContext = () => useContext(NotificationContext);
 
-export {
-  INotificationContext,
-  useNotificationContext,
-  NotificationContextProvider,
-};
+export { useNotificationContext, NotificationContextProvider };

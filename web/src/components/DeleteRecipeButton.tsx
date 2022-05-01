@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Button as BootstrapButton } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,22 +10,23 @@ import {
   DialogActions,
   Dialog,
 } from "@mui/material";
-
 import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useNotificationContext } from "../hooks/NotificationContext";
 import { useBackdropContext } from "../hooks/BackdropContext";
 
-const DeleteRecipeButton = ({ recipeId }) => {
+type Props = { recipeId: string };
+
+const DeleteRecipeButton = ({ recipeId }: Props): JSX.Element => {
   const url = `${process.env.REACT_APP_API_BASE_URL}/recipes/${recipeId}`;
+  const navigate = useNavigate();
 
   const { addNotification } = useNotificationContext();
   const { addBackdrop, setBackdropOpen } = useBackdropContext();
   const { accessToken } = useAuthToken();
-  const navigate = useNavigate();
-  const [open, setOpen] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const onDeleteButtonClick = () => {
-    setOpen(false);
+    setDialogOpen(false);
     addBackdrop("Deleting Recipe");
 
     setTimeout(() => {
@@ -42,8 +43,8 @@ const DeleteRecipeButton = ({ recipeId }) => {
     }, 200);
   };
 
-  const handleClickOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const handleClickOpen = () => setDialogOpen(true);
+  const handleClose = () => setDialogOpen(false);
 
   return (
     <>
@@ -52,7 +53,7 @@ const DeleteRecipeButton = ({ recipeId }) => {
       </BootstrapButton>
 
       <Dialog
-        open={open}
+        open={dialogOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
@@ -75,4 +76,5 @@ const DeleteRecipeButton = ({ recipeId }) => {
     </>
   );
 };
+
 export default DeleteRecipeButton;

@@ -1,20 +1,20 @@
-import CircularProgress from "@mui/material/CircularProgress";
 import RecipeList from "./RecipeList";
-import GetRecipesByURL from "../api/RecipeListAPI";
+import GetRecipesByURL from "../apis/GetRecipesByUrl";
+import LoadingIcon from "./LoadingIcon";
 
-const RecipeListByURL = ({ url }) => {
-  const { isLoading, error, data: recipes, isFetching } = GetRecipesByURL(url);
+type Props = { url: string };
+
+const RecipeListByURL = ({ url }: Props): JSX.Element => {
+  const { isLoading, error, data: recipes } = GetRecipesByURL(url);
 
   return (
     <>
       {error ? (
-        <div>Error: {(error as any).mesasge}</div>
+        <div>Error: {error.message}</div>
       ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : (
-        <RecipeList recipes={recipes} />
+        <>{recipes && <RecipeList recipes={recipes} />}</>
       )}
     </>
   );

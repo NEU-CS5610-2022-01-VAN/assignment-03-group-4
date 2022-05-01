@@ -1,8 +1,7 @@
-import { Box, CircularProgress, Typography } from "@mui/material";
-import Backdrop from "@mui/material/Backdrop";
+import { Box, CircularProgress, Typography, Backdrop } from "@mui/material";
 import { useBackdropContext } from "../hooks/BackdropContext";
 
-const AppBackdrop = () => {
+const AppBackdrop = (): JSX.Element => {
   const { backdropOpen, setBackdropOpen, backdropMessage } =
     useBackdropContext();
 

@@ -1,37 +1,37 @@
+import "./css/profile.css";
 import { useState } from "react";
-
-import ProfileCard from "./ProfileCard";
-import PublicProfile from "./PublicProfile";
-import CircularProgress from "@mui/material/CircularProgress";
-
-import Divider from "@mui/material/Divider";
-import Box from "@mui/material/Box";
-import MenuList from "@mui/material/MenuList";
-import MenuItem from "@mui/material/MenuItem";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
-
+import {
+  Divider,
+  Box,
+  MenuList,
+  MenuItem,
+  ListItemText,
+  ListItemIcon,
+} from "@mui/material";
 import ContentPaste from "@mui/icons-material/ContentPaste";
-
 import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 import EmailIcon from "@mui/icons-material/Email";
 import EditIcon from "@mui/icons-material/Edit";
-import GetUserById from "../api/UserAPI";
+import PublicProfile from "./PublicProfile";
+import GetUserById from "../apis/GetUserById";
 import EditProfile from "./EditProfile";
-import "./css/profile.css";
+import LoadingIcon from "./LoadingIcon";
+import ProfileCard from "./ProfileCard";
 
-const UserProfile = ({ userId, isCurrentUser }) => {
-  const [showRecipe, setShowRecipe] = useState(true);
-  const [showEdit, setShowEdit] = useState(false);
+type Props = {
+  userId: string;
+  isCurrentUser: boolean;
+};
 
+const UserProfile = ({ userId, isCurrentUser }: Props): JSX.Element => {
+  const [showRecipe, setShowRecipe] = useState<boolean>(true);
+  const [showEdit, setShowEdit] = useState<boolean>(false);
   const { data: user, isLoading } = GetUserById(userId);
 
   return (
     <>
       {isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : (
         <>
           <div
@@ -96,9 +96,7 @@ const UserProfile = ({ userId, isCurrentUser }) => {
             </div>
             <div className="ma-auto profile-right">
               {isLoading ? (
-                <div>
-                  <CircularProgress color="inherit" />
-                </div>
+                <LoadingIcon />
               ) : isCurrentUser && showEdit ? (
                 <EditProfile userName={user.name} userBio={user.bio} />
               ) : (
