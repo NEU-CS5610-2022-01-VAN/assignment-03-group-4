@@ -18,10 +18,13 @@ const Thumbnail = (props) => {
 };
 
 function MyCarousel(props) {
+  // const [urlCurrent, setUrlCurrent] = useState(
+  //   props.video
+  //     ? `https://www.youtube.com/embed/${props.video}`
+  //     : `http://img.zcool.cn/community/017f365d157e1ea8012051cd848a88.gif`
+  // );
   const [urlCurrent, setUrlCurrent] = useState(
-    props.video
-      ? `https://www.youtube.com/embed/${props.video}`
-      : `http://img.zcool.cn/community/017f365d157e1ea8012051cd848a88.gif`
+    `http://img.zcool.cn/community/017f365d157e1ea8012051cd848a88.gif`
   );
   const [video, setVideo] = useState(props.video ? true : false);
 
@@ -40,13 +43,18 @@ function MyCarousel(props) {
     ).then((res: any) => {
       setImages(res);
       if (!props.video) {
+        setVideo(false);
         setUrlCurrent(res[0]);
+      } else {
+        setVideo(true);
+        setUrlCurrent(`https://www.youtube.com/embed/${props.video}`);
       }
     });
   }, [props.photos, props.recipeId, props.video]);
 
   return (
     <>
+      {console.log(`props.video${props.video} ?state.video:${video}`)}
       <div className="responsive-topcard flex md:flex-row flex-col w-full top-container">
         <div className="box ">
           {video ? (

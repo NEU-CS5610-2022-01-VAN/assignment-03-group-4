@@ -23,7 +23,7 @@ const RecipeNote = ({
           <div className="text-gray-800 font-bold mr-2">
             {recipe.rating ? recipe.rating.toFixed(1) : "0.0"}
           </div>
-          <Rating name="read-only" defaultValue={recipe.rating} readOnly />
+          <Rating name="read-only" value={recipe.rating} readOnly />
         </div>
         <div
           onClick={() => executeScroll(myRef)}

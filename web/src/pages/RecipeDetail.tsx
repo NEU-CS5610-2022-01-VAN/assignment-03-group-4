@@ -119,6 +119,7 @@ const RecipeDetail = (): JSX.Element => {
                 photos={recipe!.photos}
                 video={recipe!.youtubeVideoId}
               >
+                {console.log("pass" + recipe!.youtubeVideoId)}
                 <RecipeNote
                   recipe={recipe!}
                   myRef={myRef}
