@@ -120,19 +120,6 @@ const NewComment = ({ recipeId }) => {
             helperText={formik.touched.content && formik.errors.content}
           />
           <br />
-          {/* <TextField
-            className="mt-5"
-            id="rating"
-            color="success"
-            name="rating"
-            type="number"
-            label="Rating"
-            defaultValue={rating}
-            value={formik.values.rating}
-            onChange={formik.handleChange}
-            error={formik.touched.rating && Boolean(formik.errors.rating)}
-            helperText={formik.touched.rating && formik.errors.rating}
-          /> */}
           <div className="flex flex-row">
             <h4 className="font-serif mt-2 mr-2 text-lg text-gray-800">
               Rating
@@ -143,7 +130,7 @@ const NewComment = ({ recipeId }) => {
               name="rating"
               className="pt-2"
               size="large"
-              value={formik.values.rating}
+              value={parseInt(formik.values.rating)}
             />
           </div>
           <p
