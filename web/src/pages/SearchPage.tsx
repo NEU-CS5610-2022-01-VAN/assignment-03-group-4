@@ -1,23 +1,26 @@
-import React, { useState } from "react";
 import axios from "axios";
-import { useQuery } from "react-query";
-import CircularProgress from "@mui/material/CircularProgress";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 import H3 from "@material-tailwind/react/Heading3";
 import H6 from "@material-tailwind/react/Heading6";
 import RecipeList from "../components/RecipeList";
+import LoadingIcon from "../components/LoadingIcon";
 
-const url = process.env.REACT_APP_API_BASE_URL + "/recipes";
-const SearchPage = () => {
+const url = `${process.env.REACT_APP_API_BASE_URL}/recipes`;
+
+const SearchPage = (): JSX.Element => {
   const {
     isLoading,
     error,
     data: recipes,
-  } = useQuery(url, () => axios.get(url).then((res) => res.data));
+  } = useQuery<IRecipe[], Error>(url, () =>
+    axios.get(url).then((res) => res.data)
+  );
 
   const params = useParams();
-
-  const [keyword, setKeyword] = useState(params.keyword + "");
+  const initialKeyword: string | undefined = params.keyword;
+  const [keyword, setKeyword] = useState<string>(initialKeyword + "");
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -38,9 +41,9 @@ const SearchPage = () => {
               className="bg-gray-200 border-gray-200 bg-opacity-80 p-4 text-black outline-none"
               type="text"
               placeholder="Search Recipes"
-              defaultValue={params.keyword === null ? "" : params.keyword}
+              defaultValue={initialKeyword || ""}
               onKeyPress={handleKeyPress}
-            ></input>
+            />
           </div>
         </div>
       </div>
@@ -50,17 +53,15 @@ const SearchPage = () => {
       </div>
 
       {error ? (
-        <div>Error: {(error as any).mesasge}</div>
+        <div>Error: {error.message}</div>
       ) : isLoading ? (
-        <div>
-          <CircularProgress color="inherit" />
-        </div>
+        <LoadingIcon />
       ) : (
         <RecipeList
-          recipes={recipes.filter((recipe) =>
+          recipes={recipes!.filter((recipe) =>
             recipe.title.toLowerCase().includes(keyword.toLowerCase())
           )}
-        ></RecipeList>
+        />
       )}
     </>
   );

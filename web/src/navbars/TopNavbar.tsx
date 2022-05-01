@@ -1,32 +1,17 @@
-import React, { useState } from "react";
-// import Navbar from "@material-tailwind/react/Navbar";
-
-import { Box, Button, IconButton, Typography } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
+import { FiSearch } from "react-icons/fi";
+import { IoMdAdd } from "react-icons/io";
 import UserNavbarDropdown from "./UserNavbarDropdown";
 import LeftCategoryDrawer from "./LeftCategoryDrawer";
-import { CgProfile } from "react-icons/cg";
-import { BsSearch } from "react-icons/bs";
-import { FiSearch } from "react-icons/fi";
-import { makeStyles } from "@material-ui/styles";
-import { InputAdornment, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import Navbar from "@material-tailwind/react/Navbar";
-
-import { IoMdAdd } from "react-icons/io";
-const useStyles = makeStyles((theme) => ({
-  inputLabel: {
-    fontSize: 22,
-    color: "#444",
-    alignSelf: "flex-start",
-    fontWeight: "bold",
-    marginBottom: "0.3vh",
-  },
-  textField: {},
-}));
 
 export default function TopNavbar() {
-  const [openNavbar, setOpenNavbar] = useState(false);
   const navigate = useNavigate();
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
