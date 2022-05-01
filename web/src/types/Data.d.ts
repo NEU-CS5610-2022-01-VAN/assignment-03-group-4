@@ -24,6 +24,7 @@ interface IRecipe {
   body: string;
   cookingTime: number;
   ingredients: string[];
+  instructions: string[];
   youtubeId: string;
   author: IUser;
   categories: ICategory[];

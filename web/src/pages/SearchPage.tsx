@@ -9,7 +9,7 @@ import LoadingIcon from "../components/LoadingIcon";
 
 const url = `${process.env.REACT_APP_API_BASE_URL}/recipes`;
 
-const SearchPage = () => {
+const SearchPage = (): JSX.Element => {
   const {
     isLoading,
     error,
@@ -19,8 +19,8 @@ const SearchPage = () => {
   );
 
   const params = useParams();
-
-  const [keyword, setKeyword] = useState(params.keyword + "");
+  const initialKeyword: string | undefined = params.keyword;
+  const [keyword, setKeyword] = useState<string>(initialKeyword + "");
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -41,9 +41,9 @@ const SearchPage = () => {
               className="bg-gray-200 border-gray-200 bg-opacity-80 p-4 text-black outline-none"
               type="text"
               placeholder="Search Recipes"
-              defaultValue={params.keyword === null ? "" : params.keyword}
+              defaultValue={initialKeyword || ""}
               onKeyPress={handleKeyPress}
-            ></input>
+            />
           </div>
         </div>
       </div>
