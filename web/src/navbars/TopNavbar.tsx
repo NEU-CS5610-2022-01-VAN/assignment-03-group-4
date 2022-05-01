@@ -105,7 +105,7 @@ export default function TopNavbar() {
         </Button>
 
         <IconButton
-          href="/newrecipe"
+          onClick={() => navigate("/newrecipe")}
           className="outline-none"
           size="large"
           sx={{ display: { xs: "block", md: "none" }, alignItems: "center" }}
