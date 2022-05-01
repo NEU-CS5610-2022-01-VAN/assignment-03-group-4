@@ -69,7 +69,8 @@ export default function TopNavbar() {
           placeholder="find your recipe"
         />
         <IconButton
-          href="/search"
+          // href="/search"
+          onClick={() => navigate("/search")}
           className="outline-none"
           size="large"
           sx={{ display: { xs: "block", md: "none" }, alignItems: "center" }}
@@ -79,7 +80,8 @@ export default function TopNavbar() {
         </IconButton>
 
         <Button
-          href="/newrecipe"
+          // href="/newrecipe"
+          onClick={() => navigate("/newrecipe")}
           className="outline-none"
           size="large"
           sx={{ display: { xs: "none", md: "block" } }}
