@@ -67,7 +67,7 @@ const NewComment = ({ recipeId }: Props): JSX.Element => {
     return <LoadingIcon />;
   }
   if (error) {
-    return <div>Oops... {(error as any).message}</div>;
+    return <div>Oops... {error.message}</div>;
   }
 
   if (!user) {
@@ -124,7 +124,7 @@ const NewComment = ({ recipeId }: Props): JSX.Element => {
             name="rating"
             className="pt-2"
             size="large"
-            value={formik.values.rating}
+            value={Number(formik.values.rating)}
           />
         </div>
         <p className="ml-16" style={{ fontSize: "0.85rem", color: "#D32F2F" }}>

@@ -111,13 +111,13 @@ const RecipeDetail = (): JSX.Element => {
             </div>
           </div>
 
-          {(recipe!.photos.length || recipe!.youtubeId) && (
+          {(recipe!.photos.length || recipe!.youtubeVideoId) && (
             <>
               <hr />
               <MyCarousel
-                recipeId={recipeId}
+                recipeId={recipeId!}
                 photos={recipe!.photos}
-                video={recipe!.youtubeId}
+                video={recipe!.youtubeVideoId}
               >
                 <RecipeNote
                   recipe={recipe!}

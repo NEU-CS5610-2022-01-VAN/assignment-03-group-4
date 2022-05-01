@@ -1,6 +1,6 @@
+import "./css/myCarousel.css";
 import axios from "axios";
 import { useState, useEffect } from "react";
-import "./css/myCarousel.css";
 
 type ThumbnailProps = { url: string };
 
@@ -20,38 +20,50 @@ const Thumbnail = ({ url }: ThumbnailProps): JSX.Element => {
   );
 };
 
-function MyCarousel(props) {
+type Props = {
+  video: string;
+  photos: string[];
+  recipeId: string;
+  children: React.ReactNode;
+};
+
+const MyCarousel = ({
+  video,
+  photos,
+  recipeId,
+  children,
+}: Props): JSX.Element => {
   const [urlCurrent, setUrlCurrent] = useState(
-    props.video
-      ? `https://www.youtube.com/embed/${props.video}`
+    video
+      ? `https://www.youtube.com/embed/${video}`
       : `http://img.zcool.cn/community/017f365d157e1ea8012051cd848a88.gif`
   );
-  const [video, setVideo] = useState(props.video ? true : false);
+  const [videoOpen, setVideoOpen] = useState<boolean>(video ? true : false);
   const [images, setImages] = useState([]);
 
   useEffect(() => {
     Promise.all(
-      props.photos.map((photoId) =>
+      photos.map((photoId) =>
         axios
           .get(
-            `${process.env.REACT_APP_API_BASE_URL}/recipes/${props.recipeId}/files/${photoId}`,
+            `${process.env.REACT_APP_API_BASE_URL}/recipes/${recipeId}/files/${photoId}`,
             { responseType: "blob" }
           )
           .then((res) => URL.createObjectURL(res.data as any))
       )
     ).then((res: any) => {
       setImages(res);
-      if (!props.video) {
+      if (!video) {
         setUrlCurrent(res[0]);
       }
     });
-  }, [props.photos, props.recipeId, props.video]);
+  }, [photos, recipeId, video]);
 
   return (
     <>
       <div className="responsive-topcard flex md:flex-row flex-col w-full top-container">
         <div className="box ">
-          {video ? (
+          {videoOpen ? (
             <iframe
               title="recipe-video"
               className="responsive-iframe"
@@ -77,7 +89,7 @@ function MyCarousel(props) {
             backgroundColor: "#F5F1E7",
           }}
         >
-          {props.children}
+          {children}
         </div>
       </div>
       <div
@@ -93,15 +105,15 @@ function MyCarousel(props) {
           scrollbarWidth: "none",
         }}
       >
-        {props.video && (
+        {video && (
           <button
             onClick={() => {
-              setUrlCurrent(`https://www.youtube.com/embed/${props.video}`);
-              setVideo(true);
+              setUrlCurrent(`https://www.youtube.com/embed/${video}`);
+              setVideoOpen(true);
             }}
           >
             <Thumbnail
-              url={`https://img.youtube.com/vi/${props.video}/mqdefault.jpg`}
+              url={`https://img.youtube.com/vi/${video}/mqdefault.jpg`}
             />
           </button>
         )}
@@ -113,7 +125,7 @@ function MyCarousel(props) {
                 key={img}
                 onClick={() => {
                   setUrlCurrent(img);
-                  setVideo(false);
+                  setVideoOpen(false);
                 }}
                 aria-label={`carousel image ${index}`}
               >
@@ -124,6 +136,6 @@ function MyCarousel(props) {
       </div>
     </>
   );
-}
+};
 
 export default MyCarousel;

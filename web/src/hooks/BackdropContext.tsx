@@ -15,7 +15,6 @@ const BackdropContextProvider = ({ children }: Props): JSX.Element => {
   const [backdropMessage, setBackdropMessage] = useState<string>("");
 
   const addBackdrop = (message: string) => {
-    console.log(message);
     setBackdropMessage(message);
     setBackdropOpen(true);
   };
