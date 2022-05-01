@@ -31,7 +31,10 @@ export default function TopNavbar() {
       >
         <LeftCategoryDrawer />
         <Box sx={{ ml: "2vw" }}>
-          <Button className="outline-none" onClick={() => navigate("/")}>
+          <Button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => navigate("/")}
+          >
             <div className="text-amber-500 text-2xl">🥖 &nbsp;Recipe</div>
           </Button>
         </Box>
@@ -70,7 +73,7 @@ export default function TopNavbar() {
         />
         <IconButton
           onClick={() => navigate("/search")}
-          className="outline-none"
+          onMouseDown={(e) => e.preventDefault()}
           size="large"
           sx={{ display: { xs: "block", md: "none" }, alignItems: "center" }}
           aria-label="new recipe page"
@@ -80,7 +83,7 @@ export default function TopNavbar() {
 
         <Button
           onClick={() => navigate("/newrecipe")}
-          className="outline-none"
+          onMouseDown={(e) => e.preventDefault()}
           size="large"
           sx={{ display: { xs: "none", md: "block" } }}
         >
@@ -106,7 +109,7 @@ export default function TopNavbar() {
 
         <IconButton
           onClick={() => navigate("/newrecipe")}
-          className="outline-none"
+          onMouseDown={(e) => e.preventDefault()}
           size="large"
           sx={{ display: { xs: "block", md: "none" }, alignItems: "center" }}
           aria-label="search page"
