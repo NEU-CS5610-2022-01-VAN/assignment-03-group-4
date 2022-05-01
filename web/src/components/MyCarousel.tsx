@@ -54,7 +54,6 @@ function MyCarousel(props) {
 
   return (
     <>
-      {console.log(`props.video${props.video} ?state.video:${video}`)}
       <div className="responsive-topcard flex md:flex-row flex-col w-full top-container">
         <div className="box ">
           {video ? (
