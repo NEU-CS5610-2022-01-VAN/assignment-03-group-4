@@ -31,7 +31,7 @@ export default function TopNavbar() {
       >
         <LeftCategoryDrawer />
         <Box sx={{ ml: "2vw" }}>
-          <Button className="outline-none" href="/">
+          <Button className="outline-none" onClick={() => navigate("/")}>
             <div className="text-amber-500 text-2xl">🥖 &nbsp;Recipe</div>
           </Button>
         </Box>
