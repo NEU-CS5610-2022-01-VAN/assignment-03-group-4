@@ -18,7 +18,6 @@ const Footer = (): JSX.Element => (
 
       <div style={{ display: "flex", flexDirection: "row" }}>
         <Link
-          href="/profile"
           underline="hover"
           color="#6e6e73"
           style={{ fontSize: 12, margin: "0px 7px" }}
@@ -26,7 +25,6 @@ const Footer = (): JSX.Element => (
           Privacy Policy
         </Link>
         <Link
-          href="/profile"
           underline="hover"
           color="#6e6e73"
           style={{ fontSize: 12, margin: "0px 7px" }}
@@ -34,7 +32,6 @@ const Footer = (): JSX.Element => (
           Use of Cookies
         </Link>
         <Link
-          href="/profile"
           underline="hover"
           color="#6e6e73"
           style={{ fontSize: 12, margin: "0px 7px" }}
