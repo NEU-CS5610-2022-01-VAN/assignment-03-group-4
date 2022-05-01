@@ -1,8 +1,7 @@
-import react from "react";
 import { BiFoodMenu } from "react-icons/bi";
 import { Divider, Link } from "@mui/material";
 
-const Footer = () => (
+const Footer = (): JSX.Element => (
   <>
     <Divider />
     <div

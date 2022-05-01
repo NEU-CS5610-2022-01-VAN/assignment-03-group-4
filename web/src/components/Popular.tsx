@@ -1,19 +1,21 @@
+import { useNavigate } from "react-router-dom";
 import GetImageById from "../apis/ImageAPI";
 import { Skeleton } from "@mui/material";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
-import { useNavigate } from "react-router-dom";
 
 const Item = ({ photoId, recipeId }) => {
   const { isLoading, error, data: photoUrl } = GetImageById(photoId, recipeId);
   const navigate = useNavigate();
-  const handleKeyPress = (e) => {
+
+  const handleClick = () => {
     navigate(`/recipes/${recipeId}`);
   };
+
   return (
-    <div onClick={handleKeyPress}>
+    <div onClick={handleClick}>
       {error ? (
-        <div>Error: {(error as any).mesasge}</div>
+        <div>Error: {error.message}</div>
       ) : isLoading ? (
         <Skeleton variant="rectangular" animation="wave">
           <i
@@ -41,15 +43,17 @@ const Item = ({ photoId, recipeId }) => {
   );
 };
 
-const Popular = ({ recipes }) => {
+type Props = { recipes: IRecipe[] };
+
+const Popular = ({ recipes }: Props): JSX.Element => {
   return (
     <Carousel showStatus={false} interval={2000} infiniteLoop={true}>
       {recipes.map((recipe) => {
         return (
           <Item
-            key={recipe.id}
+            key={recipe._id}
             photoId={recipe.photos[0]}
-            recipeId={recipe.id}
+            recipeId={recipe._id}
           />
         );
       })}

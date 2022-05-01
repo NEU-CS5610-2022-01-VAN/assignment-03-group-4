@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import "./css/myCarousel.css";
-const Thumbnail = (props) => {
+
+type ThumbnailProps = { url: string };
+
+const Thumbnail = ({ url }: ThumbnailProps): JSX.Element => {
   return (
     <div
       style={{
@@ -10,7 +13,7 @@ const Thumbnail = (props) => {
         padding: "10px",
         height: "100px",
         backgroundPosition: "center",
-        backgroundImage: `url(${props.url})`,
+        backgroundImage: `url(${url})`,
         backgroundSize: "cover",
       }}
     />
@@ -90,37 +93,34 @@ function MyCarousel(props) {
           scrollbarWidth: "none",
         }}
       >
-        <>
-          {props.video && (
-            <button
-              onClick={() => {
-                setUrlCurrent(`https://www.youtube.com/embed/${props.video}`);
-                setVideo(true);
-              }}
-            >
-              <Thumbnail
-                url={`https://img.youtube.com/vi/${props.video}/mqdefault.jpg`}
-              />
-            </button>
-          )}
-        </>
-        <>
-          {images.length !== 0 &&
-            images.map((img, index) => {
-              return (
-                <button
-                  key={img}
-                  onClick={() => {
-                    setUrlCurrent(img);
-                    setVideo(false);
-                  }}
-                  aria-label={`carousel image ${index}`}
-                >
-                  <Thumbnail url={img} />
-                </button>
-              );
-            })}
-        </>
+        {props.video && (
+          <button
+            onClick={() => {
+              setUrlCurrent(`https://www.youtube.com/embed/${props.video}`);
+              setVideo(true);
+            }}
+          >
+            <Thumbnail
+              url={`https://img.youtube.com/vi/${props.video}/mqdefault.jpg`}
+            />
+          </button>
+        )}
+
+        {images.length !== 0 &&
+          images.map((img, index) => {
+            return (
+              <button
+                key={img}
+                onClick={() => {
+                  setUrlCurrent(img);
+                  setVideo(false);
+                }}
+                aria-label={`carousel image ${index}`}
+              >
+                <Thumbnail url={img} />
+              </button>
+            );
+          })}
       </div>
     </>
   );

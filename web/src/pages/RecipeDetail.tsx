@@ -90,7 +90,7 @@ const RecipeDetail = (): JSX.Element => {
             {recipe!.body}
           </div>
           <div className="py-4 flex">
-            <MyAvatar id={recipe!.author._id} />
+            <MyAvatar userId={recipe!.author._id} />
             <div className="px-2">
               <h3 className="flex">
                 By&nbsp;
@@ -195,7 +195,7 @@ const RecipeDetail = (): JSX.Element => {
               Leave comment
             </h4>
           </div>
-          <NewComment recipeId={recipeId} />
+          {recipeId && <NewComment recipeId={recipeId} />}
         </div>
       )}
     </div>

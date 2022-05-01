@@ -1,6 +1,6 @@
 import { Box, CircularProgress } from "@mui/material";
 
-const LoadingIcon = () => (
+const LoadingIcon = (): JSX.Element => (
   <Box
     sx={{
       ml: "3vw",

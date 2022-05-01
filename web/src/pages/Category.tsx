@@ -104,7 +104,7 @@ const Category = (): JSX.Element => {
         )}
       </Box>
 
-      {!isLoadingRecipes && <RecipeList recipes={recipes} />}
+      {!isLoadingRecipes && recipes && <RecipeList recipes={recipes} />}
     </>
   );
 };

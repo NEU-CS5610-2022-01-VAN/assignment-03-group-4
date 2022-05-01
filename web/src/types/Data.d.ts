@@ -6,6 +6,7 @@ interface IUser {
   _id: string;
   email: string;
   name: string;
+  bio?: string;
   picture?: string;
   createdAt: string;
   upatedAt: string;
@@ -39,6 +40,7 @@ interface IReview {
   _id: string;
   title: string;
   content: string;
+  rating: number;
   recipe: string;
   author: IUser;
   createdAt: string;

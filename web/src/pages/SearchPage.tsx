@@ -58,7 +58,7 @@ const SearchPage = (): JSX.Element => {
         <LoadingIcon />
       ) : (
         <RecipeList
-          recipes={recipes?.filter((recipe) =>
+          recipes={recipes!.filter((recipe) =>
             recipe.title.toLowerCase().includes(keyword.toLowerCase())
           )}
         />

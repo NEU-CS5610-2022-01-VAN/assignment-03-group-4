@@ -1,8 +1,14 @@
 import { Skeleton } from "@mui/material";
 import GetImageById from "../apis/ImageAPI";
 
-const ImageCard = ({ photoId, recipeId }) => {
+type Props = {
+  photoId: string;
+  recipeId: string;
+};
+
+const ImageCard = ({ photoId, recipeId }: Props): JSX.Element => {
   const { isLoading, error, data } = GetImageById(photoId, recipeId);
+
   return (
     <>
       {error ? (

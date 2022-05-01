@@ -1,19 +1,21 @@
 import Avatar from "@mui/material/Avatar";
-import GetAvatarById from "../apis/AvaterAPI";
+import GetAvatarByUserId from "../apis/GetAvatarByUserId";
 
-const MyAvatar = (userId) => {
-  const { isLoading, error, data: url } = GetAvatarById(userId);
+type Props = {
+  userId: string;
+};
+
+const MyAvatar = ({ userId }: Props): JSX.Element => {
+  const { isLoading, error, data: avatarUrl } = GetAvatarByUserId(userId);
 
   return (
     <>
       {error ? (
-        <></>
+        <>Error:{error.message}</>
       ) : isLoading ? (
         <Avatar alt="avater" src="../assets/img/recipe.png" />
       ) : (
-        <>
-          <Avatar alt="avater" src={url} />
-        </>
+        <Avatar alt="avater" src={avatarUrl} />
       )}
     </>
   );

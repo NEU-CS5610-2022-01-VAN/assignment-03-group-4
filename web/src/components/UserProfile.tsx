@@ -18,10 +18,16 @@ import EditProfile from "./EditProfile";
 import LoadingIcon from "./LoadingIcon";
 import ProfileCard from "./ProfileCard";
 
-const UserProfile = ({ userId, isCurrentUser }) => {
-  const [showRecipe, setShowRecipe] = useState(true);
-  const [showEdit, setShowEdit] = useState(false);
+type Props = {
+  userId: string;
+  isCurrentUser: boolean;
+};
+
+const UserProfile = ({ userId, isCurrentUser }: Props): JSX.Element => {
+  const [showRecipe, setShowRecipe] = useState<boolean>(true);
+  const [showEdit, setShowEdit] = useState<boolean>(false);
   const { data: user, isLoading } = GetUserById(userId);
+
   return (
     <>
       {isLoading ? (

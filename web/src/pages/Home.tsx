@@ -71,7 +71,7 @@ const Home = (): JSX.Element => {
               </div>
             </div>
 
-            <TypeSection recipes={recipes} />
+            {recipes && <TypeSection recipes={recipes} />}
 
             {!userLoading && isAuthenticated && recipes && (
               <div className=" font-serif text-xl font-bold pt-6 pb-3 mb-4">

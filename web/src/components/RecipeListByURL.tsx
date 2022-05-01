@@ -2,17 +2,19 @@ import RecipeList from "./RecipeList";
 import GetRecipesByURL from "../apis/RecipeListAPI";
 import LoadingIcon from "./LoadingIcon";
 
-const RecipeListByURL = ({ url }) => {
+type Props = { url: string };
+
+const RecipeListByURL = ({ url }: Props): JSX.Element => {
   const { isLoading, error, data: recipes } = GetRecipesByURL(url);
 
   return (
     <>
       {error ? (
-        <div>Error: {(error as any).mesasge}</div>
+        <div>Error: {error.message}</div>
       ) : isLoading ? (
         <LoadingIcon />
       ) : (
-        <RecipeList recipes={recipes} />
+        <>{recipes && <RecipeList recipes={recipes} />}</>
       )}
     </>
   );

@@ -85,7 +85,7 @@ function App() {
             </UserContextProvider>
           </AuthTokenProvider>
         </Auth0Provider>
-        <ReactQueryDevtools initialIsOpen={true} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
 
       {process.env.NODE_ENV === "development"

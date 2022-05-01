@@ -4,12 +4,16 @@ import { Rating } from "@mui/material";
 import { BsThreeDots } from "react-icons/bs";
 import ImageCard from "./ImageCard";
 
-const RecipeRow = ({ recipe }) => (
-  <Link to={`/recipes/${recipe.id}`}>
-    <div className="flex flex-row  gap-8 w-full ">
+type Props = {
+  recipe: IRecipe;
+};
+
+const RecipeRow = ({ recipe }: Props): JSX.Element => (
+  <Link to={`/recipes/${recipe._id}`}>
+    <div className="flex flex-row gap-8 w-full ">
       <div style={{ flexShrink: 0 }}>
         {recipe.photos.length ? (
-          <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
+          <ImageCard photoId={recipe.photos[0]} recipeId={recipe._id} />
         ) : (
           <div
             className={`rounded-lg -mt-9 shadow-lg`}
