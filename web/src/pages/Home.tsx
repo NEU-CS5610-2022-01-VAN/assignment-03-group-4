@@ -30,7 +30,15 @@ const Home = (): JSX.Element => {
           <div className="bg-landing-background bg-cover bg-center absolute top-0 w-full h-full" />
           <div className="container max-w-8xl relative mx-auto">
             <div className="w-full lg:w-6/12 px-4 mx-auto text-center">
-              <H2 color="white">Find Your Recipe.</H2>
+              <p
+                className="font-serif font-bold text-4xl text-white"
+                color="white"
+                style={{
+                  padding: "2%",
+                }}
+              >
+                Find Your Recipe
+              </p>
               <input
                 style={{ width: "21rem" }}
                 className="bg-amber-100 bg-opacity-80 p-3 text-white outline-none"
