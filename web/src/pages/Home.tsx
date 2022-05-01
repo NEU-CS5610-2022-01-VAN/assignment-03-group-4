@@ -12,11 +12,11 @@ import Section from "../components/Section";
 
 const recipeUrl = `${process.env.REACT_APP_API_BASE_URL}/recipes`;
 
-const Home = () => {
+const Home = (): JSX.Element => {
   const { isLoading, error, data: recipes } = GetRecipesByURL(recipeUrl);
   const { isLoading: userLoading, isAuthenticated, user } = useAuth0();
-
   const navigate = useNavigate();
+
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
       navigate(`/search/${e.target.value}`);
@@ -37,40 +37,43 @@ const Home = () => {
                 type="text"
                 placeholder="Search recipes"
                 onKeyPress={handleKeyPress}
-              ></input>
+              />
             </div>
           </div>
         </div>
       </main>
 
       {error ? (
-        <div>Error: {(error as any).mesasge}</div>
+        <div>Error: {error.message}</div>
       ) : isLoading ? (
         <LoadingIcon />
       ) : (
         <>
           <div className="pt-16 mx-auto m-full md:w-9/12 ">
-            <div className="flex flex-col place-items-center ">
+            <div className="flex flex-col place-items-center">
               <div className="font-serif text-3xl font-bold pt-6 pb-3 mb-4">
                 Most Popular
               </div>
-              <div className="max-w-3xl  mb-8">
-                <Popular
-                  recipes={Array.from(
-                    recipes
-                      .filter((x) => x.photos.length > 0 && x.rating != null)
-                      .sort(function (a, b) {
-                        return a.rating > b.rating ? 1 : -1;
-                      })
-                      .reverse()
-                      .slice(0, 3)
-                  )}
-                />
+              <div className="max-w-3xl mb-8">
+                {recipes && (
+                  <Popular
+                    recipes={Array.from(
+                      recipes
+                        .filter((x) => x.photos.length > 0 && x.rating)
+                        .sort(function (a, b) {
+                          return a.rating > b.rating ? 1 : -1;
+                        })
+                        .reverse()
+                        .slice(0, 3)
+                    )}
+                  />
+                )}
               </div>
             </div>
+
             <TypeSection recipes={recipes} />
 
-            {!userLoading && isAuthenticated && (
+            {!userLoading && isAuthenticated && recipes && (
               <div className=" font-serif text-xl font-bold pt-6 pb-3 mb-4">
                 Your Latest Recipe
                 <hr className="mt-2 mb-2" />
@@ -84,7 +87,7 @@ const Home = () => {
                 ) : (
                   <div className="flex flex-col justify-center text-base font-normal text-gray-600 my-16 p-2 items-center">
                     <IoFastFoodOutline size={25} />
-                    <p>You have no recipe yet. </p>
+                    <p>You have no recipe yet.</p>
                     <p>
                       Create your first recipe{" "}
                       <Link style={{ color: "#2F7D31" }} to="./NewRecipe">
@@ -96,6 +99,7 @@ const Home = () => {
               </div>
             )}
           </div>
+
           {!isAuthenticated && (
             <div
               className="font-serif flex flex-wrap text-semibold w-full justify-center gap-2"

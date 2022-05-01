@@ -8,7 +8,7 @@ import { BsPeople, BsThreeDots } from "react-icons/bs";
 import RecipeList from "../components/RecipeList";
 import LoadingIcon from "../components/LoadingIcon";
 
-const Category = () => {
+const Category = (): JSX.Element => {
   const params = useParams();
   const categoryId = params.categoryId;
 
@@ -23,13 +23,15 @@ const Category = () => {
     axios.get(categoryUrl).then((res) => res.data)
   );
 
-  const { isLoading: isLoadingRecipes, data: recipes } = useQuery(
-    recipesByCategoryIdUrl,
-    () => axios.get(recipesByCategoryIdUrl).then((res) => res.data)
+  const { isLoading: isLoadingRecipes, data: recipes } = useQuery<
+    IRecipe[],
+    Error
+  >(recipesByCategoryIdUrl, () =>
+    axios.get(recipesByCategoryIdUrl).then((res) => res.data)
   );
 
-  const [totalRecipes, setTotalRecipes] = useState();
-  const [totalComments, setTotalComments] = useState();
+  const [totalRecipes, setTotalRecipes] = useState<number>();
+  const [totalComments, setTotalComments] = useState<number>();
 
   useEffect(() => {
     if (recipes && recipes.length) {
