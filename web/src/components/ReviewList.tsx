@@ -3,6 +3,7 @@ import axios from "axios";
 
 import ReviewCard from "./ReviewCard";
 import { BiCommentDots } from "react-icons/bi";
+import { Link } from "react-router-dom";
 
 const ReviewList = ({ url, showDeleteButton, showRecipe }) => {
   const {
