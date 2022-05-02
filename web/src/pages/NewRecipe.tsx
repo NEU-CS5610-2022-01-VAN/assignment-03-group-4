@@ -509,7 +509,7 @@ const NewRecipe = (): JSX.Element => {
                   id="files-upload"
                   type="file"
                   multiple
-                  accept="image/*"
+                  accept="image/png, image/jpeg"
                   onChange={onImageChange}
                   style={{ display: "none" }}
                 />
