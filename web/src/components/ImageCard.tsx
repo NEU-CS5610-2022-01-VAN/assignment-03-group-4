@@ -12,7 +12,7 @@ const ImageCard = ({ photoId, recipeId }: Props): JSX.Element => {
   return (
     <>
       {error ? (
-        <div>Error: {(error as any).mesasge}</div>
+        <div>Error: {error.message}</div>
       ) : isLoading ? (
         <Skeleton variant="rectangular" animation="wave">
           <div

@@ -17,7 +17,7 @@ const AuthTokenProvider = ({ children }: Props): JSX.Element => {
     const getAccessToken = async () => {
       try {
         const token = await getAccessTokenSilently();
-        setAccessToken(token as any);
+        setAccessToken(token);
       } catch (err) {
         console.log(err);
       }

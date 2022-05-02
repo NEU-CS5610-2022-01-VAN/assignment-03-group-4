@@ -20,7 +20,7 @@ const RecipeRowList = ({ url }: Props): JSX.Element => {
   return (
     <>
       {error ? (
-        <div>Error: {(error as any).mesasge}</div>
+        <div>Error: {error.message}</div>
       ) : isLoading ? (
         <LoadingIcon />
       ) : recipes!.length !== 0 ? (
