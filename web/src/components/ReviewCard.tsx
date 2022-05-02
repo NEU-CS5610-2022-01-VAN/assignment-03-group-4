@@ -25,7 +25,7 @@ const ReviewCard = ({
   const { addBackdrop, setBackdropOpen } = useBackdropContext();
   const { accessToken } = useAuthToken();
   const route = showRecipe
-    ? `/recipe/${review.recipe}`
+    ? `/recipes/${review.recipe}`
     : `/profile/${review.author._id}`;
 
   const handleDeleteReview = async () => {
