@@ -1,24 +1,32 @@
-import { Link } from "react-router-dom";
-import Rating from "@mui/material/Rating";
-import "../assets/styles/tailwind.css";
-import { Button } from "@mui/material";
-
 import axios from "axios";
-import { useAuthToken } from "../hooks/AuthTokenContext";
-
+import { Link } from "react-router-dom";
+import { Button, Rating, Avatar } from "@mui/material";
 import MyAvatar from "./MyAvatar";
+import { useAuthToken } from "../hooks/AuthTokenContext";
 import { useNotificationContext } from "../hooks/NotificationContext";
 import { useBackdropContext } from "../hooks/BackdropContext";
 
-function ReviewCard({ review, showDeleteButton, showRecipe }) {
+type Props = {
+  review: IReview;
+  showDeleteButton: boolean;
+  showRecipe: boolean;
+};
+
+const defaultPicture =
+  "https://media.istockphoto.com/vectors/user-profile-icon-vector-avatar-portrait-symbol-flat-shape-person-vector-id1270368615?k=20&m=1270368615&s=170667a&w=0&h=qpvA8Z6L164ZcKfIyOl-E8fKnfmRZ09Tks7WEoiLawA=";
+
+const ReviewCard = ({
+  review,
+  showDeleteButton,
+  showRecipe,
+}: Props): JSX.Element => {
   const url = `${process.env.REACT_APP_API_BASE_URL}/reviews/${review._id}`;
   const { addNotification } = useNotificationContext();
   const { addBackdrop, setBackdropOpen } = useBackdropContext();
+  const { accessToken } = useAuthToken();
   const route = showRecipe
     ? `/recipe/${review.recipe}`
     : `/profile/${review.author._id}`;
-
-  const { accessToken } = useAuthToken();
 
   const handleDeleteReview = async () => {
     try {
@@ -41,7 +49,11 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
           <div className="font-serif mt-2">
             <div className="flex flex-row">
               <div className="mt-1">
-                <MyAvatar id={review.author._id}></MyAvatar>
+                {review.author.picture ? (
+                  <MyAvatar userId={review.author._id} />
+                ) : (
+                  <Avatar src={defaultPicture} />
+                )}
               </div>
               <div className="mt-2 ml-2 ">
                 <p style={{ fontSize: 19 }} className="text-black no-underline">
@@ -88,6 +100,6 @@ function ReviewCard({ review, showDeleteButton, showRecipe }) {
       </div>
     </>
   );
-}
+};
 
 export default ReviewCard;

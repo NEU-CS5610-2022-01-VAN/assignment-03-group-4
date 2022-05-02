@@ -1,20 +1,23 @@
 import "./css/recipeCard.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Box, Rating } from "@mui/material";
-import ImageCard from "./ImageCard";
-import { useNavigate } from "react-router-dom";
 
-const RecipeCard = ({ recipe }) => {
+import ImageCard from "./ImageCard";
+
+type Props = { recipe: IRecipe };
+
+const RecipeCard = ({ recipe }: Props): JSX.Element => {
   const navigate = useNavigate();
-  const handleKeyPress = (e) => {
-    navigate(`/recipe/${recipe.id}`);
+
+  const handleClick = () => {
+    navigate(`/recipes/${recipe._id}`);
   };
 
   return (
-    <Box onClick={handleKeyPress}>
+    <Box onClick={handleClick}>
       <div className={`w-72 h-96 rounded-xl overflow-hdden shadow-md p-4`}>
         {recipe.photos.length ? (
-          <ImageCard photoId={recipe.photos[0]} recipeId={recipe.id} />
+          <ImageCard photoId={recipe.photos[0]} recipeId={recipe._id} />
         ) : (
           <div
             className={`rounded-lg -mt-9 shadow-lg`}
@@ -48,7 +51,7 @@ const RecipeCard = ({ recipe }) => {
 
           <div className="text-sm font-medium">
             By&nbsp;
-            <Link to={`/profile/${recipe.author.id}`}>
+            <Link to={`/profile/${recipe.author._id}`}>
               {recipe.author.name}
             </Link>
           </div>

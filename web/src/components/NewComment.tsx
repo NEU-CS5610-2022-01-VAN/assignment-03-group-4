@@ -2,15 +2,15 @@ import axios from "axios";
 import { useFormik } from "formik";
 import { useAuth0 } from "@auth0/auth0-react";
 import * as yup from "yup";
-import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import { FiLogIn } from "react-icons/fi";
-
-import { useAuthToken } from "../hooks/AuthTokenContext";
-import LoginButton from "./LoginButton";
+import { Rating, TextField, Button } from "@mui/material";
 import { useNotificationContext } from "../hooks/NotificationContext";
 import { useBackdropContext } from "../hooks/BackdropContext";
-import Rating from "@mui/material/Rating";
+import { useAuthToken } from "../hooks/AuthTokenContext";
+import LoadingIcon from "./LoadingIcon";
+import LoginButton from "./LoginButton";
+
+type Props = { recipeId: string };
 
 const validationSchema = yup.object({
   title: yup.string().required("Review Title Required"),
@@ -24,7 +24,7 @@ const validationSchema = yup.object({
     .required("Plese give a rating score(1-5)"),
 });
 
-const NewComment = ({ recipeId }) => {
+const NewComment = ({ recipeId }: Props): JSX.Element => {
   const { addNotification } = useNotificationContext();
   const { addBackdrop, setBackdropOpen } = useBackdropContext();
   const { accessToken } = useAuthToken();
@@ -64,10 +64,10 @@ const NewComment = ({ recipeId }) => {
   });
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <LoadingIcon />;
   }
   if (error) {
-    return <div>Oops... {(error as any).message}</div>;
+    return <div>Oops... {error.message}</div>;
   }
 
   if (!user) {
@@ -90,67 +90,57 @@ const NewComment = ({ recipeId }) => {
   }
 
   return (
-    <>
-      <div className="ml-7 mr-10">
-        <form
-          className="flex flex-col mt-5 mb-10"
-          onSubmit={formik.handleSubmit}
+    <div className="ml-7 mr-10">
+      <form className="flex flex-col mt-5 mb-10" onSubmit={formik.handleSubmit}>
+        <TextField
+          className="mt-4"
+          id="comment-title"
+          color="success"
+          name="title"
+          label="Title"
+          value={formik.values.title}
+          onChange={formik.handleChange}
+          error={formik.touched.title && Boolean(formik.errors.title)}
+          helperText={formik.touched.title && formik.errors.title}
+        />
+        <br />
+        <TextField
+          className="mt-4"
+          id="content"
+          color="success"
+          name="content"
+          label="Content"
+          value={formik.values.content}
+          onChange={formik.handleChange}
+          error={formik.touched.content && Boolean(formik.errors.content)}
+          helperText={formik.touched.content && formik.errors.content}
+        />
+        <br />
+        <div className="flex flex-row">
+          <h4 className="font-serif mt-2 mr-2 text-lg text-gray-800">Rating</h4>
+          <Rating
+            onChange={formik.handleChange}
+            id="rating"
+            name="rating"
+            className="pt-2"
+            size="large"
+            value={Number(formik.values.rating)}
+          />
+        </div>
+        <p className="ml-16" style={{ fontSize: "0.85rem", color: "#D32F2F" }}>
+          {formik.touched.rating && formik.errors.rating}
+        </p>
+        <br />
+        <Button
+          className="mt-5"
+          color="success"
+          variant="outlined"
+          type="submit"
         >
-          <TextField
-            className="mt-4"
-            id="comment-title"
-            color="success"
-            name="title"
-            label="Title"
-            value={formik.values.title}
-            onChange={formik.handleChange}
-            error={formik.touched.title && Boolean(formik.errors.title)}
-            helperText={formik.touched.title && formik.errors.title}
-          />
-          <br />
-          <TextField
-            className="mt-4"
-            id="content"
-            color="success"
-            name="content"
-            label="Content"
-            value={formik.values.content}
-            onChange={formik.handleChange}
-            error={formik.touched.content && Boolean(formik.errors.content)}
-            helperText={formik.touched.content && formik.errors.content}
-          />
-          <br />
-          <div className="flex flex-row">
-            <h4 className="font-serif mt-2 mr-2 text-lg text-gray-800">
-              Rating
-            </h4>
-            <Rating
-              onChange={formik.handleChange}
-              id="rating"
-              name="rating"
-              className="pt-2"
-              size="large"
-              value={parseInt(formik.values.rating)}
-            />
-          </div>
-          <p
-            className="ml-16"
-            style={{ fontSize: "0.85rem", color: "#D32F2F" }}
-          >
-            {formik.touched.rating && formik.errors.rating}
-          </p>
-          <br />
-          <Button
-            className="mt-5"
-            color="success"
-            variant="outlined"
-            type="submit"
-          >
-            Submit
-          </Button>
-        </form>
-      </div>
-    </>
+          Submit
+        </Button>
+      </form>
+    </div>
   );
 };
 

@@ -1,13 +1,18 @@
 import { Skeleton } from "@mui/material";
-import GetImageById from "../api/ImageAPI";
-import "./css/recipeCard.css";
+import GetImageById from "../apis/GetPhotoByRecipeAndPhotoId";
 
-const ImageCard = ({ photoId, recipeId }) => {
+type Props = {
+  photoId: string;
+  recipeId: string;
+};
+
+const ImageCard = ({ photoId, recipeId }: Props): JSX.Element => {
   const { isLoading, error, data } = GetImageById(photoId, recipeId);
+
   return (
     <>
       {error ? (
-        <div>Error: {(error as any).mesasge}</div>
+        <div>Error: {error.message}</div>
       ) : isLoading ? (
         <Skeleton variant="rectangular" animation="wave">
           <div
@@ -21,7 +26,6 @@ const ImageCard = ({ photoId, recipeId }) => {
           />
         </Skeleton>
       ) : (
-        // <img className="recipe_card_image" src={data} alt="recipe" />
         <div
           className={`rounded-lg -mt-9 shadow-lg`}
           style={{

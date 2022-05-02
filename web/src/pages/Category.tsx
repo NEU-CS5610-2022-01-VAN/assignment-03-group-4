@@ -1,45 +1,37 @@
 import axios from "axios";
-import { useQuery } from "react-query";
-import { useParams } from "react-router-dom";
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Divider,
-  IconButton,
-  Typography,
-} from "@mui/material";
-
-import { BiFoodMenu } from "react-icons/bi";
-
-import { BsPeople, BsThreeDots } from "react-icons/bs";
-import { IoMdAdd } from "react-icons/io";
-import { useNavigate } from "react-router-dom";
-
-import RecipeList from "../components/RecipeList";
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+import { Box, Divider, IconButton, Typography } from "@mui/material";
+import { BiFoodMenu } from "react-icons/bi";
+import { BsPeople, BsThreeDots } from "react-icons/bs";
+import RecipeList from "../components/RecipeList";
+import LoadingIcon from "../components/LoadingIcon";
 
-const buttonShown = false;
-const Category = () => {
+const Category = (): JSX.Element => {
   const params = useParams();
-  const navigate = useNavigate();
-
   const categoryId = params.categoryId;
-  const baseUrl = `${process.env.REACT_APP_API_BASE_URL}/categories/${categoryId}`;
-  const url = baseUrl + "/recipes";
+
+  const categoryUrl = `${process.env.REACT_APP_API_BASE_URL}/categories/${categoryId}`;
+  const recipesByCategoryIdUrl = `${categoryUrl}/recipes`;
 
   const {
     isLoading,
     error,
     data: cat,
-  } = useQuery(baseUrl, () => axios.get(baseUrl).then((res) => res.data));
-
-  const { isLoading: isLoadingRecipes, data: recipes } = useQuery(url, () =>
-    axios.get(url).then((res) => res.data)
+  } = useQuery<ICategory, Error>(categoryUrl, () =>
+    axios.get(categoryUrl).then((res) => res.data)
   );
 
-  const [totalRecipes, setTotalRecipes] = useState();
-  const [totalComments, setTotalComments] = useState();
+  const { isLoading: isLoadingRecipes, data: recipes } = useQuery<
+    IRecipe[],
+    Error
+  >(recipesByCategoryIdUrl, () =>
+    axios.get(recipesByCategoryIdUrl).then((res) => res.data)
+  );
+
+  const [totalRecipes, setTotalRecipes] = useState<number>();
+  const [totalComments, setTotalComments] = useState<number>();
 
   useEffect(() => {
     if (recipes && recipes.length) {
@@ -61,11 +53,9 @@ const Category = () => {
         }}
       >
         {error ? (
-          <div>Error: {(error as any).mesasge}</div>
+          <div>Error: {error.message}</div>
         ) : isLoading ? (
-          <div>
-            <CircularProgress color="inherit" />
-          </div>
+          <LoadingIcon />
         ) : (
           <div>
             <div className="flex flex-row">
@@ -73,7 +63,7 @@ const Category = () => {
                 variant="h4"
                 sx={{ fontSize: 40, marginBottom: "6px", width: "60%" }}
               >
-                {cat.name}
+                {cat?.name}
               </Typography>
               <IconButton
                 aria-label="more options"
@@ -86,7 +76,7 @@ const Category = () => {
             </div>
 
             <Typography variant="h5" color="#777" sx={{ fontSize: "1.4rem" }}>
-              Check out our {cat.name.toLowerCase()} recipes.
+              Check out our {cat?.name.toLowerCase()} recipes.
             </Typography>
 
             <div className="flex flex-row">
@@ -107,24 +97,6 @@ const Category = () => {
                   {totalComments} comments
                 </Typography>
               </div>
-              {buttonShown && (
-                <Button
-                  onClick={() => navigate("/newrecipe")}
-                  color="success"
-                  variant="contained"
-                  size="medium"
-                  onMouseDown={(e) => e.preventDefault()}
-                  sx={{
-                    display: "flex",
-                    backgroundColor: "#3dc795",
-                    mr: 2,
-                    marginLeft: "auto",
-                  }}
-                  startIcon={<IoMdAdd size={20} />}
-                >
-                  Add
-                </Button>
-              )}
             </div>
 
             <Divider sx={{ marginTop: "22px", marginBottom: "6px" }} />
@@ -132,7 +104,7 @@ const Category = () => {
         )}
       </Box>
 
-      {!isLoadingRecipes && <RecipeList recipes={recipes} />}
+      {!isLoadingRecipes && recipes && <RecipeList recipes={recipes} />}
     </>
   );
 };

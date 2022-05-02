@@ -1,32 +1,17 @@
-import React, { useState } from "react";
-// import Navbar from "@material-tailwind/react/Navbar";
-
-import { Box, Button, IconButton, Typography } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
+import {
+  Box,
+  Button,
+  IconButton,
+  InputAdornment,
+  TextField,
+} from "@mui/material";
+import { FiSearch } from "react-icons/fi";
+import { IoMdAdd } from "react-icons/io";
 import UserNavbarDropdown from "./UserNavbarDropdown";
 import LeftCategoryDrawer from "./LeftCategoryDrawer";
-import { CgProfile } from "react-icons/cg";
-import { BsSearch } from "react-icons/bs";
-import { FiSearch } from "react-icons/fi";
-import { makeStyles } from "@material-ui/styles";
-import { InputAdornment, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
-import Navbar from "@material-tailwind/react/Navbar";
-
-import { IoMdAdd } from "react-icons/io";
-const useStyles = makeStyles((theme) => ({
-  inputLabel: {
-    fontSize: 22,
-    color: "#444",
-    alignSelf: "flex-start",
-    fontWeight: "bold",
-    marginBottom: "0.3vh",
-  },
-  textField: {},
-}));
 
 export default function TopNavbar() {
-  const [openNavbar, setOpenNavbar] = useState(false);
   const navigate = useNavigate();
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
@@ -46,7 +31,10 @@ export default function TopNavbar() {
       >
         <LeftCategoryDrawer />
         <Box sx={{ ml: "2vw" }}>
-          <Button className="outline-none" href="/">
+          <Button
+            onMouseDown={(e) => e.preventDefault()}
+            onClick={() => navigate("/")}
+          >
             <div className="text-amber-500 text-2xl">🥖 &nbsp;Recipe</div>
           </Button>
         </Box>
@@ -84,8 +72,8 @@ export default function TopNavbar() {
           placeholder="find your recipe"
         />
         <IconButton
-          href="/search"
-          className="outline-none"
+          onClick={() => navigate("/search")}
+          onMouseDown={(e) => e.preventDefault()}
           size="large"
           sx={{ display: { xs: "block", md: "none" }, alignItems: "center" }}
           aria-label="new recipe page"
@@ -94,8 +82,8 @@ export default function TopNavbar() {
         </IconButton>
 
         <Button
-          href="/newrecipe"
-          className="outline-none"
+          onClick={() => navigate("/newrecipe")}
+          onMouseDown={(e) => e.preventDefault()}
           size="large"
           sx={{ display: { xs: "none", md: "block" } }}
         >
@@ -120,8 +108,8 @@ export default function TopNavbar() {
         </Button>
 
         <IconButton
-          href="/newrecipe"
-          className="outline-none"
+          onClick={() => navigate("/newrecipe")}
+          onMouseDown={(e) => e.preventDefault()}
           size="large"
           sx={{ display: { xs: "block", md: "none" }, alignItems: "center" }}
           aria-label="search page"

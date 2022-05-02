@@ -1,19 +1,12 @@
-import { Routes, Route, Outlet } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
-import { BrowserRouter } from "react-router-dom";
-import { Auth0Provider } from "@auth0/auth0-react";
+import { Routes, Route, Outlet, BrowserRouter } from "react-router-dom";
+import { useAuth0, Auth0Provider } from "@auth0/auth0-react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
-import ScrollToTop from "./hooks/ScrollToTop";
-
 // Font Awesome Style Sheet
 import "@fortawesome/fontawesome-free/css/all.min.css";
-
 // Tailwind CSS Style Sheet
 import "./assets/styles/tailwind.css";
-
 import TopNavbar from "./navbars/TopNavbar";
-import { AuthTokenProvider } from "./hooks/AuthTokenContext";
 import NewRecipe from "./pages/NewRecipe";
 import RecipeDetail from "./pages/RecipeDetail";
 import Home from "./pages/Home";
@@ -22,11 +15,13 @@ import VerifyUser from "./pages/VerifyUser";
 import SearchPage from "./pages/SearchPage";
 import Category from "./pages/Category";
 import Footer from "./components/Footer";
-import { UserContextProvider } from "./hooks/UserContext";
 import NotificationSnackbar from "./components/NotificationSnackbar";
-import { NotificationContextProvider } from "./hooks/NotificationContext";
 import AppBackdrop from "./components/AppBackdrop";
+import { UserContextProvider } from "./hooks/UserContext";
+import { NotificationContextProvider } from "./hooks/NotificationContext";
 import { BackdropContextProvider } from "./hooks/BackdropContext";
+import { AuthTokenProvider } from "./hooks/AuthTokenContext";
+import ScrollToTop from "./utils/ScrollToTop";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -90,7 +85,7 @@ function App() {
             </UserContextProvider>
           </AuthTokenProvider>
         </Auth0Provider>
-        <ReactQueryDevtools initialIsOpen={true} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
 
       {process.env.NODE_ENV === "development"
@@ -122,7 +117,7 @@ function AppRouter() {
           <Route path="/search" element={<SearchPage />}>
             <Route path="/search/:keyword" element={<SearchPage />} />
           </Route>
-          <Route path="/recipe/:recipeId" element={<RecipeDetail />} />
+          <Route path="/recipes/:recipeId" element={<RecipeDetail />} />
           <Route path="/profile" element={<Profile />}>
             <Route path=":userId" element={<Profile />} />
           </Route>
