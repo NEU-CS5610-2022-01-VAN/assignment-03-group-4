@@ -24,7 +24,7 @@ function MyCarousel(props) {
   //     : `http://img.zcool.cn/community/017f365d157e1ea8012051cd848a88.gif`
   // );
   const [urlCurrent, setUrlCurrent] = useState(
-    `http://img.zcool.cn/community/017f365d157e1ea8012051cd848a88.gif`
+    `https://img.zcool.cn/community/017f365d157e1ea8012051cd848a88.gif`
   );
   const [video, setVideo] = useState(props.video ? true : false);
 
