@@ -5,15 +5,15 @@ import * as uploadController from "../controllers/upload.controller";
 
 const router = Router();
 
+router.get("/:recipeId/files/:fileId", uploadController.download);
+router.get("/", recipeController.getAllRecipes);
+router.get("/:recipeId", recipeController.getRecipeById);
+router.get("/:recipeId/reviews", recipeController.getReviewsByRecipeId);
 router.post(
   "/:recipeId/files",
   checkJwt,
   uploadController.uploadFilesByRecipeId
 );
-router.get("/:recipeId/files/:fileId", uploadController.download);
-router.get("/", recipeController.getAllRecipes);
-router.get("/:recipeId", recipeController.getRecipeById);
-router.get("/:recipeId/reviews", recipeController.getReviewsByRecipeId);
 router.post("/", checkJwt, recipeController.createRecipe);
 router.post("/:recipeId", checkJwt, recipeController.updateRecipeById);
 router.delete("/:recipeId", checkJwt, recipeController.deleteRecipeById);

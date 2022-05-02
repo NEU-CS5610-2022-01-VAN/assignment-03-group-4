@@ -85,6 +85,7 @@ export const updateRecipeById = asyncHandler(
       {
         title,
         body,
+        cookingTime,
         author,
         categories,
         ingredients,

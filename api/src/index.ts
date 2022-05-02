@@ -3,13 +3,11 @@ import mongoose from "mongoose";
 import morgan from "morgan";
 import "dotenv/config";
 import cors from "cors";
-
 //routers
 import userRouter from "./routes/user.router";
 import recipeRouter from "./routes/recipe.router";
 import categoryRouter from "./routes/category.router";
 import reviewRouter from "./routes/review.router";
-
 //middlewares
 import { errorHandler } from "./middlewares/error.middleware";
 import { notFoundHandler } from "./middlewares/not-found.middleware";

@@ -1,6 +1,6 @@
 import "./css/newRecipe.css";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, FieldArray, getIn } from "formik";
