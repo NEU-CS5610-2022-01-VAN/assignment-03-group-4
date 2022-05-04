@@ -1,0 +1,30 @@
+.recipe_details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.recipe_details-list {
+  padding-left: 25px;
+  padding-bottom: 15px;
+}
+
+.recipe__details-list img {
+  max-width: 200px;
+  min-height: 200px;
+}
+
+.recipe-title {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+}
+
+.recipe-category {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

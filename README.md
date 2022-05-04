@@ -1,3 +1,14 @@
+
+# Recipe Website
+
+## Group Member: Yun Feng, Jiaxue Li, Ziming Jia
+🥖Check out here： https://recipego.vercel.app/
+
+## Tech Stack
+Front End: React, Typescript, React Query, Tailwind CSS, MUI Components
+
+Back End: Express, Typescript, MongoDB, Mongoose, Auth0
+
 # assignment-03
 
 You will be working in groups of up to 3 students for this project.
