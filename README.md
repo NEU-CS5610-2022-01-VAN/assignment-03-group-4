@@ -5,9 +5,9 @@
 🥖Check out here： https://recipego.vercel.app/
 
 ## Tech Stack
-Front End: React, Typescript, React Query, Tailwind CSS, MUI Components
+Front End: React, TypeScript, React Query, Tailwind CSS, MUI Components
 
-Back End: Express, Typescript, MongoDB, Mongoose, Auth0
+Back End: Express, TypeScript, MongoDB, Mongoose, Auth0
 
 # assignment-03
 
